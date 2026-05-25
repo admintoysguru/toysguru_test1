@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#E8001D;--yellow:#F5C400;--orange:#FF6B1A;
+  --bg:#0A0A0B;--bg2:#111113;--bg3:#18181C;--bg4:#1E1E24;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --text:#F0EFEB;--muted:#6B6B73;--muted2:#9B9BA3;
+  --ff-head:'Barlow Condensed',sans-serif;--ff-body:'Barlow',sans-serif;--ff-mono:'Space Mono',monospace;
+  --r:6px;--rl:12px;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size:14px;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--ff-head);letter-spacing:.02em;line-height:1.1}
+button{cursor:pointer;font-family:var(--ff-body);border:none;transition:all .15s}
+input,select,textarea{font-family:var(--ff-body)}
+
+.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,11,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;padding:0 20px;justify-content:space-between;gap:12px}
+.logo{font-family:var(--ff-head);font-size:20px;font-weight:900;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
+.logo .hw{color:var(--red)}.logo .z{color:var(--yellow)}.logo .blr{color:var(--muted2);font-weight:400;font-size:14px;margin-left:2px}
+.nav-links{display:flex;gap:2px;flex-wrap:nowrap}
+.nl{padding:5px 11px;border-radius:var(--r);font-size:13px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .15s;border:none;background:none;white-space:nowrap}
+.nl:hover,.nl.a{color:var(--text);background:var(--bg3)}
+.nl.drop{color:var(--yellow)}.nl.pub{color:#A78BFA}
+.nav-r{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:var(--r);font-size:13px;font-weight:600;transition:all .15s;white-space:nowrap;cursor:pointer}
+.btn-p{background:var(--red);color:#fff}.btn-p:hover{background:#c5001a;transform:translateY(-1px)}
+.btn-s{background:var(--bg3);color:var(--text);border:1px solid var(--border2)}.btn-s:hover{border-color:var(--muted2)}
+.btn-g{background:transparent;color:var(--muted2)}.btn-g:hover{color:var(--text)}
+.btn-y{background:var(--yellow);color:#000;font-weight:700}.btn-y:hover{background:#e0b200}
+.btn-v{background:#7C3AED;color:#fff}.btn-v:hover{background:#6D28D9}
+.btn-lg{padding:10px 22px;font-size:15px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+.page{display:none;min-height:calc(100vh - 54px)}.page.active{display:block}
+.container{max-width:1140px;margin:0 auto;padding:0 20px}
+
+.hero{padding:56px 0 44px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% -10%,rgba(232,0,29,.1) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(232,0,29,.1);border:1px solid rgba(232,0,29,.22);color:#FF4D6A;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.hero-title{font-family:var(--ff-head);font-size:clamp(42px,6.5vw,78px);font-weight:900;line-height:1;text-transform:uppercase;margin-bottom:12px}
+.hero-title span{color:var(--red);display:block}
+.hero-sub{font-size:15px;color:var(--muted2);max-width:420px;margin-bottom:26px;line-height:1.55}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.g2{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:all .2s;cursor:pointer}
+.card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.card-img{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:54px;overflow:hidden;position:relative}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:12px}
+.card-title{font-family:var(--ff-head);font-size:17px;font-weight:700;line-height:1.2;margin-bottom:3px}
+.card-sub{font-size:11px;color:var(--muted2);margin-bottom:8px}
+.card-price{font-family:var(--ff-head);font-size:20px;font-weight:800;color:var(--red)}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
+
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
+.b-red{background:rgba(232,0,29,.15);color:#FF4D6A;border:1px solid rgba(232,0,29,.3)}
+.b-yellow{background:rgba(245,196,0,.15);color:var(--yellow);border:1px solid rgba(245,196,0,.3)}
+.b-green{background:rgba(34,197,94,.1);color:#4ADE80;border:1px solid rgba(34,197,94,.2)}
+.b-blue{background:rgba(59,130,246,.1);color:#60A5FA;border:1px solid rgba(59,130,246,.2)}
+.b-gray{background:var(--bg3);color:var(--muted2);border:1px solid var(--border)}
+.b-purple{background:rgba(124,58,237,.15);color:#A78BFA;border:1px solid rgba(124,58,237,.3)}
+.b-orange{background:rgba(255,107,26,.12);color:#FB923C;border:1px solid rgba(255,107,26,.25)}
+
+.section{padding:44px 0}
+.sec-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px}
+.sec-title{font-family:var(--ff-head);font-size:26px;font-weight:800;text-transform:uppercase}
+.sec-title .ac{color:var(--red)}.sec-title .acp{color:#A78BFA}
+
+.drop-banner{background:var(--bg2);border:1px solid rgba(245,196,0,.2);border-radius:var(--rl);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.drop-banner h2{font-family:var(--ff-head);font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:3px}
+.drop-banner p{color:var(--muted2);font-size:12px}
+
+.cd{display:flex;gap:5px;align-items:center}
+.cd-seg{display:flex;flex-direction:column;align-items:center}
+.cd-num{font-family:var(--ff-mono);font-size:17px;font-weight:700;color:var(--yellow);background:var(--bg3);padding:3px 7px;border-radius:4px;min-width:34px;text-align:center;line-height:1}
+.cd-lbl{font-size:8px;color:var(--muted);text-transform:uppercase;margin-top:3px;letter-spacing:.1em}
+.cd-sep{font-family:var(--ff-mono);color:var(--muted);font-size:15px;margin-top:-4px}
+.live-dot{width:7px;height:7px;background:#FF4D6A;border-radius:50%;display:inline-block;animation:pulse 1s infinite}
+.g-dot{width:7px;height:7px;background:#4ADE80;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite}
+.auction-live{display:inline-flex;align-items:center;gap:5px;color:#FF4D6A;font-size:11px;font-weight:600}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.detail-layout{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:start}
+.detail-main-img{width:100%;aspect-ratio:1;border-radius:var(--rl);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:96px;margin-bottom:10px}
+.verified-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ADE80;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600}
+.bid-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rl);padding:18px}
+.bid-amt{font-family:var(--ff-head);font-size:34px;font-weight:900;color:var(--yellow)}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 12px;color:var(--text);font-size:13px;transition:border-color .15s}
+.form-input:focus{outline:none;border-color:var(--red)}
+.form-input::placeholder{color:var(--muted)}
+.buy-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rl);padding:18px}
+.buy-price{font-family:var(--ff-head);font-size:38px;font-weight:900;color:var(--red);margin-bottom:14px}
+
+.filter-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+.chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:500;background:var(--bg3);border:1px solid var(--border);color:var(--muted2);cursor:pointer;transition:all .15s}
+.chip:hover,.chip.a{background:rgba(232,0,29,.1);border-color:rgba(232,0,29,.3);color:#FF4D6A}
+.chip.ap{} .chip.ap:hover,.chip.ap.a{background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:#A78BFA}
+
+.auth-page{min-height:calc(100vh - 54px);display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:32px;width:100%;max-width:400px}
+.auth-logo{font-family:var(--ff-head);font-size:26px;font-weight:900;text-align:center;margin-bottom:22px}
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:11px;font-weight:600;color:var(--muted2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.form-select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 12px;color:var(--text);font-size:13px;width:100%}
+.form-textarea{min-height:80px;resize:vertical}
+
+.admin-layout{display:flex;min-height:calc(100vh - 54px)}
+.admin-sidebar{width:200px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:14px 10px}
+.admin-content{flex:1;padding:26px;overflow-x:hidden}
+.sidebar-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);font-size:13px;color:var(--muted2);cursor:pointer;transition:all .15s;margin-bottom:2px}
+.sidebar-item:hover,.sidebar-item.a{background:var(--bg3);color:var(--text)}
+.sidebar-item.a{color:var(--red)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(162px,1fr));gap:12px;margin-bottom:26px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:15px}
+.stat-val{font-family:var(--ff-head);font-size:26px;font-weight:800}
+.stat-lbl{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+.stat-card.profit .stat-val{color:#4ADE80}
+.stat-card.pending .stat-val{color:var(--yellow)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:var(--bg3)}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-title{font-family:var(--ff-head);font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:18px}
+.mc{position:absolute;top:14px;right:14px;background:var(--bg3);border:1px solid var(--border);color:var(--muted2);width:28px;height:28px;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
+.mc:hover{color:var(--text)}
+
+.sub-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:14px;margin-bottom:10px}
+.ss-pending{background:rgba(245,196,0,.1);color:var(--yellow)}
+.ss-approved{background:rgba(34,197,94,.1);color:#4ADE80}
+.ss-rejected{background:rgba(232,0,29,.1);color:#FF4D6A}
+.ss-listed{background:rgba(59,130,246,.1);color:#60A5FA}
+
+.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:var(--r);padding:3px;margin-bottom:18px}
+.tab{flex:1;padding:6px 10px;border-radius:4px;font-size:12px;font-weight:600;color:var(--muted2);cursor:pointer;transition:all .15s;text-align:center;border:none;background:transparent}
+.tab.a{background:var(--bg2);color:var(--text);border:1px solid var(--border)}
+
+.pub-hero{background:var(--bg2);border:1px solid rgba(124,58,237,.2);border-radius:var(--rl);padding:28px;margin-bottom:28px;position:relative;overflow:hidden}
+.pub-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(124,58,237,.06) 0%,transparent 70%);pointer-events:none}
+
+#toast{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.t{background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:var(--r);font-size:13px;animation:slideIn .2s ease;max-width:300px}
+.t.success{border-color:rgba(34,197,94,.3)}.t.error{border-color:rgba(232,0,29,.3)}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.empty{text-align:center;padding:48px 20px;color:var(--muted2)}
+.empty-icon{font-size:40px;margin-bottom:10px}
+.empty h3{font-family:var(--ff-head);font-size:20px;color:var(--text);margin-bottom:4px}
+
+.owner-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--muted2);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:4px}
+
+.collection-lock{background:rgba(232,0,29,.06);border:1px solid rgba(232,0,29,.15);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--muted2);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+
+@media(max-width:700px){
+  .detail-layout{grid-template-columns:1fr}
+  .admin-layout{flex-direction:column}
+  .admin-sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);padding:10px;display:flex;flex-wrap:wrap;gap:4px}
+  .nav-links{display:none}
+  .drop-banner{flex-direction:column}
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo" onclick="go('home')">
+    <span class="hw">HotWheelz</span><span class="z"> BLR</span>
+  </div>
+  <div class="nav-links">
+    <button class="nl" onclick="go('browse')">Browse</button>
+    <button class="nl drop" onclick="go('drops')">🔥 Drops</button>
+    <button class="nl" onclick="go('auctions')">⚡ Auctions</button>
+    <button class="nl pub" onclick="go('public')">🪩 Public Collection</button>
+    <button class="nl" onclick="go('collection')">🗃 My Collection</button>
+  </div>
+  <div class="nav-r" id="nav-r"></div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page">
+  <div class="hero">
+    <div class="container">
+      <div class="hero-tag">🏎️ Bangalore's Curated Die-Cast Marketplace</div>
+      <h1 class="hero-title">Hunt.<span>Score.</span>Collect.</h1>
+      <p class="hero-sub">Every listing verified. Every price fair. Drops, auctions, and a community-powered public collection — all in one place.</p>
+      <div class="hero-btns">
+        <button class="btn btn-p btn-lg" onclick="go('browse')">Browse Collection</button>
+        <button class="btn btn-v btn-lg" onclick="go('public')">🪩 Public Collection</button>
+        <button class="btn btn-s btn-lg" onclick="go('drops')">🔥 Live Drops</button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div id="drop-banner-home"></div>
+    <div class="section">
+      <div class="sec-hdr"><h2 class="sec-title">Featured <span class="ac">Drops & Auctions</span></h2><button class="btn btn-g" onclick="go('browse')">View All →</button></div>
+      <div class="grid g4" id="home-listings"></div>
+    </div>
+    <div class="section" style="border-top:1px solid var(--border)">
+      <div class="sec-hdr"><h2 class="sec-title">Community <span class="acp">Public Collection</span></h2><button class="btn btn-g" onclick="go('public')">View All →</button></div>
+      <p style="color:var(--muted2);font-size:13px;margin-bottom:20px">Cars listed directly by Bangalore collectors. All admin-verified before going live.</p>
+      <div class="grid g4" id="home-public-listings"></div>
+    </div>
+    <div class="section" style="border-top:1px solid var(--border)">
+      <div class="sec-hdr"><h2 class="sec-title">Why <span class="ac">HotWheelz BLR?</span></h2></div>
+      <div class="grid g3" style="gap:12px" id="why-grid"></div>
+    </div>
+    <footer style="border-top:1px solid var(--border);padding:18px 0;text-align:center;color:var(--muted);font-size:12px">
+      <span style="font-family:var(--ff-head);font-weight:900;margin-right:6px;font-size:14px"><span style="color:var(--red)">HotWheelz</span> <span style="color:var(--yellow)">BLR</span></span>
+      © 2024 · Curated by collectors, for collectors · Bangalore
+    </footer>
+  </div>
+</div>
+
+<!-- BROWSE (Admin curated) -->
+<div id="page-browse" class="page">
+  <div class="section"><div class="container">
+    <div style="margin-bottom:20px">
+      <h1 class="sec-title">The <span class="ac">Collection</span></h1>
+      <p style="color:var(--muted2);font-size:13px;margin-top:4px">Admin-curated inventory — verified, graded, and priced by our team.</p>
+    </div>
+    <div class="filter-bar" id="browse-filters"></div>
+    <div class="grid g4" id="browse-listings"></div>
+  </div></div>
+</div>
+
+<!-- PUBLIC COLLECTION -->
+<div id="page-public" class="page">
+  <div class="section"><div class="container">
+    <div class="pub-hero">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);color:#A78BFA;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">🪩 Community Marketplace</div>
+          <h1 style="font-family:var(--ff-head);font-size:32px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Public <span style="color:#A78BFA">Collection</span></h1>
+          <p style="color:var(--muted2);font-size:14px;max-width:480px;line-height:1.55">Real collectors in Bangalore listing their personal cars. Every listing is reviewed by our admin before going live — so quality stays high.</p>
+        </div>
+        <button class="btn btn-v btn-lg" onclick="openListYourCar()">+ List Your Car</button>
+      </div>
+    </div>
+    <div class="filter-bar" id="pub-filters"></div>
+    <div class="grid g4" id="pub-listings"></div>
+  </div></div>
+</div>
+
+<!-- MY COLLECTION (Admin only) -->
+<div id="page-collection" class="page">
+  <div class="section"><div class="container">
+    <div style="margin-bottom:20px">
+      <h1 class="sec-title">🗃 My <span class="ac">Collection</span></h1>
+      <p style="color:var(--muted2);font-size:13px;margin-top:4px">Admin's personal inventory showcase — only you can add, edit, or remove cars here.</p>
+    </div>
+    <div id="collection-content"></div>
+  </div></div>
+</div>
+
+<!-- DROPS -->
+<div id="page-drops" class="page">
+  <div class="section"><div class="container">
+    <div style="margin-bottom:24px">
+      <div class="hero-tag">🔥 Timed Releases</div>
+      <h1 class="sec-title">Live <span class="ac">Drops</span></h1>
+      <p style="color:var(--muted2);margin-top:5px;font-size:13px">Miss the window, miss the car. No restocks.</p>
+    </div>
+    <div class="grid g3" id="drops-listings"></div>
+  </div></div>
+</div>
+
+<!-- AUCTIONS -->
+<div id="page-auctions" class="page">
+  <div class="section"><div class="container">
+    <div style="margin-bottom:24px">
+      <div class="hero-tag">⚡ Live Bidding</div>
+      <h1 class="sec-title">Active <span class="ac">Auctions</span></h1>
+      <p style="color:var(--muted2);margin-top:5px;font-size:13px">Anti-sniping protection. Bid extension on last-minute bids.</p>
+    </div>
+    <div class="grid g3" id="auctions-listings"></div>
+  </div></div>
+</div>
+
+<!-- DETAIL -->
+<div id="page-detail" class="page">
+  <div class="section"><div class="container">
+    <button class="btn btn-g" style="margin-bottom:18px" onclick="goBack()">← Back</button>
+    <div id="detail-content"></div>
+  </div></div>
+</div>
+
+<!-- LOGIN -->
+<div id="page-login" class="page">
+  <div class="auth-page"><div class="auth-card">
+    <div class="auth-logo"><span style="color:var(--red)">HotWheelz</span> <span style="color:var(--yellow)">BLR</span></div>
+    <h2 style="font-family:var(--ff-head);font-size:20px;margin-bottom:4px">Welcome Back</h2>
+    <p style="color:var(--muted2);font-size:13px;margin-bottom:18px">Sign in to your collector account</p>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="login-email" type="email" placeholder="you@email.com"></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="login-pw" type="password" placeholder="••••••••"></div>
+    <button class="btn btn-p btn-lg" style="width:100%;margin-bottom:14px" onclick="doLogin()">Sign In</button>
+    <div style="text-align:center;color:var(--muted2);font-size:13px">No account? <span style="color:var(--red);cursor:pointer;font-weight:600" onclick="go('register')">Sign Up</span></div>
+    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:var(--r);font-size:11px;color:var(--muted2);line-height:1.8">
+      <strong style="color:var(--muted2)">Demo accounts:</strong><br>
+      admin@hwblr.in → Admin (full access)<br>
+      user@hwblr.in → Collector (can list in Public)
+    </div>
+  </div></div>
+</div>
+
+<!-- REGISTER -->
+<div id="page-register" class="page">
+  <div class="auth-page"><div class="auth-card">
+    <div class="auth-logo"><span style="color:var(--red)">HotWheelz</span> <span style="color:var(--yellow)">BLR</span></div>
+    <h2 style="font-family:var(--ff-head);font-size:20px;margin-bottom:4px">Join the Hunt</h2>
+    <p style="color:var(--muted2);font-size:13px;margin-bottom:18px">Create your collector account</p>
+    <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="reg-name" placeholder="Raj Collector"></div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="reg-email" type="email" placeholder="you@email.com"></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="reg-pw" type="password" placeholder="Min 8 characters"></div>
+    <button class="btn btn-p btn-lg" style="width:100%;margin-bottom:14px" onclick="doRegister()">Create Account</button>
+    <div style="text-align:center;color:var(--muted2);font-size:13px">Have an account? <span style="color:var(--red);cursor:pointer;font-weight:600" onclick="go('login')">Sign In</span></div>
+  </div></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="page-dashboard" class="page">
+  <div class="section"><div class="container" style="max-width:760px" id="dashboard-content"></div></div>
+</div>
+
+<!-- ADMIN -->
+<div id="page-admin" class="page">
+  <div class="admin-layout">
+    <div class="admin-sidebar" id="admin-sidebar"></div>
+    <div class="admin-content" id="admin-content"></div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><button class="mc" onclick="closeModal()">✕</button><div id="modal-content"></div></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+let currentUser = null;
+let currentListing = null;
+let prevPage = 'browse';
+let activeBrowseFilter = 'all';
+let activePubFilter = 'all';
+let adminSection = 'dashboard';
+
+const INR = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+// ─── DEMO DATA ────────────────────────────────────────────────────────────────
+
+const ADMIN_LISTINGS = [
+  {id:'a1',car_name:'Ferrari F40',series:'Car Culture',year:2023,condition_code:'MOMC',condition_label:'Mint on Mint Card',selling_price:1200,listing_type:'normal',status:'active',emoji:'🏎️',is_featured:true,view_count:243,bid_count:0,source:'admin',description:'Factory sealed with stunning red livery. A must for Ferrari collectors.'},
+  {id:'a2',car_name:'Porsche 911 GT3 RS',series:'Hot Wheels 2024',year:2024,condition_code:'LNM',condition_label:'Like New Mint',selling_price:850,listing_type:'auction',status:'active',emoji:'🚗',auction_end:new Date(Date.now()+7260000).toISOString(),starting_bid:500,current_bid:720,bid_count:14,source:'admin',description:'Iconic 911 in Guards Red. Opened but perfect condition.'},
+  {id:'a3',car_name:'Lambo Countach',series:'Retro Entertainment',year:2022,condition_code:'EX',condition_label:'Excellent',selling_price:650,listing_type:'drop',status:'scheduled',emoji:'🚀',drop_time:new Date(Date.now()+14400000).toISOString(),bid_count:0,source:'admin',description:'The legendary Countach in classic white.'},
+  {id:'a4',car_name:'McLaren Senna',series:'Car Culture',year:2023,condition_code:'MOMC',condition_label:'Mint on Mint Card',selling_price:2200,listing_type:'auction',status:'active',emoji:'🧡',auction_end:new Date(Date.now()+79200000).toISOString(),starting_bid:1500,current_bid:1850,bid_count:7,is_featured:true,source:'admin',description:'Ultra-rare McLaren Senna. Factory sealed.'},
+  {id:'a5',car_name:'BMW M3 E30',series:'Car Culture',year:2022,condition_code:'EX',condition_label:'Excellent',selling_price:980,listing_type:'normal',status:'active',emoji:'🔵',view_count:156,bid_count:0,source:'admin',description:'Classic E30 M3 in Brilliant Red.'},
+];
+
+const ADMIN_COLLECTION = [
+  {id:'c1',car_name:'Dodge Viper GTS',series:'Treasure Hunt 2024',year:2024,condition_code:'MOMC',emoji:'🐍',value:3200,notes:'Personal grail. Not for sale.',acquired:'Jan 2024'},
+  {id:'c2',car_name:'Honda NSX Type R',series:'Car Culture Japan Historics',year:2022,condition_code:'MOMC',emoji:'🇯🇵',value:2800,notes:'JDM legend. Sealed.',acquired:'Mar 2023'},
+  {id:'c3',car_name:'Nissan Skyline R34',series:'Fast & Furious',year:2023,condition_code:'LNM',emoji:'⚡',value:1800,notes:'Brian\'s car. Display piece.',acquired:'Jun 2023'},
+];
+
+const PUBLIC_LISTINGS = [
+  {id:'p1',car_name:'Dodge Challenger SRT',series:'Fast & Furious',year:2021,condition_code:'VG',condition_label:'Very Good',selling_price:480,listing_type:'normal',status:'active',emoji:'💪',view_count:87,bid_count:0,source:'public',owner:'Arjun K.',owner_id:'u2',description:"Dom's Charger. Some shelf wear but complete and clean.",verified:true},
+  {id:'p2',car_name:'Toyota Supra MkIV',series:'Speed Machines',year:2022,condition_code:'EX',condition_label:'Excellent',selling_price:720,listing_type:'normal',status:'active',emoji:'🟡',view_count:134,bid_count:0,source:'public',owner:'Meera S.',owner_id:'u3',description:'JZA80 Supra in Targa White. Minimal play wear.',verified:true},
+  {id:'p3',car_name:'RUF CTR Yellowbird',series:'Car Culture Germany',year:2023,condition_code:'LNM',condition_label:'Like New Mint',selling_price:1100,listing_type:'normal',status:'active',emoji:'🐦',view_count:201,bid_count:0,source:'public',owner:'Priya R.',owner_id:'u4',description:'The legendary Yellowbird. Opened but kept perfect.',verified:true},
+];
+
+const USER_SUBMISSIONS = [
+  {id:'s1',car_name:'Honda Civic EG6',condition_code:'EX',selling_price:560,status:'pending',submitted_at:new Date(Date.now()-3600000).toISOString(),emoji:'🚗',description:'JDM spec, red, opened packaging'},
+  {id:'s2',car_name:'Mazda RX-7 FD',condition_code:'LNM',selling_price:890,status:'approved',seller_payout:720,listing_id:'p_new',submitted_at:new Date(Date.now()-86400000).toISOString(),emoji:'🦊'},
+  {id:'s3',car_name:'Mitsubishi Evo VI',condition_code:'MOMC',selling_price:1400,status:'rejected',admin_notes:'Images too blurry. Please resubmit.',submitted_at:new Date(Date.now()-172800000).toISOString(),emoji:'🔵'},
+];
+
+const PENDING_PUB = [
+  {id:'ps1',car_name:'Honda Civic EG6',condition_code:'EX',seller_expected_price:560,seller_name:'Kiran M.',submitted_at:new Date(Date.now()-3600000).toISOString(),emoji:'🚗',description:'JDM spec, red, condition EX'},
+  {id:'ps2',car_name:'Subaru Impreza WRX',condition_code:'VG',seller_expected_price:420,seller_name:'Deepa N.',submitted_at:new Date(Date.now()-7200000).toISOString(),emoji:'💙',description:'Blue, some play wear, complete'},
+];
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function toast(msg,type='success'){const el=document.createElement('div');el.className=`t ${type}`;el.textContent=(type==='success'?'✓ ':'✕ ')+msg;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500)}
+function openModal(html){document.getElementById('modal-content').innerHTML=html;document.getElementById('modal').style.display='flex'}
+function closeModal(){document.getElementById('modal').style.display='none'}
+
+function cd(target,compact=false){
+  const diff=new Date(target)-new Date();
+  if(diff<=0)return compact?'<span style="color:#4ADE80;font-weight:700;font-size:12px">🟢 LIVE</span>':'<span style="color:#4ADE80;font-weight:700">🟢 LIVE NOW</span>';
+  const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000),d=Math.floor(diff/86400000);
+  if(compact)return`<span style="font-family:var(--ff-mono);font-size:11px;color:var(--yellow)">${d>0?d+'d ':''}${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</span>`;
+  return`<div class="cd">${d>0?`<div class="cd-seg"><div class="cd-num">${d}</div><div class="cd-lbl">Days</div></div><div class="cd-sep">:</div>`:''}<div class="cd-seg"><div class="cd-num">${String(h).padStart(2,'0')}</div><div class="cd-lbl">Hrs</div></div><div class="cd-sep">:</div><div class="cd-seg"><div class="cd-num">${String(m).padStart(2,'0')}</div><div class="cd-lbl">Min</div></div><div class="cd-sep">:</div><div class="cd-seg"><div class="cd-num">${String(s).padStart(2,'0')}</div><div class="cd-lbl">Sec</div></div></div>`;
+}
+
+function listingCard(l){
+  const isAuction=l.listing_type==='auction',isDrop=l.listing_type==='drop';
+  const dropLive=isDrop&&l.drop_time&&new Date()>=new Date(l.drop_time);
+  const price=isAuction&&l.current_bid?l.current_bid:l.selling_price;
+  const timer=isAuction&&l.auction_end?`<div class="auction-live" style="margin-bottom:4px"><div class="live-dot"></div> ${cd(l.auction_end,true)}</div>`:isDrop&&!dropLive&&l.drop_time?`<div style="margin-bottom:4px">${cd(l.drop_time,true)}</div>`:'';
+  const srcBadge=l.source==='public'?'<span class="badge b-purple">🪩 Public</span>':'';
+  return`<div class="card" onclick="openDetail('${l.id}','${l.source||'admin'}')">
+    <div class="card-img">${l.emoji}</div>
+    <div class="card-body">
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px">
+        ${srcBadge}
+        ${isAuction?'<span class="badge b-yellow">⚡ Auction</span>':''}
+        ${isDrop&&!dropLive?'<span class="badge b-red">🔥 Drop</span>':''}
+        ${isDrop&&dropLive?'<span class="badge b-green">🟢 Live</span>':''}
+        ${l.is_featured?'<span class="badge b-orange">⭐ Featured</span>':''}
+        <span class="badge b-gray">${l.condition_code}</span>
+      </div>
+      <div class="card-title">${l.car_name}</div>
+      <div class="card-sub">${l.series||''}${l.year?' · '+l.year:''}</div>
+      ${l.source==='public'&&l.owner?`<div class="owner-tag" style="margin-bottom:6px">👤 ${l.owner}</div>`:''}
+      ${timer}
+      <div class="card-footer">
+        <div>
+          <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em">${isAuction?'Current Bid':'Price'}</div>
+          <div class="card-price">${INR(price)}</div>
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ADE80;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600">✓ Verified</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── NAV ─────────────────────────────────────────────────────────────────────
+function renderNav(){
+  const el=document.getElementById('nav-r');
+  if(currentUser){
+    const isAdmin=currentUser.role==='admin';
+    el.innerHTML=`
+      ${isAdmin?'<button class="btn btn-s" style="font-size:12px;padding:5px 12px" onclick="go(\'admin\')">⚙ Admin</button>':''}
+      <button class="btn btn-g" style="font-size:12px" onclick="go('dashboard')">${currentUser.name.split(' ')[0]}</button>
+      <button class="btn btn-g" style="font-size:12px;color:var(--muted)" onclick="doLogout()">Logout</button>`;
+  }else{
+    el.innerHTML=`<button class="btn btn-g" style="font-size:12px" onclick="go('login')">Login</button>
+      <button class="btn btn-p" style="font-size:12px;padding:6px 14px" onclick="go('register')">Sign Up</button>`;
+  }
+}
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+let cdInterval=null;
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById('page-'+page);
+  if(el)el.classList.add('active');
+  window.scrollTo(0,0);
+  if(cdInterval)clearInterval(cdInterval);
+  const renders={home:renderHome,browse:renderBrowse,public:renderPublic,collection:renderCollection,drops:renderDrops,auctions:renderAuctions,submit:renderSubmit,dashboard:renderDashboard,admin:renderAdmin};
+  if(renders[page])renders[page]();
+  if(['home','browse','public','drops','auctions','detail'].includes(page))startCd();
+}
+function goBack(){go(prevPage||'browse')}
+
+// ─── HOME ─────────────────────────────────────────────────────────────────────
+function renderHome(){
+  const drop=ADMIN_LISTINGS.find(l=>l.listing_type==='drop');
+  const banner=document.getElementById('drop-banner-home');
+  banner.innerHTML=drop?`<div class="drop-banner">
+    <div><div style="margin-bottom:5px"><span class="badge b-red">🔥 Upcoming Drop</span></div>
+    <h2>${drop.car_name}</h2><p>${drop.series} · ${INR(drop.selling_price)} · ${drop.condition_label}</p></div>
+    <div style="text-align:center"><div style="font-size:9px;color:var(--muted2);margin-bottom:7px;text-transform:uppercase;letter-spacing:.06em">Drops In</div><div id="home-drop-cd">${cd(drop.drop_time)}</div></div>
+    <button class="btn btn-y" onclick="openDetail('${drop.id}','admin')">Get Ready →</button>
+  </div>`:'';
+  document.getElementById('home-listings').innerHTML=ADMIN_LISTINGS.filter(l=>l.is_featured||l.listing_type==='auction').slice(0,4).map(listingCard).join('');
+  document.getElementById('home-public-listings').innerHTML=PUBLIC_LISTINGS.slice(0,4).map(listingCard).join('');
+  const why=[{i:'🛡️',t:'Admin Verified',d:'Every listing graded and approved. No fakes.'},{i:'💰',t:'Fair Pricing',d:'Prices set by experts, not flippers.'},{i:'⚡',t:'Live Drops',d:'Timed releases, real urgency, no restocks.'},{i:'🪩',t:'Public Collection',d:'Buy from real Bangalore collectors too.'},{i:'🏆',t:'Collector Grade',d:'Mainline to Super Treasure Hunts.'},{i:'📍',t:'Bangalore First',d:'Meetups across Koramangala, Indiranagar & more.'}];
+  document.getElementById('why-grid').innerHTML=why.map(f=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:18px"><div style="font-size:26px;margin-bottom:10px">${f.i}</div><h3 style="font-family:var(--ff-head);font-size:17px;font-weight:700;margin-bottom:5px">${f.t}</h3><p style="color:var(--muted2);font-size:13px">${f.d}</p></div>`).join('');
+}
+
+// ─── BROWSE (Admin inventory) ──────────────────────────────────────────────────
+function renderBrowse(){
+  const filters=[{k:'all',l:'🏎️ All'},{k:'normal',l:'🟢 Available'},{k:'drop',l:'🔥 Drops'},{k:'auction',l:'⚡ Auctions'}];
+  document.getElementById('browse-filters').innerHTML=filters.map(f=>`<button class="chip ${activeBrowseFilter===f.k?'a':''}" onclick="setBF('${f.k}')">${f.l}</button>`).join('');
+  const filtered=activeBrowseFilter==='all'?ADMIN_LISTINGS:ADMIN_LISTINGS.filter(l=>l.listing_type===activeBrowseFilter);
+  document.getElementById('browse-listings').innerHTML=filtered.length?filtered.map(listingCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🏎️</div><h3>No listings</h3></div>`;
+}
+function setBF(f){activeBrowseFilter=f;renderBrowse()}
+
+// ─── PUBLIC COLLECTION ────────────────────────────────────────────────────────
+function renderPublic(){
+  const filters=[{k:'all',l:'All'},{k:'normal',l:'Available'}];
+  document.getElementById('pub-filters').innerHTML=filters.map(f=>`<button class="chip ap ${activePubFilter===f.k?'a':''}" onclick="setPF('${f.k}')">${f.l}</button>`).join('');
+  const filtered=activePubFilter==='all'?PUBLIC_LISTINGS:PUBLIC_LISTINGS.filter(l=>l.listing_type===activePubFilter);
+  document.getElementById('pub-listings').innerHTML=filtered.length?filtered.map(listingCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🪩</div><h3>No community listings yet</h3><p>Be the first to list your car!</p><button class="btn btn-v" style="margin-top:14px" onclick="openListYourCar()">+ List Your Car</button></div>`;
+}
+function setPF(f){activePubFilter=f;renderPublic()}
+
+function openListYourCar(){
+  if(!currentUser){toast('Login first to list your car','error');setTimeout(()=>go('login'),800);return}
+  openModal(`
+    <div class="modal-title">🪩 List Your Car</div>
+    <p style="color:var(--muted2);font-size:13px;margin-bottom:18px;line-height:1.5">Your listing will be reviewed by our admin before going live. We'll check condition, verify details, and approve within 24h.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Car Name *</label><input class="form-input" id="pub-name" placeholder="e.g. Honda NSX, RX-7 FD"></div>
+      <div class="form-group"><label class="form-label">Series / Line</label><input class="form-input" id="pub-series" placeholder="Car Culture, Mainline…"></div>
+      <div class="form-group"><label class="form-label">Year</label><input class="form-input" type="number" id="pub-year" placeholder="2023"></div>
+      <div class="form-group"><label class="form-label">Condition *</label>
+        <select class="form-select" id="pub-cond">
+          <option value="MOMC">MOMC — Mint on Mint Card</option>
+          <option value="LNM">LNM — Like New Mint</option>
+          <option value="EX" selected>EX — Excellent</option>
+          <option value="VG">VG — Very Good</option>
+          <option value="GD">GD — Good</option>
+          <option value="PL">PL — Player</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Your Asking Price (₹) *</label><input class="form-input" type="number" id="pub-price" placeholder="Your expected amount"></div>
+      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="pub-desc" placeholder="Condition details, packaging notes, any special features…"></textarea></div>
+    </div>
+    <div style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:var(--r);padding:10px 14px;font-size:12px;color:#A78BFA;margin-bottom:16px">
+      ℹ️ Admin sets the final listing price. You'll see your confirmed payout once approved.
+    </div>
+    <button class="btn btn-v btn-lg" style="width:100%" onclick="doPublicSubmit()">Submit for Review →</button>`);
+}
+
+function doPublicSubmit(){
+  const name=document.getElementById('pub-name')?.value.trim();
+  const price=document.getElementById('pub-price')?.value;
+  if(!name||!price){toast('Fill in required fields','error');return}
+  USER_SUBMISSIONS.unshift({id:'ps'+Date.now(),car_name:name,condition_code:document.getElementById('pub-cond').value,selling_price:parseFloat(price),status:'pending',submitted_at:new Date().toISOString(),emoji:'🚗',description:document.getElementById('pub-desc')?.value});
+  PENDING_PUB.unshift({id:'pps'+Date.now(),car_name:name,condition_code:document.getElementById('pub-cond').value,seller_expected_price:parseFloat(price),seller_name:currentUser.name,submitted_at:new Date().toISOString(),emoji:'🚗'});
+  closeModal();
+  toast('Submitted! Admin will review within 24h. 🪩');
+}
+
+// ─── MY COLLECTION (Admin only) ───────────────────────────────────────────────
+function renderCollection(){
+  const el=document.getElementById('collection-content');
+  if(!currentUser||currentUser.role!=='admin'){
+    el.innerHTML=`<div class="collection-lock">🔒 This is the admin's personal collection showcase. Only the admin can add, edit, or remove cars here.</div>
+      <div class="empty"><div class="empty-icon">🗃</div><h3>Admin Access Required</h3><p>Sign in as admin to manage your personal collection.</p><button class="btn btn-p" style="margin-top:14px" onclick="go('login')">Sign In</button></div>`;
+    return;
+  }
+  el.innerHTML=`
+    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+      <button class="btn btn-p" onclick="openAddToCollection()">+ Add to Collection</button>
+    </div>
+    <div class="grid g3">
+      ${ADMIN_COLLECTION.map(c=>`
+        <div class="card">
+          <div class="card-img">${c.emoji}</div>
+          <div class="card-body">
+            <div style="display:flex;gap:5px;margin-bottom:7px">
+              <span class="badge b-orange">Admin Collection</span>
+              <span class="badge b-gray">${c.condition_code}</span>
+            </div>
+            <div class="card-title">${c.car_name}</div>
+            <div class="card-sub">${c.series} · ${c.year}</div>
+            <div style="font-size:12px;color:var(--muted2);margin:6px 0">${c.notes}</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">
+              <div>
+                <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em">Est. Value</div>
+                <div style="font-family:var(--ff-head);font-size:18px;font-weight:800;color:var(--yellow)">${INR(c.value)}</div>
+              </div>
+              <div style="display:flex;gap:6px">
+                <button class="btn btn-s" style="font-size:11px;padding:4px 10px" onclick="toast('Edit feature coming soon')">Edit</button>
+                <button class="btn btn-g" style="font-size:11px;padding:4px 10px;color:#FF4D6A" onclick="removeFromCollection('${c.id}')">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function openAddToCollection(){
+  openModal(`
+    <div class="modal-title">Add to My Collection</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Car Name *</label><input class="form-input" id="col-name" placeholder="e.g. Dodge Viper GTS"></div>
+      <div class="form-group"><label class="form-label">Series</label><input class="form-input" id="col-series" placeholder="Treasure Hunt 2024"></div>
+      <div class="form-group"><label class="form-label">Year</label><input class="form-input" type="number" id="col-year" placeholder="2024"></div>
+      <div class="form-group"><label class="form-label">Condition</label>
+        <select class="form-select" id="col-cond">
+          <option value="MOMC">MOMC</option><option value="LNM">LNM</option><option value="EX">EX</option><option value="VG">VG</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Est. Value (₹)</label><input class="form-input" type="number" id="col-value" placeholder="0"></div>
+      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Notes</label><input class="form-input" id="col-notes" placeholder="Why it's special, display notes…"></div>
+    </div>
+    <button class="btn btn-p btn-lg" style="width:100%" onclick="doAddCollection()">Add to Collection</button>`);
+}
+
+function doAddCollection(){
+  const name=document.getElementById('col-name')?.value.trim();
+  if(!name){toast('Enter a car name','error');return}
+  ADMIN_COLLECTION.push({id:'c'+Date.now(),car_name:name,series:document.getElementById('col-series').value||'',year:parseInt(document.getElementById('col-year').value)||2024,condition_code:document.getElementById('col-cond').value,emoji:'🚗',value:parseFloat(document.getElementById('col-value').value)||0,notes:document.getElementById('col-notes').value||'',acquired:new Date().toLocaleDateString('en-IN')});
+  closeModal();toast('Added to your collection! 🗃');renderCollection();
+}
+
+function removeFromCollection(id){
+  const idx=ADMIN_COLLECTION.findIndex(c=>c.id===id);
+  if(idx>-1)ADMIN_COLLECTION.splice(idx,1);
+  toast('Removed from collection');renderCollection();
+}
+
+// ─── DROPS & AUCTIONS ─────────────────────────────────────────────────────────
+function renderDrops(){
+  document.getElementById('drops-listings').innerHTML=ADMIN_LISTINGS.filter(l=>l.listing_type==='drop').map(listingCard).join('')||'<div class="empty"><div class="empty-icon">⏳</div><h3>No drops scheduled</h3></div>';
+}
+function renderAuctions(){
+  document.getElementById('auctions-listings').innerHTML=ADMIN_LISTINGS.filter(l=>l.listing_type==='auction').map(listingCard).join('')||'<div class="empty"><div class="empty-icon">⚡</div><h3>No live auctions</h3></div>';
+}
+
+// ─── DETAIL ───────────────────────────────────────────────────────────────────
+function openDetail(id,source){
+  prevPage=document.querySelector('.page.active')?.id?.replace('page-','')||'browse';
+  currentListing=source==='public'?PUBLIC_LISTINGS.find(l=>l.id===id):ADMIN_LISTINGS.find(l=>l.id===id);
+  if(!currentListing)return;
+  renderDetail();go('detail');
+}
+
+function renderDetail(){
+  const l=currentListing;
+  const isAuction=l.listing_type==='auction',isDrop=l.listing_type==='drop';
+  const dropLive=isDrop&&l.drop_time&&new Date()>=new Date(l.drop_time);
+  const canBuy=l.status==='active'&&!isAuction&&(!isDrop||dropLive);
+  const minBid=l.current_bid?l.current_bid+10:(l.starting_bid||0);
+  const isPublic=l.source==='public';
+  document.getElementById('detail-content').innerHTML=`
+    <div class="detail-layout">
+      <div><div class="detail-main-img">${l.emoji}</div></div>
+      <div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+          ${isPublic?'<span class="badge b-purple">🪩 Public Collection</span>':'<span class="badge b-orange">HotWheelz BLR</span>'}
+          ${isAuction?'<span class="badge b-yellow">⚡ Auction</span>':''}
+          ${isDrop&&!dropLive?'<span class="badge b-red">🔥 Drop</span>':''}
+          ${isDrop&&dropLive?'<span class="badge b-green">🟢 Live</span>':''}
+          <span class="badge b-gray">${l.condition_label||l.condition_code}</span>
+        </div>
+        <h1 style="font-family:var(--ff-head);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px">${l.car_name}</h1>
+        <p style="color:var(--muted2);font-size:13px;margin-bottom:4px">${l.series||''}${l.year?' · '+l.year:''}</p>
+        ${isPublic&&l.owner?`<p style="font-size:12px;color:var(--muted2);margin-bottom:12px">Listed by <strong style="color:var(--text)">${l.owner}</strong> · Bangalore</p>`:''}
+        <div class="verified-badge" style="margin-bottom:14px">✓ Platform Verified</div>
+        <p style="font-size:14px;color:var(--muted2);line-height:1.6;margin-bottom:16px">${l.description||''}</p>
+        <div style="display:flex;gap:14px;margin-bottom:14px;font-size:12px;color:var(--muted2)">
+          <span>👁 ${l.view_count||0} views</span>
+          ${isAuction?`<span>🔥 ${l.bid_count||0} bids</span>`:''}
+        </div>
+        ${isAuction?`
+          <div class="bid-box">
+            <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em">Current Bid</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px">
+              <div class="bid-amt">${INR(l.current_bid||l.starting_bid||0)}</div>
+              ${l.bid_count>0?`<span style="font-size:11px;color:var(--muted2)">(${l.bid_count} bids)</span>`:''}
+            </div>
+            ${l.auction_end?`<div class="auction-live" style="margin-bottom:12px"><div class="live-dot"></div> Ends <span id="det-cd" style="margin-left:4px">${cd(l.auction_end,true)}</span></div>`:''}
+            <div style="display:flex;gap:8px">
+              <input class="form-input" type="number" id="bid-input" placeholder="Min ${INR(minBid)}" style="flex:1">
+              <button class="btn btn-y" onclick="placeBid()">Place Bid</button>
+            </div>
+          </div>`:`
+          <div class="buy-box">
+            <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Price</div>
+            <div class="buy-price">${INR(l.selling_price)}</div>
+            ${isDrop&&!dropLive&&l.drop_time?`<div style="margin-bottom:14px"><div style="font-size:10px;color:var(--muted2);margin-bottom:5px">Drops in</div><div id="det-cd">${cd(l.drop_time)}</div></div>`:''}
+            ${canBuy?`<button class="btn btn-p btn-lg" style="width:100%" onclick="buyNow()">🏎️ Buy Now</button>`:isDrop&&!dropLive?`<button class="btn btn-s btn-lg" style="width:100%" disabled>Drops Soon</button>`:`<button class="btn btn-s btn-lg" style="width:100%" disabled>Unavailable</button>`}
+          </div>`}
+      </div>
+    </div>`;
+}
+
+function placeBid(){
+  if(!currentUser){toast('Login to bid','error');return}
+  const l=currentListing,amount=parseFloat(document.getElementById('bid-input').value);
+  const minBid=l.current_bid?l.current_bid+10:(l.starting_bid||0);
+  if(!amount||amount<minBid){toast(`Minimum bid is ${INR(minBid)}`,'error');return}
+  l.current_bid=amount;l.bid_count=(l.bid_count||0)+1;
+  toast(`Bid of ${INR(amount)} placed! 🎉`);renderDetail();
+}
+function buyNow(){
+  if(!currentUser){toast('Login to buy','error');return}
+  currentListing.status='sold';
+  toast(`${currentListing.car_name} is yours! 🏎️`);go(prevPage);
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  if(!email){toast('Enter email','error');return}
+  const isAdmin=email.includes('admin');
+  currentUser={id:isAdmin?'admin1':'u1',email,name:isAdmin?'Admin':'Kiran M.',role:isAdmin?'admin':'user'};
+  renderNav();toast(`Welcome back, ${currentUser.name.split(' ')[0]}! 🏎️`);
+  go(isAdmin?'admin':'home');
+}
+function doRegister(){
+  const name=document.getElementById('reg-name').value.trim(),email=document.getElementById('reg-email').value.trim();
+  if(!name||!email){toast('Fill in all fields','error');return}
+  currentUser={id:'u'+Date.now(),email,name,role:'user'};
+  renderNav();toast(`Welcome, ${name.split(' ')[0]}! 🏎️`);go('home');
+}
+function doLogout(){currentUser=null;renderNav();toast('Logged out');go('home')}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderDashboard(){
+  if(!currentUser){document.getElementById('dashboard-content').innerHTML='<div class="empty"><h3>Please login</h3><button class="btn btn-p" style="margin-top:14px" onclick="go(\'login\')">Login</button></div>';return}
+  const mine=USER_SUBMISSIONS;
+  document.getElementById('dashboard-content').innerHTML=`
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px">
+      <div style="width:48px;height:48px;border-radius:50%;background:rgba(232,0,29,.15);display:flex;align-items:center;justify-content:center;font-family:var(--ff-head);font-size:18px;font-weight:700;color:var(--red)">${currentUser.name[0]}</div>
+      <div>
+        <h1 style="font-family:var(--ff-head);font-size:24px;font-weight:800">${currentUser.name}</h1>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:3px">
+          <span class="badge ${currentUser.role==='admin'?'b-red':'b-purple'}">${currentUser.role==='admin'?'Admin':'Collector'}</span>
+          <span style="font-size:12px;color:var(--muted2)">${currentUser.email}</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
+      <button class="btn btn-v" onclick="openListYourCar()">🪩 List a Car (Public)</button>
+      ${currentUser.role==='admin'?'<button class="btn btn-p" onclick="go(\'admin\')">⚙ Admin Panel</button>':''}
+    </div>
+    <h3 style="font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:14px">My Public Submissions</h3>
+    ${mine.length?mine.map(s=>`
+      <div class="sub-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-family:var(--ff-head);font-size:16px;font-weight:700">${s.emoji} ${s.car_name}</div>
+            <div style="font-size:12px;color:var(--muted2);margin-top:2px">${s.condition_code} · Asking ${INR(s.selling_price)}</div>
+          </div>
+          <span class="badge ss-${s.status}" style="padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase">${s.status}</span>
+        </div>
+        ${s.status==='approved'&&s.seller_payout?`<div style="margin-top:10px;padding:9px 12px;background:rgba(34,197,94,.08);border-radius:var(--r);border:1px solid rgba(34,197,94,.15)"><span style="color:#4ADE80;font-size:12px">✓ Approved · Your payout: <strong>${INR(s.seller_payout)}</strong></span></div>`:''}
+        ${s.status==='rejected'&&s.admin_notes?`<div style="margin-top:10px;padding:9px 12px;background:rgba(232,0,29,.08);border-radius:var(--r);border:1px solid rgba(232,0,29,.15)"><span style="color:#FF4D6A;font-size:12px">Reason: ${s.admin_notes}</span></div>`:''}
+        <div style="font-size:10px;color:var(--muted);margin-top:7px">${new Date(s.submitted_at).toLocaleDateString('en-IN')}</div>
+      </div>`).join(''):`<div class="empty"><div class="empty-icon">🪩</div><h3>No listings yet</h3><button class="btn btn-v" style="margin-top:12px" onclick="openListYourCar()">List Your First Car</button></div>`}`;
+}
+
+// ─── ADMIN ────────────────────────────────────────────────────────────────────
+const ADM_SECS=['dashboard','pub-submissions','collection','listings','orders','users'];
+const ADM_ICONS={dashboard:'📊','pub-submissions':'🪩',collection:'🗃',listings:'🏎️',orders:'📦',users:'👥'};
+const ADM_LABELS={dashboard:'Dashboard','pub-submissions':'Public Submissions',collection:'My Collection',listings:'Curated Listings',orders:'Orders',users:'Users'};
+const ADM_BADGES={'pub-submissions':PENDING_PUB.length};
+
+function renderAdmin(){
+  if(!currentUser||currentUser.role!=='admin'){document.getElementById('admin-content').innerHTML='<div class="empty"><h3>Admin only</h3></div>';return}
+  document.getElementById('admin-sidebar').innerHTML=`
+    <div style="font-family:var(--ff-head);font-size:15px;font-weight:800;padding:6px 10px;margin-bottom:8px;color:var(--red)">ADMIN</div>
+    ${ADM_SECS.map(s=>`<div class="sidebar-item ${adminSection===s?'a':''}" onclick="setAdminSec('${s}')">
+      ${ADM_ICONS[s]} ${ADM_LABELS[s]}
+      ${ADM_BADGES[s]>0?`<span style="margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 5px;border-radius:10px">${ADM_BADGES[s]}</span>`:''}
+    </div>`).join('')}`;
+  renderAdminContent();
+}
+function setAdminSec(s){adminSection=s;renderAdmin()}
+
+function renderAdminContent(){
+  const el=document.getElementById('admin-content');
+  if(adminSection==='dashboard')el.innerHTML=adminDashboard();
+  else if(adminSection==='pub-submissions')el.innerHTML=adminPubSubs();
+  else if(adminSection==='collection'){renderCollection();el.innerHTML='';document.getElementById('page-admin').style.display='none';go('collection');}
+  else if(adminSection==='listings')el.innerHTML=adminListings();
+  else if(adminSection==='orders')el.innerHTML=adminOrders();
+  else if(adminSection==='users')el.innerHTML=adminUsers();
+}
+
+function adminDashboard(){
+  const stats=[{l:'Platform Revenue',v:'₹1,86,000',cls:'profit'},{l:'Platform Profit',v:'₹42,500',cls:'profit'},{l:'Public Pending',v:PENDING_PUB.length,cls:'pending'},{l:'Active Listings',v:ADMIN_LISTINGS.length+PUBLIC_LISTINGS.length},{l:'Collection Size',v:ADMIN_COLLECTION.length},{l:'Total Users',v:124}];
+  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">Dashboard</h2>
+    <div class="stat-grid">${stats.map(s=>`<div class="stat-card ${s.cls||''}"><div class="stat-val">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('')}</div>
+    <h3 style="font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:14px">Pending Public Submissions</h3>
+    ${PENDING_PUB.length?PENDING_PUB.map(s=>`
+      <div style="background:var(--bg2);border:1px solid rgba(124,58,237,.2);border-radius:var(--rl);padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <div>
+          <div style="font-family:var(--ff-head);font-size:16px;font-weight:700">${s.emoji} ${s.car_name}</div>
+          <div style="font-size:12px;color:var(--muted2);margin-top:2px">by ${s.seller_name} · ${s.condition_code} · Asking ${INR(s.seller_expected_price)}</div>
+          ${s.description?`<div style="font-size:12px;color:var(--muted);margin-top:2px">${s.description}</div>`:''}
+        </div>
+        <button class="btn btn-v" style="font-size:12px;padding:6px 14px" onclick="approvePub('${s.id}')">✓ Approve & List</button>
+      </div>`).join(''):`<div class="empty"><div class="empty-icon">✅</div><h3>All clear!</h3><p>No pending submissions.</p></div>`}`;
+}
+
+function adminPubSubs(){
+  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">🪩 Public Submissions</h2>
+    ${PENDING_PUB.length?PENDING_PUB.map(s=>`
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+          <div>
+            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700">${s.emoji} ${s.car_name}</div>
+            <div style="font-size:12px;color:var(--muted2);margin-top:3px">by <strong style="color:var(--text)">${s.seller_name}</strong> · ${s.condition_code} · Asking ${INR(s.seller_expected_price)}</div>
+            ${s.description?`<p style="font-size:12px;color:var(--muted);margin-top:5px">${s.description}</p>`:''}
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-v" style="font-size:12px;padding:6px 14px" onclick="approvePub('${s.id}')">✓ Approve</button>
+            <button class="btn btn-g" style="font-size:12px;color:#FF4D6A" onclick="rejectPub('${s.id}')">✕ Reject</button>
+          </div>
+        </div>
+      </div>`).join(''):`<div class="empty"><div class="empty-icon">🪩</div><h3>No pending submissions</h3></div>`}`;
+}
+
+function approvePub(id){
+  const sub=PENDING_PUB.find(s=>s.id===id);
+  if(!sub)return;
+  openModal(`
+    <div class="modal-title">Approve: ${sub.car_name}</div>
+    <p style="color:var(--muted2);font-size:13px;margin-bottom:16px">Set the final listing price and seller payout. Only the payout is shown to the seller.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div class="form-group"><label class="form-label">Listing Price (₹) *</label><input class="form-input" type="number" id="ap-price" value="${Math.round(sub.seller_expected_price*1.2)}" placeholder="Buyer pays"></div>
+      <div class="form-group"><label class="form-label">Seller Payout (₹) *</label><input class="form-input" type="number" id="ap-payout" value="${sub.seller_expected_price}" placeholder="Seller receives"></div>
+    </div>
+    <div id="ap-margin" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:var(--r);padding:9px 12px;font-size:12px;color:#4ADE80;margin-bottom:14px">Platform margin: ${INR(sub.seller_expected_price*0.2)}</div>
+    <button class="btn btn-v btn-lg" style="width:100%" onclick="confirmApprovePub('${id}')">✓ Approve & List Publicly</button>`);
+}
+
+function confirmApprovePub(id){
+  const sub=PENDING_PUB.find(s=>s.id===id);
+  if(!sub)return;
+  const price=parseFloat(document.getElementById('ap-price').value);
+  const payout=parseFloat(document.getElementById('ap-payout').value);
+  if(!price||!payout||payout>=price){toast('Check pricing — payout must be less than price','error');return}
+  PUBLIC_LISTINGS.push({id:'p'+Date.now(),car_name:sub.car_name,series:'Community',year:2024,condition_code:sub.condition_code,condition_label:sub.condition_code,selling_price:price,listing_type:'normal',status:'active',emoji:sub.emoji||'🚗',view_count:0,bid_count:0,source:'public',owner:sub.seller_name,owner_id:'u_ext',description:sub.description||'',verified:true});
+  const idx=PENDING_PUB.findIndex(s=>s.id===id);
+  if(idx>-1)PENDING_PUB.splice(idx,1);
+  const subIdx=USER_SUBMISSIONS.findIndex(s=>s.car_name===sub.car_name);
+  if(subIdx>-1){USER_SUBMISSIONS[subIdx].status='approved';USER_SUBMISSIONS[subIdx].seller_payout=payout;}
+  closeModal();toast(`${sub.car_name} approved and now live in Public Collection! 🪩`);renderAdmin();
+}
+
+function rejectPub(id){
+  const idx=PENDING_PUB.findIndex(s=>s.id===id);
+  if(idx>-1)PENDING_PUB.splice(idx,1);
+  toast('Submission rejected');renderAdmin();
+}
+
+function adminListings(){
+  const all=[...ADMIN_LISTINGS.map(l=>({...l,src:'Admin'})),...PUBLIC_LISTINGS.map(l=>({...l,src:'Public'}))];
+  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">All Listings</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Car</th><th>Source</th><th>Type</th><th>Price</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>${all.map(l=>`<tr>
+        <td><strong>${l.car_name}</strong><br><span style="font-size:10px;color:var(--muted2)">${l.condition_code}</span></td>
+        <td><span class="badge ${l.src==='Public'?'b-purple':'b-orange'}">${l.src}</span></td>
+        <td><span class="badge ${l.listing_type==='auction'?'b-yellow':l.listing_type==='drop'?'b-red':'b-gray'}">${l.listing_type}</span></td>
+        <td>${INR(l.selling_price)}</td>
+        <td><span class="badge ${l.status==='active'?'b-green':l.status==='sold'?'b-blue':'b-gray'}">${l.status}</span></td>
+        <td><button class="btn btn-g" style="font-size:11px;padding:4px 10px;color:#FF4D6A" onclick="toast('Listing hidden')">Hide</button></td>
+      </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+}
+
+function adminOrders(){return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">Orders</h2><div class="empty"><div class="empty-icon">📦</div><h3>No orders yet</h3><p>Orders appear here once buyers purchase listings.</p></div>`}
+
+function adminUsers(){
+  const users=[{name:'Kiran M.',email:'user@hwblr.in',role:'Collector',subs:3},{name:'Arjun K.',email:'arjun@gmail.com',role:'Collector',subs:1},{name:'Admin',email:'admin@hwblr.in',role:'Admin',subs:0}];
+  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">Users</h2>
+    <div style="overflow-x:auto"><table>
+      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Public Listings</th><th>Action</th></tr></thead>
+      <tbody>${users.map(u=>`<tr>
+        <td><strong>${u.name}</strong></td><td style="color:var(--muted2)">${u.email}</td>
+        <td><span class="badge ${u.role==='Admin'?'b-red':'b-purple'}">${u.role}</span></td>
+        <td>${u.subs}</td>
+        <td><button class="btn btn-g" style="font-size:11px;padding:4px 10px;color:#FF4D6A" onclick="toast('User deactivated')">Deactivate</button></td>
+      </tr>`).join('')}</tbody>
+    </table></div>`;
+}
+
+// ─── COUNTDOWN UPDATER ────────────────────────────────────────────────────────
+function startCd(){
+  cdInterval=setInterval(()=>{
+    const drop=ADMIN_LISTINGS.find(l=>l.listing_type==='drop');
+    const hcd=document.getElementById('home-drop-cd');
+    if(hcd&&drop)hcd.innerHTML=cd(drop.drop_time);
+    const detCd=document.getElementById('det-cd');
+    if(detCd&&currentListing){
+      const t=currentListing.listing_type==='auction'?currentListing.auction_end:currentListing.drop_time;
+      if(t)detCd.innerHTML=currentListing.listing_type==='auction'?cd(t,true):cd(t);
+    }
+  },1000);
+}
+
+renderNav();
+go('home');
+</script>
+</body>
+</html>
