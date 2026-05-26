@@ -415,21 +415,17 @@ function closeModal(){
   document.getElementById('loginModal').style.display='none';
 }
 
-function login(){
+<script>
 
-  const email=document.getElementById('email').value;
-  const password=document.getElementById('password').value;
+function openModal(){
+  document.getElementById('loginModal').style.display = 'flex';
+}
 
-  if(email==="admin" && password==="1234"){
+function closeModal(){
+  document.getElementById('loginModal').style.display = 'none';
+}
 
-    window.location.href="marketplace.html";
-
-  }else{
-
-    alert("Invalid Credentials");
-
-  }
-  function signup(){
+function signup(){
 
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
@@ -448,9 +444,26 @@ function login(){
 
 }
 
+function login(){
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const savedEmail = localStorage.getItem("toysguru_user");
+  const savedPass = localStorage.getItem("toysguru_pass");
+
+  if(email === savedEmail && password === savedPass){
+
+      window.location.href = "marketplace.html";
+
+  }else{
+
+      alert("Invalid Credentials");
+
+  }
+
 }
 
 </script>
-
 </body>
 </html>
