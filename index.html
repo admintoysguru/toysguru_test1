@@ -9,6 +9,24 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+  .signup-link{
+  margin-top:18px;
+  text-align:center;
+  color:rgba(255,255,255,0.55);
+  font-size:14px;
+}
+
+.signup-link span{
+  color:#ff7a00;
+  cursor:pointer;
+  font-weight:700;
+  transition:0.25s;
+}
+
+.signup-link span:hover{
+  color:#ffb066;
+  text-shadow:0 0 12px rgba(255,120,0,0.45);
+}
 
 :root{
   --red:#e0001b;
@@ -374,11 +392,16 @@ body{
 
     <input class="input" type="password" id="password" placeholder="Password">
 
-    <button class="login-btn" onclick="login()">
-      Login
-    </button>
+<button class="login-btn" onclick="login()">
+  Login
+</button>
 
-  </div>
+<div class="signup-link">
+  New here?
+  <span onclick="signup()">
+    Create Account
+  </span>
+</div>
 
 </div>
 
@@ -406,6 +429,11 @@ function login(){
     alert("Invalid Credentials");
 
   }
+
+}
+  function signup(){
+
+  alert("Public Signup Coming Soon");
 
 }
 
