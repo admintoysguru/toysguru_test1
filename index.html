@@ -1,888 +1,1327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ToysGuru.in — Bangalore's Diecast Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --red:#E8001D;--yellow:#F5C400;--orange:#FF6B1A;
-  --bg:#0A0A0B;--bg2:#111113;--bg3:#18181C;--bg4:#1E1E24;
-  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
-  --text:#F0EFEB;--muted:#6B6B73;--muted2:#9B9BA3;
-  --ff-head:'Barlow Condensed',sans-serif;--ff-body:'Barlow',sans-serif;--ff-mono:'Space Mono',monospace;
-  --r:6px;--rl:12px;
+:root {
+  --red: #e8001d;
+  --red2: #ff1f38;
+  --gold: #c9a84c;
+  --goldf: #f5d06e;
+  --bg: #000000;
+  --s1: #0c0c0c;
+  --s2: #111111;
+  --s3: #161616;
+  --bdr: rgba(201,168,76,0.14);
+  --txt: #ede8df;
+  --muted: #5a554f;
+  --white: #f7f2ea;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--ff-body);font-size:14px;min-height:100vh;overflow-x:hidden}
-h1,h2,h3,h4{font-family:var(--ff-head);letter-spacing:.02em;line-height:1.1}
-button{cursor:pointer;font-family:var(--ff-body);border:none;transition:all .15s}
-input,select,textarea{font-family:var(--ff-body)}
 
-.nav{position:sticky;top:0;z-index:100;background:rgba(10,10,11,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:54px;display:flex;align-items:center;padding:0 20px;justify-content:space-between;gap:12px}
-.logo{font-family:var(--ff-head);font-size:20px;font-weight:900;letter-spacing:.03em;cursor:pointer;white-space:nowrap}
-.logo .hw{color:var(--red)}.logo .z{color:var(--yellow)}.logo .blr{color:var(--muted2);font-weight:400;font-size:14px;margin-left:2px}
-.nav-links{display:flex;gap:2px;flex-wrap:nowrap}
-.nl{padding:5px 11px;border-radius:var(--r);font-size:13px;font-weight:500;color:var(--muted2);cursor:pointer;transition:all .15s;border:none;background:none;white-space:nowrap}
-.nl:hover,.nl.a{color:var(--text);background:var(--bg3)}
-.nl.drop{color:var(--yellow)}.nl.pub{color:#A78BFA}
-.nav-r{display:flex;gap:6px;align-items:center;flex-shrink:0}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:var(--r);font-size:13px;font-weight:600;transition:all .15s;white-space:nowrap;cursor:pointer}
-.btn-p{background:var(--red);color:#fff}.btn-p:hover{background:#c5001a;transform:translateY(-1px)}
-.btn-s{background:var(--bg3);color:var(--text);border:1px solid var(--border2)}.btn-s:hover{border-color:var(--muted2)}
-.btn-g{background:transparent;color:var(--muted2)}.btn-g:hover{color:var(--text)}
-.btn-y{background:var(--yellow);color:#000;font-weight:700}.btn-y:hover{background:#e0b200}
-.btn-v{background:#7C3AED;color:#fff}.btn-v:hover{background:#6D28D9}
-.btn-lg{padding:10px 22px;font-size:15px}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 
-.page{display:none;min-height:calc(100vh - 54px)}.page.active{display:block}
-.container{max-width:1140px;margin:0 auto;padding:0 20px}
+body {
+  background:#000;
+  color:var(--txt);
+  font-family:'Syne',sans-serif;
+  overflow-x:hidden;
+}
 
-.hero{padding:56px 0 44px;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% -10%,rgba(232,0,29,.1) 0%,transparent 70%);pointer-events:none}
-.hero-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(232,0,29,.1);border:1px solid rgba(232,0,29,.22);color:#FF4D6A;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
-.hero-title{font-family:var(--ff-head);font-size:clamp(42px,6.5vw,78px);font-weight:900;line-height:1;text-transform:uppercase;margin-bottom:12px}
-.hero-title span{color:var(--red);display:block}
-.hero-sub{font-size:15px;color:var(--muted2);max-width:420px;margin-bottom:26px;line-height:1.55}
-.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+/* ─── GLOW CURSOR TEXT EFFECT ─── */
+.glow-text {
+  position:relative;
+  display:inline-block;
+  cursor:default;
+  transition:color 0.3s;
+}
+.glow-text:hover {
+  color:#fff;
+  text-shadow:
+    0 0 8px rgba(232,0,29,0.9),
+    0 0 20px rgba(232,0,29,0.6),
+    0 0 50px rgba(232,0,29,0.3);
+}
+.glow-text-gold:hover {
+  color:#fff;
+  text-shadow:
+    0 0 8px rgba(201,168,76,0.9),
+    0 0 24px rgba(201,168,76,0.6),
+    0 0 60px rgba(201,168,76,0.3);
+}
+.glow-text-white:hover {
+  color:#fff;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 30px rgba(255,255,255,0.4),
+    0 0 70px rgba(255,255,255,0.15);
+}
 
-.grid{display:grid;gap:16px}
-.g4{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-.g3{grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
-.g2{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+/* ─── NAV ─── */
+nav {
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:200;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 48px;
+  height:62px;
+  background:rgba(0,0,0,0.88);
+  border-bottom:1px solid rgba(201,168,76,0.1);
+  backdrop-filter:blur(20px);
+}
 
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:all .2s;cursor:pointer}
-.card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.card-img{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:54px;overflow:hidden;position:relative}
-.card-img img{width:100%;height:100%;object-fit:cover}
-.card-body{padding:12px}
-.card-title{font-family:var(--ff-head);font-size:17px;font-weight:700;line-height:1.2;margin-bottom:3px}
-.card-sub{font-size:11px;color:var(--muted2);margin-bottom:8px}
-.card-price{font-family:var(--ff-head);font-size:20px;font-weight:800;color:var(--red)}
-.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
+.logo {
+  display:flex;
+  align-items:center;
+  gap:0;
+  text-decoration:none;
+}
+.logo-main {
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;
+  font-size:19px;
+  letter-spacing:3px;
+  color:#fff;
+  text-transform:uppercase;
+}
+.logo-main em {
+  font-style:normal;
+  color:var(--gold);
+}
+.logo-dot {
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:1px;
+  margin-left:2px;
+  padding-top:6px;
+}
 
-.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em}
-.b-red{background:rgba(232,0,29,.15);color:#FF4D6A;border:1px solid rgba(232,0,29,.3)}
-.b-yellow{background:rgba(245,196,0,.15);color:var(--yellow);border:1px solid rgba(245,196,0,.3)}
-.b-green{background:rgba(34,197,94,.1);color:#4ADE80;border:1px solid rgba(34,197,94,.2)}
-.b-blue{background:rgba(59,130,246,.1);color:#60A5FA;border:1px solid rgba(59,130,246,.2)}
-.b-gray{background:var(--bg3);color:var(--muted2);border:1px solid var(--border)}
-.b-purple{background:rgba(124,58,237,.15);color:#A78BFA;border:1px solid rgba(124,58,237,.3)}
-.b-orange{background:rgba(255,107,26,.12);color:#FB923C;border:1px solid rgba(255,107,26,.25)}
+.nav-links {
+  display:flex;
+  gap:36px;
+  list-style:none;
+}
+.nav-links a {
+  font-family:'Syne',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  text-decoration:none;
+  color:var(--muted);
+  transition:color 0.25s, text-shadow 0.25s;
+}
+.nav-links a:hover {
+  color:#fff;
+  text-shadow:0 0 16px rgba(232,0,29,0.7),0 0 40px rgba(232,0,29,0.3);
+}
 
-.section{padding:44px 0}
-.sec-hdr{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px}
-.sec-title{font-family:var(--ff-head);font-size:26px;font-weight:800;text-transform:uppercase}
-.sec-title .ac{color:var(--red)}.sec-title .acp{color:#A78BFA}
+.nav-actions { display:flex; gap:10px; }
 
-.drop-banner{background:var(--bg2);border:1px solid rgba(245,196,0,.2);border-radius:var(--rl);padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.drop-banner h2{font-family:var(--ff-head);font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:3px}
-.drop-banner p{color:var(--muted2);font-size:12px}
+.btn-ghost {
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.6);
+  padding:8px 22px;
+  font-family:'Syne',sans-serif;
+  font-weight:600;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.25s;
+}
+.btn-ghost:hover {
+  border-color:var(--gold);
+  color:var(--gold);
+  box-shadow:0 0 16px rgba(201,168,76,0.2),inset 0 0 12px rgba(201,168,76,0.04);
+}
 
-.cd{display:flex;gap:5px;align-items:center}
-.cd-seg{display:flex;flex-direction:column;align-items:center}
-.cd-num{font-family:var(--ff-mono);font-size:17px;font-weight:700;color:var(--yellow);background:var(--bg3);padding:3px 7px;border-radius:4px;min-width:34px;text-align:center;line-height:1}
-.cd-lbl{font-size:8px;color:var(--muted);text-transform:uppercase;margin-top:3px;letter-spacing:.1em}
-.cd-sep{font-family:var(--ff-mono);color:var(--muted);font-size:15px;margin-top:-4px}
-.live-dot{width:7px;height:7px;background:#FF4D6A;border-radius:50%;display:inline-block;animation:pulse 1s infinite}
-.g-dot{width:7px;height:7px;background:#4ADE80;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite}
-.auction-live{display:inline-flex;align-items:center;gap:5px;color:#FF4D6A;font-size:11px;font-weight:600}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn-red {
+  background:var(--red);
+  border:1px solid var(--red);
+  color:#fff;
+  padding:8px 24px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all 0.25s;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.btn-red:hover {
+  background:#ff0020;
+  box-shadow:0 0 24px rgba(232,0,29,0.6),0 0 60px rgba(232,0,29,0.2);
+}
 
-.detail-layout{display:grid;grid-template-columns:1fr 360px;gap:26px;align-items:start}
-.detail-main-img{width:100%;aspect-ratio:1;border-radius:var(--rl);background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:96px;margin-bottom:10px}
-.verified-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ADE80;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:600}
-.bid-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rl);padding:18px}
-.bid-amt{font-family:var(--ff-head);font-size:34px;font-weight:900;color:var(--yellow)}
-.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 12px;color:var(--text);font-size:13px;transition:border-color .15s}
-.form-input:focus{outline:none;border-color:var(--red)}
-.form-input::placeholder{color:var(--muted)}
-.buy-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rl);padding:18px}
-.buy-price{font-family:var(--ff-head);font-size:38px;font-weight:900;color:var(--red);margin-bottom:14px}
+/* ─── HERO ─── */
+.hero {
+  position:relative;
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:62px 0 0;
+  overflow:hidden;
+  background:#000;
+}
 
-.filter-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
-.chip{padding:4px 13px;border-radius:20px;font-size:12px;font-weight:500;background:var(--bg3);border:1px solid var(--border);color:var(--muted2);cursor:pointer;transition:all .15s}
-.chip:hover,.chip.a{background:rgba(232,0,29,.1);border-color:rgba(232,0,29,.3);color:#FF4D6A}
-.chip.ap{} .chip.ap:hover,.chip.ap.a{background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.3);color:#A78BFA}
+/* subtle scanline texture */
+.hero::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255,255,255,0.008) 3px,
+    rgba(255,255,255,0.008) 4px
+  );
+  pointer-events:none;
+  z-index:0;
+}
 
-.auth-page{min-height:calc(100vh - 54px);display:flex;align-items:center;justify-content:center;padding:20px}
-.auth-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:32px;width:100%;max-width:400px}
-.auth-logo{font-family:var(--ff-head);font-size:26px;font-weight:900;text-align:center;margin-bottom:22px}
-.form-group{margin-bottom:14px}
-.form-label{display:block;font-size:11px;font-weight:600;color:var(--muted2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
-.form-select{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 12px;color:var(--text);font-size:13px;width:100%}
-.form-textarea{min-height:80px;resize:vertical}
+/* radial light behind car */
+.hero-light {
+  position:absolute;
+  right:0;top:0;bottom:0;
+  width:55%;
+  background:
+    radial-gradient(ellipse 70% 60% at 60% 55%, rgba(232,0,29,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 30% at 65% 75%, rgba(201,168,76,0.04) 0%, transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
 
-.admin-layout{display:flex;min-height:calc(100vh - 54px)}
-.admin-sidebar{width:200px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:14px 10px}
-.admin-content{flex:1;padding:26px;overflow-x:hidden}
-.sidebar-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r);font-size:13px;color:var(--muted2);cursor:pointer;transition:all .15s;margin-bottom:2px}
-.sidebar-item:hover,.sidebar-item.a{background:var(--bg3);color:var(--text)}
-.sidebar-item.a{color:var(--red)}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(162px,1fr));gap:12px;margin-bottom:26px}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:15px}
-.stat-val{font-family:var(--ff-head);font-size:26px;font-weight:800}
-.stat-lbl{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-.stat-card.profit .stat-val{color:#4ADE80}
-.stat-card.pending .stat-val{color:var(--yellow)}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border)}
-td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:var(--bg3)}
+.hero-left {
+  position:relative;
+  z-index:2;
+  padding:0 0 0 64px;
+}
 
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--rl);padding:24px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;position:relative}
-.modal-title{font-family:var(--ff-head);font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:18px}
-.mc{position:absolute;top:14px;right:14px;background:var(--bg3);border:1px solid var(--border);color:var(--muted2);width:28px;height:28px;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px}
-.mc:hover{color:var(--text)}
+.hero-eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:36px;
+  opacity:0;
+  animation:fadeUp 0.7s 0.1s ease forwards;
+}
+.hero-eyebrow::before {
+  content:'';
+  width:28px;height:1px;
+  background:var(--gold);
+}
+.pulse-dot {
+  width:5px;height:5px;
+  border-radius:50%;
+  background:var(--red);
+  animation:blink 1.6s infinite;
+}
+@keyframes blink {0%,100%{opacity:1}50%{opacity:0.2}}
 
-.sub-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:14px;margin-bottom:10px}
-.ss-pending{background:rgba(245,196,0,.1);color:var(--yellow)}
-.ss-approved{background:rgba(34,197,94,.1);color:#4ADE80}
-.ss-rejected{background:rgba(232,0,29,.1);color:#FF4D6A}
-.ss-listed{background:rgba(59,130,246,.1);color:#60A5FA}
+.hero-h1 {
+  font-family:'Playfair Display',serif;
+  font-weight:900;
+  font-size:clamp(60px,7.5vw,100px);
+  line-height:0.9;
+  color:#fff;
+  letter-spacing:-1px;
+  margin-bottom:24px;
+  opacity:0;
+  animation:fadeUp 0.8s 0.2s ease forwards;
+}
+.hero-h1 .line2 {
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;
+  font-size:clamp(28px,3.8vw,52px);
+  letter-spacing:6px;
+  color:var(--red);
+  display:block;
+  line-height:1.3;
+}
+.hero-h1 .line3 {
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:clamp(50px,6vw,82px);
+  color:var(--gold);
+  display:block;
+  font-style:italic;
+  line-height:1;
+}
 
-.tabs{display:flex;gap:2px;background:var(--bg3);border-radius:var(--r);padding:3px;margin-bottom:18px}
-.tab{flex:1;padding:6px 10px;border-radius:4px;font-size:12px;font-weight:600;color:var(--muted2);cursor:pointer;transition:all .15s;text-align:center;border:none;background:transparent}
-.tab.a{background:var(--bg2);color:var(--text);border:1px solid var(--border)}
+.hero-desc {
+  font-size:15px;
+  line-height:1.75;
+  color:rgba(237,232,223,0.5);
+  max-width:400px;
+  margin-bottom:44px;
+  opacity:0;
+  animation:fadeUp 0.8s 0.35s ease forwards;
+}
+.hero-desc strong { color:rgba(237,232,223,0.85); font-weight:600; }
 
-.pub-hero{background:var(--bg2);border:1px solid rgba(124,58,237,.2);border-radius:var(--rl);padding:28px;margin-bottom:28px;position:relative;overflow:hidden}
-.pub-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(124,58,237,.06) 0%,transparent 70%);pointer-events:none}
+.hero-cta {
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  opacity:0;
+  animation:fadeUp 0.8s 0.45s ease forwards;
+}
+.btn-lg { padding:15px 40px; font-size:12px; letter-spacing:2.5px; }
 
-#toast{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.t{background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:var(--r);font-size:13px;animation:slideIn .2s ease;max-width:300px}
-.t.success{border-color:rgba(34,197,94,.3)}.t.error{border-color:rgba(232,0,29,.3)}
-@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+/* ─── VINTAGE CAR SVG ─── */
+.hero-right {
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  min-height:100vh;
+  padding-top:62px;
+  opacity:0;
+  animation:fadeIn 1.2s 0.4s ease forwards;
+}
 
-.empty{text-align:center;padding:48px 20px;color:var(--muted2)}
-.empty-icon{font-size:40px;margin-bottom:10px}
-.empty h3{font-family:var(--ff-head);font-size:20px;color:var(--text);margin-bottom:4px}
+.car-wrap {
+  position:relative;
+  width:90%;
+  max-width:600px;
+}
 
-.owner-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--muted2);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:4px}
+.car-ground-glow {
+  position:absolute;
+  bottom:-20px;
+  left:50%;transform:translateX(-50%);
+  width:80%;height:40px;
+  background:radial-gradient(ellipse 100% 100% at 50% 50%, rgba(232,0,29,0.35) 0%, transparent 70%);
+  filter:blur(12px);
+  border-radius:50%;
+  animation:glowPulse 2.5s ease-in-out infinite;
+}
+.car-headlight-l {
+  position:absolute;
+  left:6%;bottom:30%;
+  width:80px;height:20px;
+  background:radial-gradient(ellipse 100% 100% at 0% 50%, rgba(255,220,120,0.7) 0%, transparent 100%);
+  filter:blur(6px);
+  animation:headlightFlicker 3s ease-in-out infinite;
+}
+.car-headlight-r {
+  position:absolute;
+  right:6%;bottom:30%;
+  width:80px;height:20px;
+  background:radial-gradient(ellipse 100% 100% at 100% 50%, rgba(255,220,120,0.7) 0%, transparent 100%);
+  filter:blur(6px);
+  animation:headlightFlicker 3s 0.3s ease-in-out infinite;
+}
 
-.collection-lock{background:rgba(232,0,29,.06);border:1px solid rgba(232,0,29,.15);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--muted2);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+@keyframes glowPulse {
+  0%,100%{opacity:0.8;transform:translateX(-50%) scaleX(1);}
+  50%{opacity:1;transform:translateX(-50%) scaleX(1.08);}
+}
+@keyframes headlightFlicker {
+  0%,100%{opacity:0.7}50%{opacity:1}
+}
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(28px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn {
+  from{opacity:0;}to{opacity:1;}
+}
 
-@media(max-width:700px){
-  .detail-layout{grid-template-columns:1fr}
-  .admin-layout{flex-direction:column}
-  .admin-sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);padding:10px;display:flex;flex-wrap:wrap;gap:4px}
-  .nav-links{display:none}
-  .drop-banner{flex-direction:column}
+/* ─── MARQUEE ─── */
+.ticker {
+  background:#0a0a0a;
+  border-top:1px solid rgba(232,0,29,0.25);
+  border-bottom:1px solid rgba(232,0,29,0.25);
+  padding:11px 0;
+  overflow:hidden;
+  position:relative;
+  z-index:1;
+}
+.ticker-inner {
+  display:flex;
+  animation:ticker 22s linear infinite;
+  width:max-content;
+}
+.ticker-item {
+  font-family:'Orbitron',sans-serif;
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:rgba(232,0,29,0.7);
+  padding:0 40px;
+  white-space:nowrap;
+}
+.ticker-item::after { content:'  ✦  '; color:rgba(201,168,76,0.4); }
+@keyframes ticker {
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+
+/* ─── SECTION SHELL ─── */
+section { position:relative; z-index:1; padding:88px 64px; }
+
+.sec-tag {
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:3.5px;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-tag::before { content:''; width:20px;height:1px;background:var(--red); }
+
+.sec-title {
+  font-family:'Playfair Display',serif;
+  font-weight:900;
+  font-size:clamp(38px,4.5vw,58px);
+  letter-spacing:-0.5px;
+  color:#fff;
+  line-height:1;
+  margin-bottom:10px;
+}
+.sec-title span {
+  font-family:'Orbitron',sans-serif;
+  font-size:0.6em;
+  font-weight:900;
+  letter-spacing:4px;
+  color:var(--red);
+}
+
+.sec-sub {
+  font-size:14px;
+  color:var(--muted);
+  max-width:400px;
+  margin-bottom:52px;
+  line-height:1.65;
+}
+
+/* ─── EXPLORE ─── */
+.explore-section { background:var(--s1); }
+
+.tabs {
+  display:flex;
+  gap:2px;
+  margin-bottom:36px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.tab {
+  background:none;
+  border:none;
+  border-bottom:2px solid transparent;
+  padding:10px 20px 11px;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:var(--muted);
+  cursor:pointer;
+  margin-bottom:-1px;
+  transition:all 0.2s;
+}
+.tab.active,.tab:hover { color:#fff; border-bottom-color:var(--red); }
+
+.product-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:18px;
+}
+
+.pcard {
+  background:var(--s2);
+  border:1px solid rgba(255,255,255,0.04);
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.pcard:hover {
+  transform:translateY(-5px);
+  border-color:rgba(201,168,76,0.4);
+  box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 30px rgba(201,168,76,0.08);
+}
+.pcard:hover .pcard-name { text-shadow:0 0 16px rgba(255,255,255,0.5); }
+.pcard:hover .pcard-price { text-shadow:0 0 14px rgba(201,168,76,0.7); }
+.pcard:hover .pov { opacity:1; }
+
+.pbadge {
+  position:absolute;top:10px;left:10px;
+  background:var(--red);
+  color:#fff;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:1.5px;
+  padding:3px 8px;
+  text-transform:uppercase;
+  z-index:2;
+}
+.pbadge.gold { background:var(--gold); color:#111; }
+
+.pimg {
+  width:100%;
+  aspect-ratio:4/3;
+  background:var(--s3);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+.pov {
+  position:absolute;inset:0;
+  background:rgba(232,0,29,0.07);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 0.3s;
+  z-index:3;
+}
+.pov-btn {
+  background:var(--red);color:#fff;border:none;
+  padding:9px 18px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;cursor:pointer;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition:background 0.2s;
+}
+.pov-btn:hover { background:#ff0020; }
+
+.pbody { padding:14px 16px; }
+.pseries {
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:2px;
+  color:var(--gold);text-transform:uppercase;margin-bottom:6px;
+}
+.pcard-name {
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:14px;
+  color:#fff;margin-bottom:10px;
+  line-height:1.25;
+  transition:text-shadow 0.3s;
+}
+.pfoot {
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.pcard-price {
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;font-size:18px;
+  color:var(--goldf);
+  transition:text-shadow 0.3s;
+}
+.pcond {
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:1.5px;
+  color:var(--muted);
+  background:rgba(255,255,255,0.03);
+  padding:3px 8px;
+  border:1px solid rgba(255,255,255,0.05);
+  text-transform:uppercase;
+}
+
+/* ─── AUCTIONS ─── */
+.auction-section { background:#000; }
+
+.auction-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:22px;
+}
+.acard {
+  background:var(--s2);
+  border:1px solid var(--bdr);
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.3s, box-shadow 0.3s;
+}
+.acard:hover {
+  border-color:rgba(201,168,76,0.5);
+  box-shadow:0 0 40px rgba(201,168,76,0.06);
+}
+.acard:hover .aname {
+  text-shadow:0 0 20px rgba(255,255,255,0.5);
+}
+.acard::before {
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+}
+.acard-top {
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:18px;
+}
+.atag {
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:2px;
+  color:var(--red);
+  background:rgba(232,0,29,0.08);
+  border:1px solid rgba(232,0,29,0.2);
+  padding:4px 10px;text-transform:uppercase;
+}
+.live-ind {
+  display:flex;align-items:center;gap:5px;
+  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;
+  color:#4ade80;
+}
+.live-ind::before {
+  content:'';width:5px;height:5px;
+  border-radius:50%;background:#4ade80;
+  animation:blink 1.2s infinite;
+}
+.aimg {
+  width:100%;aspect-ratio:16/9;
+  background:var(--s3);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;position:relative;overflow:hidden;
+}
+.aimg::after {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,var(--s2) 0%,transparent 55%);
+}
+.aname {
+  font-family:'Playfair Display',serif;
+  font-weight:700;font-size:20px;
+  color:#fff;margin-bottom:4px;
+  transition:text-shadow 0.3s;
+}
+.aseries {
+  font-family:'DM Mono',monospace;
+  font-size:10px;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:18px;
+}
+.abids {
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  margin-bottom:18px;padding:14px;
+  background:var(--s3);
+}
+.alabel {
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:4px;
+}
+.aval {
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;font-size:22px;color:var(--goldf);
+}
+.acount { font-family:'Orbitron',sans-serif;font-weight:700;font-size:20px;color:#fff; }
+.atime {
+  font-family:'DM Mono',monospace;
+  font-weight:500;font-size:17px;color:var(--red);
+  letter-spacing:2px;
+}
+.bid-btn {
+  width:100%;
+  background:linear-gradient(135deg,var(--red),#9b0013);
+  border:none;color:#fff;padding:13px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;font-size:11px;letter-spacing:2.5px;
+  text-transform:uppercase;cursor:pointer;
+  transition:all 0.25s;position:relative;overflow:hidden;
+}
+.bid-btn::after {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent,rgba(255,255,255,0.08));
+  opacity:0;transition:opacity 0.25s;
+}
+.bid-btn:hover::after{opacity:1;}
+.bid-btn:hover{box-shadow:0 4px 30px rgba(232,0,29,0.5),0 0 60px rgba(232,0,29,0.15);}
+
+/* ─── SELL ─── */
+.sell-section {
+  background:var(--s1);
+  border-top:1px solid var(--bdr);
+  border-bottom:1px solid var(--bdr);
+}
+.sell-inner {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:72px;align-items:center;
+}
+.sell-feats { display:flex;flex-direction:column;gap:18px; }
+.sfeat {
+  display:flex;gap:14px;align-items:flex-start;
+  padding:18px;
+  background:var(--s2);
+  border:1px solid rgba(255,255,255,0.04);
+  transition:border-color 0.2s, box-shadow 0.2s;
+}
+.sfeat:hover {
+  border-color:var(--bdr);
+  box-shadow:0 0 20px rgba(201,168,76,0.04);
+}
+.sfeat:hover .ftitle {
+  text-shadow:0 0 16px rgba(255,255,255,0.4);
+}
+.ficon {
+  width:38px;height:38px;flex-shrink:0;
+  background:rgba(232,0,29,0.08);
+  border:1px solid rgba(232,0,29,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+.ftitle {
+  font-family:'Syne',sans-serif;
+  font-weight:700;font-size:15px;color:#fff;
+  margin-bottom:3px;
+  transition:text-shadow 0.3s;
+}
+.fdesc { font-size:13px;color:var(--muted);line-height:1.55; }
+
+.sell-form {
+  background:var(--s2);
+  border:1px solid var(--bdr);
+  padding:34px;position:relative;
+}
+.sell-form::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--red));
+}
+.form-title {
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;font-size:20px;
+  letter-spacing:2px;color:#fff;margin-bottom:22px;
+}
+.frow { margin-bottom:14px; }
+.frow label {
+  display:block;
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px;
+}
+.frow input, .frow select {
+  width:100%;
+  background:var(--s3);
+  border:1px solid rgba(255,255,255,0.06);
+  color:var(--txt);
+  padding:10px 14px;
+  font-family:'Syne',sans-serif;font-size:14px;
+  outline:none;
+  transition:border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance:none;
+}
+.frow input:focus, .frow select:focus {
+  border-color:var(--gold);
+  box-shadow:0 0 14px rgba(201,168,76,0.12);
+}
+.frow input::placeholder { color:rgba(90,85,79,0.5); }
+.frow select option { background:var(--s2); }
+.f2col { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+.submit-btn {
+  width:100%;
+  background:var(--gold);color:#111;border:none;
+  padding:13px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;font-size:12px;letter-spacing:2.5px;
+  text-transform:uppercase;cursor:pointer;
+  margin-top:6px;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  transition:all 0.25s;
+}
+.submit-btn:hover {
+  background:var(--goldf);
+  box-shadow:0 4px 28px rgba(201,168,76,0.35);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background:#000;
+  border-top:1px solid var(--bdr);
+  padding:48px 64px 28px;
+  position:relative;z-index:1;
+}
+.footer-top {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;margin-bottom:40px;
+}
+.fbrand-logo {
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;font-size:18px;
+  letter-spacing:3px;color:#fff;
+  display:block;margin-bottom:12px;
+}
+.fbrand-logo em { font-style:normal;color:var(--gold); }
+.fbrand p { font-size:13px;color:var(--muted);line-height:1.6;max-width:240px; }
+
+.fcol h4 {
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:16px;
+}
+.fcol ul { list-style:none;display:flex;flex-direction:column;gap:10px; }
+.fcol ul a {
+  font-size:13px;color:var(--muted);
+  text-decoration:none;letter-spacing:0.5px;
+  transition:color 0.2s, text-shadow 0.2s;
+}
+.fcol ul a:hover {
+  color:#fff;
+  text-shadow:0 0 14px rgba(255,255,255,0.4);
+}
+.fbot {
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:22px;
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+.fbot p {
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:rgba(90,85,79,0.6);letter-spacing:1.5px;
+}
+.fbot p span { color:var(--red); }
+.socials { display:flex;gap:10px; }
+.sbtn {
+  width:30px;height:30px;
+  border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:11px;font-weight:700;
+  font-family:'Orbitron',sans-serif;
+  text-decoration:none;letter-spacing:0;
+  transition:all 0.2s;
+}
+.sbtn:hover {
+  border-color:var(--gold);color:var(--gold);
+  box-shadow:0 0 14px rgba(201,168,76,0.25);
+}
+
+/* ─── REVEAL ─── */
+.reveal { opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease; }
+.reveal.vis { opacity:1;transform:none; }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;padding:62px 32px 48px;}
+  .hero-right{display:none;}
+  .hero-left{padding:48px 0 0;}
+  .sell-inner{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  section{padding:72px 32px;}
+  nav{padding:0 24px;}
+}
+@media(max-width:600px){
+  .footer-top{grid-template-columns:1fr;}
+  footer{padding:40px 24px 20px;}
+  .nav-links{display:none;}
 }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<nav class="nav">
-  <div class="logo" onclick="go('home')">
-    <span class="hw">HotWheelz</span><span class="z"> BLR</span>
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">
+    <span class="logo-main">Toys<em>Guru</em></span>
+    <span class="logo-dot">.in</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#explore" class="glow-text">Explore</a></li>
+    <li><a href="#auctions" class="glow-text">Auctions</a></li>
+    <li><a href="#sell" class="glow-text">Sell</a></li>
+    <li><a href="#" class="glow-text">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn-ghost">Login</button>
+    <button class="btn-red">Sign Up</button>
   </div>
-  <div class="nav-links">
-    <button class="nl" onclick="go('browse')">Browse</button>
-    <button class="nl drop" onclick="go('drops')">🔥 Drops</button>
-    <button class="nl" onclick="go('auctions')">⚡ Auctions</button>
-    <button class="nl pub" onclick="go('public')">🪩 Public Collection</button>
-    <button class="nl" onclick="go('collection')">🗃 My Collection</button>
-  </div>
-  <div class="nav-r" id="nav-r"></div>
 </nav>
 
-<!-- HOME -->
-<div id="page-home" class="page">
-  <div class="hero">
-    <div class="container">
-      <div class="hero-tag">🏎️ Bangalore's Curated Die-Cast Marketplace</div>
-      <h1 class="hero-title">Hunt.<span>Score.</span>Collect.</h1>
-      <p class="hero-sub">Every listing verified. Every price fair. Drops, auctions, and a community-powered public collection — all in one place.</p>
-      <div class="hero-btns">
-        <button class="btn btn-p btn-lg" onclick="go('browse')">Browse Collection</button>
-        <button class="btn btn-v btn-lg" onclick="go('public')">🪩 Public Collection</button>
-        <button class="btn btn-s btn-lg" onclick="go('drops')">🔥 Live Drops</button>
-      </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-light"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="pulse-dot"></div>
+      Bangalore's Finest Die-cast
+    </div>
+    <h1 class="hero-h1 glow-text-white">
+      Collector<span class="line2">Die·Cast</span><span class="line3">Paradise</span>
+    </h1>
+    <p class="hero-desc">
+      Curated marketplace for <strong>serious collectors</strong>. Buy, sell & bid on premium Hot Wheels, Matchbox, Tomica & vintage die-cast — authenticated and delivered.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-red btn-lg" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'})">Explore Collection</button>
+      <button class="btn-ghost btn-lg" onclick="document.getElementById('auctions').scrollIntoView({behavior:'smooth'})">Live Auctions</button>
     </div>
   </div>
-  <div class="container">
-    <div id="drop-banner-home"></div>
-    <div class="section">
-      <div class="sec-hdr"><h2 class="sec-title">Featured <span class="ac">Drops & Auctions</span></h2><button class="btn btn-g" onclick="go('browse')">View All →</button></div>
-      <div class="grid g4" id="home-listings"></div>
+
+  <!-- Vintage Car Front View -->
+  <div class="hero-right">
+    <div class="car-wrap">
+      <div class="car-ground-glow"></div>
+      <div class="car-headlight-l"></div>
+      <div class="car-headlight-r"></div>
+      <svg viewBox="0 0 540 480" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(0 30px 80px rgba(232,0,29,0.18))">
+
+        <!-- GROUND REFLECTION -->
+        <ellipse cx="270" cy="460" rx="230" ry="18" fill="rgba(232,0,29,0.12)"/>
+        <ellipse cx="270" cy="460" rx="170" ry="10" fill="rgba(232,0,29,0.08)"/>
+
+        <!-- BODY LOWER WIDE -->
+        <rect x="40" y="310" width="460" height="90" rx="10" fill="#0e0e0e"/>
+        <rect x="40" y="310" width="460" height="90" rx="10" fill="url(#bodyFill)" opacity="0.6"/>
+
+        <!-- BUMPER / FRONT FACE -->
+        <path d="M60 310 Q55 380 75 400 L465 400 Q485 380 480 310 Z" fill="#111111"/>
+        <path d="M60 310 Q55 380 75 400 L465 400 Q485 380 480 310 Z" fill="url(#faceShade)"/>
+
+        <!-- CHROME BUMPER BAR -->
+        <rect x="80" y="385" width="380" height="18" rx="5" fill="url(#chromeBumper)"/>
+        <rect x="80" y="385" width="380" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
+
+        <!-- GRILL CENTER -->
+        <rect x="170" y="325" width="200" height="55" rx="6" fill="#080808"/>
+        <rect x="172" y="327" width="196" height="51" rx="5" fill="url(#grillFill)"/>
+        <!-- grill slats -->
+        <line x1="172" y1="338" x2="368" y2="338" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="172" y1="349" x2="368" y2="349" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="172" y1="360" x2="368" y2="360" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <line x1="172" y1="371" x2="368" y2="371" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+        <!-- vertical slats -->
+        <line x1="210" y1="327" x2="210" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="250" y1="327" x2="250" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="290" y1="327" x2="290" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <line x1="330" y1="327" x2="330" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <!-- grill chrome border -->
+        <rect x="170" y="325" width="200" height="55" rx="6" fill="none" stroke="url(#chromeLine)" stroke-width="1.5"/>
+
+        <!-- HEADLIGHT LEFT -->
+        <rect x="70" y="320" width="90" height="52" rx="8" fill="#0a0a0a" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
+        <rect x="75" y="325" width="80" height="42" rx="6" fill="url(#headlightL)"/>
+        <!-- headlight inner lens -->
+        <ellipse cx="115" cy="346" rx="28" ry="16" fill="rgba(255,220,100,0.06)" stroke="rgba(255,220,100,0.2)" stroke-width="1"/>
+        <ellipse cx="115" cy="346" rx="16" ry="9" fill="rgba(255,220,100,0.12)"/>
+        <ellipse cx="115" cy="346" rx="7" ry="4" fill="rgba(255,230,140,0.3)"/>
+        <!-- chrome ring -->
+        <ellipse cx="115" cy="346" rx="28" ry="16" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
+
+        <!-- HEADLIGHT RIGHT -->
+        <rect x="380" y="320" width="90" height="52" rx="8" fill="#0a0a0a" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
+        <rect x="385" y="325" width="80" height="42" rx="6" fill="url(#headlightR)"/>
+        <ellipse cx="425" cy="346" rx="28" ry="16" fill="rgba(255,220,100,0.06)" stroke="rgba(255,220,100,0.2)" stroke-width="1"/>
+        <ellipse cx="425" cy="346" rx="16" ry="9" fill="rgba(255,220,100,0.12)"/>
+        <ellipse cx="425" cy="346" rx="7" ry="4" fill="rgba(255,230,140,0.3)"/>
+        <ellipse cx="425" cy="346" rx="28" ry="16" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
+
+        <!-- HOOD / TOP BODY -->
+        <path d="M80 310 Q100 240 140 200 L400 200 Q440 240 460 310 Z" fill="#0c0c0c"/>
+        <path d="M80 310 Q100 240 140 200 L400 200 Q440 240 460 310 Z" fill="url(#hoodShade)"/>
+
+        <!-- HOOD LINE CREASE -->
+        <path d="M200 200 Q220 255 240 310" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
+        <path d="M340 200 Q320 255 300 310" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
+
+        <!-- WINDSHIELD -->
+        <path d="M155 200 L180 130 L360 130 L385 200 Z" fill="rgba(80,160,220,0.05)" stroke="rgba(80,160,220,0.12)" stroke-width="1"/>
+        <path d="M160 198 L183 136 L357 136 L380 198 Z" fill="url(#glassShade)"/>
+        <!-- windshield glare -->
+        <path d="M175 145 L195 195 L250 195 L235 145 Z" fill="rgba(255,255,255,0.025)"/>
+
+        <!-- ROOF -->
+        <path d="M180 130 Q270 90 360 130 L385 200 L155 200 Z" fill="#0a0a0a"/>
+        <path d="M180 130 Q270 90 360 130 L385 200 L155 200 Z" fill="url(#roofShade)"/>
+
+        <!-- ROOF CHROME TRIM -->
+        <path d="M180 130 Q270 88 360 130" stroke="url(--chromeLine)" stroke-width="2" fill="none" stroke="rgba(201,168,76,0.3)"/>
+
+        <!-- SIDE MIRROR L -->
+        <ellipse cx="100" cy="225" rx="22" ry="11" fill="#111" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+        <ellipse cx="100" cy="225" rx="17" ry="8" fill="rgba(80,160,220,0.06)"/>
+
+        <!-- SIDE MIRROR R -->
+        <ellipse cx="440" cy="225" rx="22" ry="11" fill="#111" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+        <ellipse cx="440" cy="225" rx="17" ry="8" fill="rgba(80,160,220,0.06)"/>
+
+        <!-- BADGE CENTER GRILL -->
+        <circle cx="270" cy="350" r="14" fill="#0a0a0a" stroke="url(#goldRing)" stroke-width="1.5"/>
+        <circle cx="270" cy="350" r="10" fill="rgba(201,168,76,0.08)"/>
+        <text x="270" y="354" text-anchor="middle" font-family="'Orbitron',sans-serif" font-size="8" font-weight="900" fill="rgba(201,168,76,0.8)" letter-spacing="0.5">TG</text>
+
+        <!-- WHEELS FRONT VIEW (showing as circles) -->
+        <!-- left wheel -->
+        <ellipse cx="105" cy="420" rx="60" ry="28" fill="#080808" stroke="rgba(201,168,76,0.2)" stroke-width="1.5"/>
+        <ellipse cx="105" cy="420" rx="44" ry="20" fill="#0e0e0e"/>
+        <ellipse cx="105" cy="420" rx="28" ry="13" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
+        <!-- spokes -->
+        <line x1="105" y1="407" x2="105" y2="400" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="105" y1="433" x2="105" y2="440" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="77" y1="420" x2="70" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="133" y1="420" x2="140" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="85" y1="410" x2="80" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <line x1="125" y1="430" x2="130" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <line x1="125" y1="410" x2="130" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <line x1="85" y1="430" x2="80" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <ellipse cx="105" cy="420" rx="8" ry="4" fill="var(--gold)"/>
+        <ellipse cx="105" cy="420" rx="8" ry="4" fill="url(#hubcap)"/>
+
+        <!-- right wheel -->
+        <ellipse cx="435" cy="420" rx="60" ry="28" fill="#080808" stroke="rgba(201,168,76,0.2)" stroke-width="1.5"/>
+        <ellipse cx="435" cy="420" rx="44" ry="20" fill="#0e0e0e"/>
+        <ellipse cx="435" cy="420" rx="28" ry="13" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
+        <line x1="435" y1="407" x2="435" y2="400" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="435" y1="433" x2="435" y2="440" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="407" y1="420" x2="400" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="463" y1="420" x2="470" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+        <line x1="415" y1="410" x2="410" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <line x1="455" y1="430" x2="460" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <line x1="455" y1="410" x2="460" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <line x1="415" y1="430" x2="410" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <ellipse cx="435" cy="420" rx="8" ry="4" fill="var(--gold)"/>
+        <ellipse cx="435" cy="420" rx="8" ry="4" fill="url(#hubcap2)"/>
+
+        <!-- CHROME TRIM ACCENT LINE SIDES -->
+        <path d="M60 340 Q60 395 80 400" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" fill="none"/>
+        <path d="M480 340 Q480 395 460 400" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" fill="none"/>
+
+        <!-- RED ACCENT STRIP -->
+        <rect x="80" y="375" width="380" height="5" fill="rgba(232,0,29,0.6)"/>
+        <rect x="80" y="375" width="380" height="1.5" fill="rgba(255,50,70,0.8)"/>
+
+        <defs>
+          <linearGradient id="bodyFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(232,0,29,0.12)"/>
+            <stop offset="100%" stop-color="rgba(100,5,15,0.04)"/>
+          </linearGradient>
+          <linearGradient id="faceShade" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="rgba(40,40,40,0.3)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.5)"/>
+          </linearGradient>
+          <linearGradient id="chromeBumper" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4a4a4a"/>
+            <stop offset="30%" stop-color="#d0d0d0"/>
+            <stop offset="60%" stop-color="#8a8a8a"/>
+            <stop offset="100%" stop-color="#2a2a2a"/>
+          </linearGradient>
+          <linearGradient id="chromeLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="rgba(201,168,76,0)"/>
+            <stop offset="50%" stop-color="rgba(201,168,76,0.6)"/>
+            <stop offset="100%" stop-color="rgba(201,168,76,0)"/>
+          </linearGradient>
+          <linearGradient id="grillFill" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="#1a1a1a"/>
+            <stop offset="100%" stop-color="#050505"/>
+          </linearGradient>
+          <linearGradient id="headlightL" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1a1a14"/>
+            <stop offset="100%" stop-color="#080808"/>
+          </linearGradient>
+          <linearGradient id="headlightR" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1a1a14"/>
+            <stop offset="100%" stop-color="#080808"/>
+          </linearGradient>
+          <linearGradient id="hoodShade" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="rgba(40,40,40,0.4)"/>
+            <stop offset="50%" stop-color="rgba(232,0,29,0.04)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.2)"/>
+          </linearGradient>
+          <linearGradient id="glassShade" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="rgba(80,160,220,0.06)"/>
+            <stop offset="100%" stop-color="rgba(80,160,220,0.01)"/>
+          </linearGradient>
+          <linearGradient id="roofShade" x1="0.5" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="rgba(50,50,50,0.3)"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.4)"/>
+          </linearGradient>
+          <radialGradient id="goldRing" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(201,168,76,0.8)"/>
+            <stop offset="100%" stop-color="rgba(201,168,76,0.2)"/>
+          </radialGradient>
+          <radialGradient id="hubcap" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="rgba(245,208,110,0.9)"/>
+            <stop offset="100%" stop-color="rgba(140,95,20,0.8)"/>
+          </radialGradient>
+          <radialGradient id="hubcap2" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="rgba(245,208,110,0.9)"/>
+            <stop offset="100%" stop-color="rgba(140,95,20,0.8)"/>
+          </radialGradient>
+        </defs>
+      </svg>
     </div>
-    <div class="section" style="border-top:1px solid var(--border)">
-      <div class="sec-hdr"><h2 class="sec-title">Community <span class="acp">Public Collection</span></h2><button class="btn btn-g" onclick="go('public')">View All →</button></div>
-      <p style="color:var(--muted2);font-size:13px;margin-bottom:20px">Cars listed directly by Bangalore collectors. All admin-verified before going live.</p>
-      <div class="grid g4" id="home-public-listings"></div>
-    </div>
-    <div class="section" style="border-top:1px solid var(--border)">
-      <div class="sec-hdr"><h2 class="sec-title">Why <span class="ac">HotWheelz BLR?</span></h2></div>
-      <div class="grid g3" style="gap:12px" id="why-grid"></div>
-    </div>
-    <footer style="border-top:1px solid var(--border);padding:18px 0;text-align:center;color:var(--muted);font-size:12px">
-      <span style="font-family:var(--ff-head);font-weight:900;margin-right:6px;font-size:14px"><span style="color:var(--red)">HotWheelz</span> <span style="color:var(--yellow)">BLR</span></span>
-      © 2024 · Curated by collectors, for collectors · Bangalore
-    </footer>
   </div>
-</div>
+</section>
 
-<!-- BROWSE (Admin curated) -->
-<div id="page-browse" class="page">
-  <div class="section"><div class="container">
-    <div style="margin-bottom:20px">
-      <h1 class="sec-title">The <span class="ac">Collection</span></h1>
-      <p style="color:var(--muted2);font-size:13px;margin-top:4px">Admin-curated inventory — verified, graded, and priced by our team.</p>
-    </div>
-    <div class="filter-bar" id="browse-filters"></div>
-    <div class="grid g4" id="browse-listings"></div>
-  </div></div>
-</div>
-
-<!-- PUBLIC COLLECTION -->
-<div id="page-public" class="page">
-  <div class="section"><div class="container">
-    <div class="pub-hero">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px">
-        <div>
-          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);color:#A78BFA;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px">🪩 Community Marketplace</div>
-          <h1 style="font-family:var(--ff-head);font-size:32px;font-weight:900;text-transform:uppercase;margin-bottom:8px">Public <span style="color:#A78BFA">Collection</span></h1>
-          <p style="color:var(--muted2);font-size:14px;max-width:480px;line-height:1.55">Real collectors in Bangalore listing their personal cars. Every listing is reviewed by our admin before going live — so quality stays high.</p>
-        </div>
-        <button class="btn btn-v btn-lg" onclick="openListYourCar()">+ List Your Car</button>
-      </div>
-    </div>
-    <div class="filter-bar" id="pub-filters"></div>
-    <div class="grid g4" id="pub-listings"></div>
-  </div></div>
-</div>
-
-<!-- MY COLLECTION (Admin only) -->
-<div id="page-collection" class="page">
-  <div class="section"><div class="container">
-    <div style="margin-bottom:20px">
-      <h1 class="sec-title">🗃 My <span class="ac">Collection</span></h1>
-      <p style="color:var(--muted2);font-size:13px;margin-top:4px">Admin's personal inventory showcase — only you can add, edit, or remove cars here.</p>
-    </div>
-    <div id="collection-content"></div>
-  </div></div>
-</div>
-
-<!-- DROPS -->
-<div id="page-drops" class="page">
-  <div class="section"><div class="container">
-    <div style="margin-bottom:24px">
-      <div class="hero-tag">🔥 Timed Releases</div>
-      <h1 class="sec-title">Live <span class="ac">Drops</span></h1>
-      <p style="color:var(--muted2);margin-top:5px;font-size:13px">Miss the window, miss the car. No restocks.</p>
-    </div>
-    <div class="grid g3" id="drops-listings"></div>
-  </div></div>
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ti">
+    <span class="ticker-item">Hot Wheels Treasure Hunt</span>
+    <span class="ticker-item">Matchbox Superfast</span>
+    <span class="ticker-item">Tomica Limited Vintage</span>
+    <span class="ticker-item">Greenlight Hollywood</span>
+    <span class="ticker-item">Super Treasure Hunt</span>
+    <span class="ticker-item">1:64 Diecast Scale</span>
+    <span class="ticker-item">RLC Exclusive</span>
+    <span class="ticker-item">Hot Wheels Treasure Hunt</span>
+    <span class="ticker-item">Matchbox Superfast</span>
+    <span class="ticker-item">Tomica Limited Vintage</span>
+    <span class="ticker-item">Greenlight Hollywood</span>
+    <span class="ticker-item">Super Treasure Hunt</span>
+    <span class="ticker-item">1:64 Diecast Scale</span>
+    <span class="ticker-item">RLC Exclusive</span>
+  </div>
 </div>
 
 <!-- AUCTIONS -->
-<div id="page-auctions" class="page">
-  <div class="section"><div class="container">
-    <div style="margin-bottom:24px">
-      <div class="hero-tag">⚡ Live Bidding</div>
-      <h1 class="sec-title">Active <span class="ac">Auctions</span></h1>
-      <p style="color:var(--muted2);margin-top:5px;font-size:13px">Anti-sniping protection. Bid extension on last-minute bids.</p>
+<section class="auction-section" id="auctions">
+  <div class="sec-tag">Live Now</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
+    <div>
+      <h2 class="sec-title glow-text-white">Live <span>Auctions</span></h2>
+      <p class="sec-sub">Bid on rare and exclusive diecast. Every auction is authenticated by our team.</p>
     </div>
-    <div class="grid g3" id="auctions-listings"></div>
-  </div></div>
-</div>
-
-<!-- DETAIL -->
-<div id="page-detail" class="page">
-  <div class="section"><div class="container">
-    <button class="btn btn-g" style="margin-bottom:18px" onclick="goBack()">← Back</button>
-    <div id="detail-content"></div>
-  </div></div>
-</div>
-
-<!-- LOGIN -->
-<div id="page-login" class="page">
-  <div class="auth-page"><div class="auth-card">
-    <div class="auth-logo"><span style="color:var(--red)">HotWheelz</span> <span style="color:var(--yellow)">BLR</span></div>
-    <h2 style="font-family:var(--ff-head);font-size:20px;margin-bottom:4px">Welcome Back</h2>
-    <p style="color:var(--muted2);font-size:13px;margin-bottom:18px">Sign in to your collector account</p>
-    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="login-email" type="email" placeholder="you@email.com"></div>
-    <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="login-pw" type="password" placeholder="••••••••"></div>
-    <button class="btn btn-p btn-lg" style="width:100%;margin-bottom:14px" onclick="doLogin()">Sign In</button>
-    <div style="text-align:center;color:var(--muted2);font-size:13px">No account? <span style="color:var(--red);cursor:pointer;font-weight:600" onclick="go('register')">Sign Up</span></div>
-    <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:var(--r);font-size:11px;color:var(--muted2);line-height:1.8">
-      <strong style="color:var(--muted2)">Demo accounts:</strong><br>
-      admin@hwblr.in → Admin (full access)<br>
-      user@hwblr.in → Collector (can list in Public)
-    </div>
-  </div></div>
-</div>
-
-<!-- REGISTER -->
-<div id="page-register" class="page">
-  <div class="auth-page"><div class="auth-card">
-    <div class="auth-logo"><span style="color:var(--red)">HotWheelz</span> <span style="color:var(--yellow)">BLR</span></div>
-    <h2 style="font-family:var(--ff-head);font-size:20px;margin-bottom:4px">Join the Hunt</h2>
-    <p style="color:var(--muted2);font-size:13px;margin-bottom:18px">Create your collector account</p>
-    <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="reg-name" placeholder="Raj Collector"></div>
-    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="reg-email" type="email" placeholder="you@email.com"></div>
-    <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="reg-pw" type="password" placeholder="Min 8 characters"></div>
-    <button class="btn btn-p btn-lg" style="width:100%;margin-bottom:14px" onclick="doRegister()">Create Account</button>
-    <div style="text-align:center;color:var(--muted2);font-size:13px">Have an account? <span style="color:var(--red);cursor:pointer;font-weight:600" onclick="go('login')">Sign In</span></div>
-  </div></div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="page-dashboard" class="page">
-  <div class="section"><div class="container" style="max-width:760px" id="dashboard-content"></div></div>
-</div>
-
-<!-- ADMIN -->
-<div id="page-admin" class="page">
-  <div class="admin-layout">
-    <div class="admin-sidebar" id="admin-sidebar"></div>
-    <div class="admin-content" id="admin-content"></div>
+    <button class="btn-ghost" style="margin-bottom:52px;">All Auctions →</button>
   </div>
-</div>
+  <div class="auction-grid" id="agrid"></div>
+</section>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
-  <div class="modal"><button class="mc" onclick="closeModal()">✕</button><div id="modal-content"></div></div>
-</div>
+<!-- SELL -->
+<section class="sell-section" id="sell">
+  <div class="sell-inner">
+    <div>
+      <div class="sec-tag">For Sellers</div>
+      <h2 class="sec-title glow-text-white">Sell Your<br><span>Collection</span></h2>
+      <p class="sec-sub" style="margin-bottom:34px;">Turn your cars into cash. List in minutes, reach thousands of serious buyers.</p>
+      <div class="sell-feats">
+        <div class="sfeat">
+          <div class="ficon">🔐</div>
+          <div>
+            <div class="ftitle glow-text-white">Verified Listings</div>
+            <div class="fdesc">Every listing is reviewed. Buyers trust your product before they bid.</div>
+          </div>
+        </div>
+        <div class="sfeat">
+          <div class="ficon">⚡</div>
+          <div>
+            <div class="ftitle glow-text-white">Instant Payout</div>
+            <div class="fdesc">Get paid within 24 hours of a confirmed sale. Zero delays.</div>
+          </div>
+        </div>
+        <div class="sfeat">
+          <div class="ficon">📦</div>
+          <div>
+            <div class="ftitle glow-text-white">Secure Shipping</div>
+            <div class="fdesc">Specialist diecast packaging. Arrive mint, every time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sell-form reveal">
+      <div class="form-title">List Your Car</div>
+      <div class="frow">
+        <label>Car Name / Model</label>
+        <input type="text" placeholder="e.g. Hot Wheels Treasure Hunt Camaro">
+      </div>
+      <div class="frow f2col">
+        <div>
+          <label>Brand</label>
+          <select>
+            <option value="">Select Brand</option>
+            <option>Hot Wheels</option>
+            <option>Matchbox</option>
+            <option>Tomica</option>
+            <option>Greenlight</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label>Scale</label>
+          <select>
+            <option>1:64</option><option>1:43</option><option>1:32</option><option>1:18</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow f2col">
+        <div>
+          <label>Asking Price (₹)</label>
+          <input type="number" placeholder="e.g. 499">
+        </div>
+        <div>
+          <label>Condition</label>
+          <select>
+            <option>Mint on Card</option>
+            <option>Near Mint</option>
+            <option>Loose / Played</option>
+            <option>Custom</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <label>Your Phone</label>
+        <input type="tel" placeholder="+91 98765 43210">
+      </div>
+      <button class="submit-btn">Submit Listing →</button>
+    </div>
+  </div>
+</section>
 
-<div id="toast"></div>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="fbrand">
+      <span class="fbrand-logo">Toys<em>Guru</em><span style="font-size:12px;color:var(--muted);font-weight:400;">.in</span></span>
+      <p>Bangalore's curated die-cast marketplace. Connecting collectors, one car at a time.</p>
+    </div>
+    <div class="fcol">
+      <h4>Marketplace</h4>
+      <ul>
+        <li><a href="#" class="glow-text">Explore All</a></li>
+        <li><a href="#" class="glow-text">Hot Wheels</a></li>
+        <li><a href="#" class="glow-text">Matchbox</a></li>
+        <li><a href="#" class="glow-text">Auctions</a></li>
+        <li><a href="#" class="glow-text">New Arrivals</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Sellers</h4>
+      <ul>
+        <li><a href="#" class="glow-text">List a Car</a></li>
+        <li><a href="#" class="glow-text">Seller FAQ</a></li>
+        <li><a href="#" class="glow-text">Pricing</a></li>
+        <li><a href="#" class="glow-text">Guidelines</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#" class="glow-text">About Us</a></li>
+        <li><a href="#" class="glow-text">Contact</a></li>
+        <li><a href="#" class="glow-text">Privacy</a></li>
+        <li><a href="#" class="glow-text">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2025 ToysGuru.in — Made with <span>♥</span> in Bangalore</p>
+    <div class="socials">
+      <a class="sbtn" href="#">IG</a>
+      <a class="sbtn" href="#">WA</a>
+      <a class="sbtn" href="#">YT</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-let currentUser = null;
-let currentListing = null;
-let prevPage = 'browse';
-let activeBrowseFilter = 'all';
-let activePubFilter = 'all';
-let adminSection = 'dashboard';
-
-const INR = n => '₹' + Math.round(n).toLocaleString('en-IN');
-
-// ─── DEMO DATA ────────────────────────────────────────────────────────────────
-
-const ADMIN_LISTINGS = [
-  {id:'a1',car_name:'Ferrari F40',series:'Car Culture',year:2023,condition_code:'MOMC',condition_label:'Mint on Mint Card',selling_price:1200,listing_type:'normal',status:'active',emoji:'🏎️',is_featured:true,view_count:243,bid_count:0,source:'admin',description:'Factory sealed with stunning red livery. A must for Ferrari collectors.'},
-  {id:'a2',car_name:'Porsche 911 GT3 RS',series:'Hot Wheels 2024',year:2024,condition_code:'LNM',condition_label:'Like New Mint',selling_price:850,listing_type:'auction',status:'active',emoji:'🚗',auction_end:new Date(Date.now()+7260000).toISOString(),starting_bid:500,current_bid:720,bid_count:14,source:'admin',description:'Iconic 911 in Guards Red. Opened but perfect condition.'},
-  {id:'a3',car_name:'Lambo Countach',series:'Retro Entertainment',year:2022,condition_code:'EX',condition_label:'Excellent',selling_price:650,listing_type:'drop',status:'scheduled',emoji:'🚀',drop_time:new Date(Date.now()+14400000).toISOString(),bid_count:0,source:'admin',description:'The legendary Countach in classic white.'},
-  {id:'a4',car_name:'McLaren Senna',series:'Car Culture',year:2023,condition_code:'MOMC',condition_label:'Mint on Mint Card',selling_price:2200,listing_type:'auction',status:'active',emoji:'🧡',auction_end:new Date(Date.now()+79200000).toISOString(),starting_bid:1500,current_bid:1850,bid_count:7,is_featured:true,source:'admin',description:'Ultra-rare McLaren Senna. Factory sealed.'},
-  {id:'a5',car_name:'BMW M3 E30',series:'Car Culture',year:2022,condition_code:'EX',condition_label:'Excellent',selling_price:980,listing_type:'normal',status:'active',emoji:'🔵',view_count:156,bid_count:0,source:'admin',description:'Classic E30 M3 in Brilliant Red.'},
+const products = [
+  {name:"Dodge Charger Daytona",series:"Treasure Hunt 2023",price:"₹649",cond:"MOC",badge:"TH",c:"#b00010"},
+  {name:"Ferrari F40",series:"Speed Machines",price:"₹899",cond:"Mint",badge:null,c:"#cc0000"},
+  {name:"Porsche 911 GT3",series:"Car Culture 2024",price:"₹1,199",cond:"MOC",badge:"New",c:"#333"},
+  {name:"Lamborghini Huracán",series:"Exotics Series",price:"₹749",cond:"Loose",badge:null,c:"#b88800"},
+  {name:"McLaren Senna",series:"Super TH",price:"₹2,499",cond:"MOC",badge:"STH",c:"#c07000"},
+  {name:"Nissan Skyline R34",series:"Fast & Furious",price:"₹599",cond:"Mint",badge:null,c:"#003366"},
+  {name:"Ford Mustang Shelby",series:"American Muscle",price:"₹449",cond:"MOC",badge:null,c:"#c03020"},
+  {name:"Toyota Supra MK4",series:"Import Racer",price:"₹799",cond:"MOC",badge:"Rare",c:"#004433"},
 ];
 
-const ADMIN_COLLECTION = [
-  {id:'c1',car_name:'Dodge Viper GTS',series:'Treasure Hunt 2024',year:2024,condition_code:'MOMC',emoji:'🐍',value:3200,notes:'Personal grail. Not for sale.',acquired:'Jan 2024'},
-  {id:'c2',car_name:'Honda NSX Type R',series:'Car Culture Japan Historics',year:2022,condition_code:'MOMC',emoji:'🇯🇵',value:2800,notes:'JDM legend. Sealed.',acquired:'Mar 2023'},
-  {id:'c3',car_name:'Nissan Skyline R34',series:'Fast & Furious',year:2023,condition_code:'LNM',emoji:'⚡',value:1800,notes:'Brian\'s car. Display piece.',acquired:'Jun 2023'},
+function miniCar(c){
+  return `<svg viewBox="0 0 180 110" width="130" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="90" cy="100" rx="75" ry="8" fill="rgba(0,0,0,0.5)"/>
+    <rect x="18" y="58" width="144" height="28" rx="4" fill="${c}" opacity="0.85"/>
+    <path d="M40 58 L58 34 L122 34 L140 58Z" fill="${c}" opacity="0.9"/>
+    <path d="M52 36 L68 54 L112 54 L128 36Z" fill="rgba(140,200,240,0.07)" stroke="rgba(140,200,240,0.12)" stroke-width="0.8"/>
+    <rect x="18" y="65" width="144" height="4" fill="rgba(232,0,29,0.8)"/>
+    <rect x="18" y="69" width="144" height="1" fill="rgba(201,168,76,0.4)"/>
+    <circle cx="48" cy="87" r="14" fill="#080808" stroke="rgba(201,168,76,0.35)" stroke-width="1.2"/>
+    <circle cx="48" cy="87" r="8" fill="#111"/>
+    <circle cx="48" cy="87" r="4" fill="rgba(201,168,76,0.5)"/>
+    <circle cx="132" cy="87" r="14" fill="#080808" stroke="rgba(201,168,76,0.35)" stroke-width="1.2"/>
+    <circle cx="132" cy="87" r="8" fill="#111"/>
+    <circle cx="132" cy="87" r="4" fill="rgba(201,168,76,0.5)"/>
+    <rect x="20" y="61" width="18" height="10" rx="2" fill="rgba(255,220,100,0.1)" stroke="rgba(255,220,100,0.25)" stroke-width="0.8"/>
+    <rect x="142" y="61" width="18" height="10" rx="2" fill="rgba(232,0,29,0.35)" stroke="rgba(232,0,29,0.5)" stroke-width="0.8"/>
+  </svg>`;
+}
+
+document.getElementById('pgrid').innerHTML = products.map(p=>`
+  <div class="pcard">
+    ${p.badge?`<div class="pbadge${p.badge==='New'||p.badge==='Rare'?' gold':''}">${p.badge}</div>`:''}
+    <div class="pimg">
+      <div style="padding:8px;">${miniCar(p.c)}</div>
+      <div class="pov"><button class="pov-btn">Quick View</button></div>
+    </div>
+    <div class="pbody">
+      <div class="pseries">${p.series}</div>
+      <div class="pcard-name glow-text-white">${p.name}</div>
+      <div class="pfoot">
+        <div class="pcard-price">${p.price}</div>
+        <div class="pcond">${p.cond}</div>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+const auctions = [
+  {name:"Enzo Ferrari",series:"Hot Wheels Legends 2023",bid:"₹4,200",bids:14,ends:"02:14:38",live:true,c:"#cc0000"},
+  {name:"Bugatti Veyron Super Sport",series:"Super TH — MOC",bid:"₹8,750",bids:31,ends:"05:42:11",live:true,c:"#0055bb"},
+  {name:"Dodge Viper GTS-R",series:"Car Culture Racing Circuit",bid:"₹2,900",bids:9,ends:"11:05:22",live:false,c:"#660000"},
 ];
 
-const PUBLIC_LISTINGS = [
-  {id:'p1',car_name:'Dodge Challenger SRT',series:'Fast & Furious',year:2021,condition_code:'VG',condition_label:'Very Good',selling_price:480,listing_type:'normal',status:'active',emoji:'💪',view_count:87,bid_count:0,source:'public',owner:'Arjun K.',owner_id:'u2',description:"Dom's Charger. Some shelf wear but complete and clean.",verified:true},
-  {id:'p2',car_name:'Toyota Supra MkIV',series:'Speed Machines',year:2022,condition_code:'EX',condition_label:'Excellent',selling_price:720,listing_type:'normal',status:'active',emoji:'🟡',view_count:134,bid_count:0,source:'public',owner:'Meera S.',owner_id:'u3',description:'JZA80 Supra in Targa White. Minimal play wear.',verified:true},
-  {id:'p3',car_name:'RUF CTR Yellowbird',series:'Car Culture Germany',year:2023,condition_code:'LNM',condition_label:'Like New Mint',selling_price:1100,listing_type:'normal',status:'active',emoji:'🐦',view_count:201,bid_count:0,source:'public',owner:'Priya R.',owner_id:'u4',description:'The legendary Yellowbird. Opened but kept perfect.',verified:true},
-];
-
-const USER_SUBMISSIONS = [
-  {id:'s1',car_name:'Honda Civic EG6',condition_code:'EX',selling_price:560,status:'pending',submitted_at:new Date(Date.now()-3600000).toISOString(),emoji:'🚗',description:'JDM spec, red, opened packaging'},
-  {id:'s2',car_name:'Mazda RX-7 FD',condition_code:'LNM',selling_price:890,status:'approved',seller_payout:720,listing_id:'p_new',submitted_at:new Date(Date.now()-86400000).toISOString(),emoji:'🦊'},
-  {id:'s3',car_name:'Mitsubishi Evo VI',condition_code:'MOMC',selling_price:1400,status:'rejected',admin_notes:'Images too blurry. Please resubmit.',submitted_at:new Date(Date.now()-172800000).toISOString(),emoji:'🔵'},
-];
-
-const PENDING_PUB = [
-  {id:'ps1',car_name:'Honda Civic EG6',condition_code:'EX',seller_expected_price:560,seller_name:'Kiran M.',submitted_at:new Date(Date.now()-3600000).toISOString(),emoji:'🚗',description:'JDM spec, red, condition EX'},
-  {id:'ps2',car_name:'Subaru Impreza WRX',condition_code:'VG',seller_expected_price:420,seller_name:'Deepa N.',submitted_at:new Date(Date.now()-7200000).toISOString(),emoji:'💙',description:'Blue, some play wear, complete'},
-];
-
-// ─── UTILS ────────────────────────────────────────────────────────────────────
-function toast(msg,type='success'){const el=document.createElement('div');el.className=`t ${type}`;el.textContent=(type==='success'?'✓ ':'✕ ')+msg;document.getElementById('toast').appendChild(el);setTimeout(()=>el.remove(),3500)}
-function openModal(html){document.getElementById('modal-content').innerHTML=html;document.getElementById('modal').style.display='flex'}
-function closeModal(){document.getElementById('modal').style.display='none'}
-
-function cd(target,compact=false){
-  const diff=new Date(target)-new Date();
-  if(diff<=0)return compact?'<span style="color:#4ADE80;font-weight:700;font-size:12px">🟢 LIVE</span>':'<span style="color:#4ADE80;font-weight:700">🟢 LIVE NOW</span>';
-  const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000),d=Math.floor(diff/86400000);
-  if(compact)return`<span style="font-family:var(--ff-mono);font-size:11px;color:var(--yellow)">${d>0?d+'d ':''}${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</span>`;
-  return`<div class="cd">${d>0?`<div class="cd-seg"><div class="cd-num">${d}</div><div class="cd-lbl">Days</div></div><div class="cd-sep">:</div>`:''}<div class="cd-seg"><div class="cd-num">${String(h).padStart(2,'0')}</div><div class="cd-lbl">Hrs</div></div><div class="cd-sep">:</div><div class="cd-seg"><div class="cd-num">${String(m).padStart(2,'0')}</div><div class="cd-lbl">Min</div></div><div class="cd-sep">:</div><div class="cd-seg"><div class="cd-num">${String(s).padStart(2,'0')}</div><div class="cd-lbl">Sec</div></div></div>`;
-}
-
-function listingCard(l){
-  const isAuction=l.listing_type==='auction',isDrop=l.listing_type==='drop';
-  const dropLive=isDrop&&l.drop_time&&new Date()>=new Date(l.drop_time);
-  const price=isAuction&&l.current_bid?l.current_bid:l.selling_price;
-  const timer=isAuction&&l.auction_end?`<div class="auction-live" style="margin-bottom:4px"><div class="live-dot"></div> ${cd(l.auction_end,true)}</div>`:isDrop&&!dropLive&&l.drop_time?`<div style="margin-bottom:4px">${cd(l.drop_time,true)}</div>`:'';
-  const srcBadge=l.source==='public'?'<span class="badge b-purple">🪩 Public</span>':'';
-  return`<div class="card" onclick="openDetail('${l.id}','${l.source||'admin'}')">
-    <div class="card-img">${l.emoji}</div>
-    <div class="card-body">
-      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px">
-        ${srcBadge}
-        ${isAuction?'<span class="badge b-yellow">⚡ Auction</span>':''}
-        ${isDrop&&!dropLive?'<span class="badge b-red">🔥 Drop</span>':''}
-        ${isDrop&&dropLive?'<span class="badge b-green">🟢 Live</span>':''}
-        ${l.is_featured?'<span class="badge b-orange">⭐ Featured</span>':''}
-        <span class="badge b-gray">${l.condition_code}</span>
-      </div>
-      <div class="card-title">${l.car_name}</div>
-      <div class="card-sub">${l.series||''}${l.year?' · '+l.year:''}</div>
-      ${l.source==='public'&&l.owner?`<div class="owner-tag" style="margin-bottom:6px">👤 ${l.owner}</div>`:''}
-      ${timer}
-      <div class="card-footer">
-        <div>
-          <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em">${isAuction?'Current Bid':'Price'}</div>
-          <div class="card-price">${INR(price)}</div>
-        </div>
-        <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:#4ADE80;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600">✓ Verified</div>
-      </div>
+document.getElementById('agrid').innerHTML = auctions.map(a=>`
+  <div class="acard">
+    <div class="acard-top">
+      <span class="atag">Auction</span>
+      ${a.live?'<span class="live-ind">LIVE</span>':'<span style="font-family:DM Mono,monospace;font-size:9px;color:var(--muted);letter-spacing:1px">UPCOMING</span>'}
     </div>
-  </div>`;
-}
-
-// ─── NAV ─────────────────────────────────────────────────────────────────────
-function renderNav(){
-  const el=document.getElementById('nav-r');
-  if(currentUser){
-    const isAdmin=currentUser.role==='admin';
-    el.innerHTML=`
-      ${isAdmin?'<button class="btn btn-s" style="font-size:12px;padding:5px 12px" onclick="go(\'admin\')">⚙ Admin</button>':''}
-      <button class="btn btn-g" style="font-size:12px" onclick="go('dashboard')">${currentUser.name.split(' ')[0]}</button>
-      <button class="btn btn-g" style="font-size:12px;color:var(--muted)" onclick="doLogout()">Logout</button>`;
-  }else{
-    el.innerHTML=`<button class="btn btn-g" style="font-size:12px" onclick="go('login')">Login</button>
-      <button class="btn btn-p" style="font-size:12px;padding:6px 14px" onclick="go('register')">Sign Up</button>`;
-  }
-}
-
-// ─── NAVIGATION ──────────────────────────────────────────────────────────────
-let cdInterval=null;
-function go(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const el=document.getElementById('page-'+page);
-  if(el)el.classList.add('active');
-  window.scrollTo(0,0);
-  if(cdInterval)clearInterval(cdInterval);
-  const renders={home:renderHome,browse:renderBrowse,public:renderPublic,collection:renderCollection,drops:renderDrops,auctions:renderAuctions,submit:renderSubmit,dashboard:renderDashboard,admin:renderAdmin};
-  if(renders[page])renders[page]();
-  if(['home','browse','public','drops','auctions','detail'].includes(page))startCd();
-}
-function goBack(){go(prevPage||'browse')}
-
-// ─── HOME ─────────────────────────────────────────────────────────────────────
-function renderHome(){
-  const drop=ADMIN_LISTINGS.find(l=>l.listing_type==='drop');
-  const banner=document.getElementById('drop-banner-home');
-  banner.innerHTML=drop?`<div class="drop-banner">
-    <div><div style="margin-bottom:5px"><span class="badge b-red">🔥 Upcoming Drop</span></div>
-    <h2>${drop.car_name}</h2><p>${drop.series} · ${INR(drop.selling_price)} · ${drop.condition_label}</p></div>
-    <div style="text-align:center"><div style="font-size:9px;color:var(--muted2);margin-bottom:7px;text-transform:uppercase;letter-spacing:.06em">Drops In</div><div id="home-drop-cd">${cd(drop.drop_time)}</div></div>
-    <button class="btn btn-y" onclick="openDetail('${drop.id}','admin')">Get Ready →</button>
-  </div>`:'';
-  document.getElementById('home-listings').innerHTML=ADMIN_LISTINGS.filter(l=>l.is_featured||l.listing_type==='auction').slice(0,4).map(listingCard).join('');
-  document.getElementById('home-public-listings').innerHTML=PUBLIC_LISTINGS.slice(0,4).map(listingCard).join('');
-  const why=[{i:'🛡️',t:'Admin Verified',d:'Every listing graded and approved. No fakes.'},{i:'💰',t:'Fair Pricing',d:'Prices set by experts, not flippers.'},{i:'⚡',t:'Live Drops',d:'Timed releases, real urgency, no restocks.'},{i:'🪩',t:'Public Collection',d:'Buy from real Bangalore collectors too.'},{i:'🏆',t:'Collector Grade',d:'Mainline to Super Treasure Hunts.'},{i:'📍',t:'Bangalore First',d:'Meetups across Koramangala, Indiranagar & more.'}];
-  document.getElementById('why-grid').innerHTML=why.map(f=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:18px"><div style="font-size:26px;margin-bottom:10px">${f.i}</div><h3 style="font-family:var(--ff-head);font-size:17px;font-weight:700;margin-bottom:5px">${f.t}</h3><p style="color:var(--muted2);font-size:13px">${f.d}</p></div>`).join('');
-}
-
-// ─── BROWSE (Admin inventory) ──────────────────────────────────────────────────
-function renderBrowse(){
-  const filters=[{k:'all',l:'🏎️ All'},{k:'normal',l:'🟢 Available'},{k:'drop',l:'🔥 Drops'},{k:'auction',l:'⚡ Auctions'}];
-  document.getElementById('browse-filters').innerHTML=filters.map(f=>`<button class="chip ${activeBrowseFilter===f.k?'a':''}" onclick="setBF('${f.k}')">${f.l}</button>`).join('');
-  const filtered=activeBrowseFilter==='all'?ADMIN_LISTINGS:ADMIN_LISTINGS.filter(l=>l.listing_type===activeBrowseFilter);
-  document.getElementById('browse-listings').innerHTML=filtered.length?filtered.map(listingCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🏎️</div><h3>No listings</h3></div>`;
-}
-function setBF(f){activeBrowseFilter=f;renderBrowse()}
-
-// ─── PUBLIC COLLECTION ────────────────────────────────────────────────────────
-function renderPublic(){
-  const filters=[{k:'all',l:'All'},{k:'normal',l:'Available'}];
-  document.getElementById('pub-filters').innerHTML=filters.map(f=>`<button class="chip ap ${activePubFilter===f.k?'a':''}" onclick="setPF('${f.k}')">${f.l}</button>`).join('');
-  const filtered=activePubFilter==='all'?PUBLIC_LISTINGS:PUBLIC_LISTINGS.filter(l=>l.listing_type===activePubFilter);
-  document.getElementById('pub-listings').innerHTML=filtered.length?filtered.map(listingCard).join(''):`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🪩</div><h3>No community listings yet</h3><p>Be the first to list your car!</p><button class="btn btn-v" style="margin-top:14px" onclick="openListYourCar()">+ List Your Car</button></div>`;
-}
-function setPF(f){activePubFilter=f;renderPublic()}
-
-function openListYourCar(){
-  if(!currentUser){toast('Login first to list your car','error');setTimeout(()=>go('login'),800);return}
-  openModal(`
-    <div class="modal-title">🪩 List Your Car</div>
-    <p style="color:var(--muted2);font-size:13px;margin-bottom:18px;line-height:1.5">Your listing will be reviewed by our admin before going live. We'll check condition, verify details, and approve within 24h.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Car Name *</label><input class="form-input" id="pub-name" placeholder="e.g. Honda NSX, RX-7 FD"></div>
-      <div class="form-group"><label class="form-label">Series / Line</label><input class="form-input" id="pub-series" placeholder="Car Culture, Mainline…"></div>
-      <div class="form-group"><label class="form-label">Year</label><input class="form-input" type="number" id="pub-year" placeholder="2023"></div>
-      <div class="form-group"><label class="form-label">Condition *</label>
-        <select class="form-select" id="pub-cond">
-          <option value="MOMC">MOMC — Mint on Mint Card</option>
-          <option value="LNM">LNM — Like New Mint</option>
-          <option value="EX" selected>EX — Excellent</option>
-          <option value="VG">VG — Very Good</option>
-          <option value="GD">GD — Good</option>
-          <option value="PL">PL — Player</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Your Asking Price (₹) *</label><input class="form-input" type="number" id="pub-price" placeholder="Your expected amount"></div>
-      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="pub-desc" placeholder="Condition details, packaging notes, any special features…"></textarea></div>
+    <div class="aimg"><div style="padding:12px;">${miniCar(a.c)}</div></div>
+    <div class="aname glow-text-white">${a.name}</div>
+    <div class="aseries">${a.series}</div>
+    <div class="abids">
+      <div><div class="alabel">Current Bid</div><div class="aval">${a.bid}</div></div>
+      <div><div class="alabel">Ends In</div><div class="atime" id="cd${a.name.replace(/\W/g,'')}">${a.ends}</div></div>
+      <div><div class="alabel">Total Bids</div><div class="acount">${a.bids}</div></div>
     </div>
-    <div style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:var(--r);padding:10px 14px;font-size:12px;color:#A78BFA;margin-bottom:16px">
-      ℹ️ Admin sets the final listing price. You'll see your confirmed payout once approved.
-    </div>
-    <button class="btn btn-v btn-lg" style="width:100%" onclick="doPublicSubmit()">Submit for Review →</button>`);
-}
+    <button class="bid-btn">Place Bid →</button>
+  </div>
+`).join('');
 
-function doPublicSubmit(){
-  const name=document.getElementById('pub-name')?.value.trim();
-  const price=document.getElementById('pub-price')?.value;
-  if(!name||!price){toast('Fill in required fields','error');return}
-  USER_SUBMISSIONS.unshift({id:'ps'+Date.now(),car_name:name,condition_code:document.getElementById('pub-cond').value,selling_price:parseFloat(price),status:'pending',submitted_at:new Date().toISOString(),emoji:'🚗',description:document.getElementById('pub-desc')?.value});
-  PENDING_PUB.unshift({id:'pps'+Date.now(),car_name:name,condition_code:document.getElementById('pub-cond').value,seller_expected_price:parseFloat(price),seller_name:currentUser.name,submitted_at:new Date().toISOString(),emoji:'🚗'});
-  closeModal();
-  toast('Submitted! Admin will review within 24h. 🪩');
-}
-
-// ─── MY COLLECTION (Admin only) ───────────────────────────────────────────────
-function renderCollection(){
-  const el=document.getElementById('collection-content');
-  if(!currentUser||currentUser.role!=='admin'){
-    el.innerHTML=`<div class="collection-lock">🔒 This is the admin's personal collection showcase. Only the admin can add, edit, or remove cars here.</div>
-      <div class="empty"><div class="empty-icon">🗃</div><h3>Admin Access Required</h3><p>Sign in as admin to manage your personal collection.</p><button class="btn btn-p" style="margin-top:14px" onclick="go('login')">Sign In</button></div>`;
-    return;
-  }
-  el.innerHTML=`
-    <div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-      <button class="btn btn-p" onclick="openAddToCollection()">+ Add to Collection</button>
-    </div>
-    <div class="grid g3">
-      ${ADMIN_COLLECTION.map(c=>`
-        <div class="card">
-          <div class="card-img">${c.emoji}</div>
-          <div class="card-body">
-            <div style="display:flex;gap:5px;margin-bottom:7px">
-              <span class="badge b-orange">Admin Collection</span>
-              <span class="badge b-gray">${c.condition_code}</span>
-            </div>
-            <div class="card-title">${c.car_name}</div>
-            <div class="card-sub">${c.series} · ${c.year}</div>
-            <div style="font-size:12px;color:var(--muted2);margin:6px 0">${c.notes}</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">
-              <div>
-                <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em">Est. Value</div>
-                <div style="font-family:var(--ff-head);font-size:18px;font-weight:800;color:var(--yellow)">${INR(c.value)}</div>
-              </div>
-              <div style="display:flex;gap:6px">
-                <button class="btn btn-s" style="font-size:11px;padding:4px 10px" onclick="toast('Edit feature coming soon')">Edit</button>
-                <button class="btn btn-g" style="font-size:11px;padding:4px 10px;color:#FF4D6A" onclick="removeFromCollection('${c.id}')">Remove</button>
-              </div>
-            </div>
-          </div>
-        </div>`).join('')}
-    </div>`;
-}
-
-function openAddToCollection(){
-  openModal(`
-    <div class="modal-title">Add to My Collection</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Car Name *</label><input class="form-input" id="col-name" placeholder="e.g. Dodge Viper GTS"></div>
-      <div class="form-group"><label class="form-label">Series</label><input class="form-input" id="col-series" placeholder="Treasure Hunt 2024"></div>
-      <div class="form-group"><label class="form-label">Year</label><input class="form-input" type="number" id="col-year" placeholder="2024"></div>
-      <div class="form-group"><label class="form-label">Condition</label>
-        <select class="form-select" id="col-cond">
-          <option value="MOMC">MOMC</option><option value="LNM">LNM</option><option value="EX">EX</option><option value="VG">VG</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Est. Value (₹)</label><input class="form-input" type="number" id="col-value" placeholder="0"></div>
-      <div class="form-group" style="grid-column:1/-1"><label class="form-label">Notes</label><input class="form-input" id="col-notes" placeholder="Why it's special, display notes…"></div>
-    </div>
-    <button class="btn btn-p btn-lg" style="width:100%" onclick="doAddCollection()">Add to Collection</button>`);
-}
-
-function doAddCollection(){
-  const name=document.getElementById('col-name')?.value.trim();
-  if(!name){toast('Enter a car name','error');return}
-  ADMIN_COLLECTION.push({id:'c'+Date.now(),car_name:name,series:document.getElementById('col-series').value||'',year:parseInt(document.getElementById('col-year').value)||2024,condition_code:document.getElementById('col-cond').value,emoji:'🚗',value:parseFloat(document.getElementById('col-value').value)||0,notes:document.getElementById('col-notes').value||'',acquired:new Date().toLocaleDateString('en-IN')});
-  closeModal();toast('Added to your collection! 🗃');renderCollection();
-}
-
-function removeFromCollection(id){
-  const idx=ADMIN_COLLECTION.findIndex(c=>c.id===id);
-  if(idx>-1)ADMIN_COLLECTION.splice(idx,1);
-  toast('Removed from collection');renderCollection();
-}
-
-// ─── DROPS & AUCTIONS ─────────────────────────────────────────────────────────
-function renderDrops(){
-  document.getElementById('drops-listings').innerHTML=ADMIN_LISTINGS.filter(l=>l.listing_type==='drop').map(listingCard).join('')||'<div class="empty"><div class="empty-icon">⏳</div><h3>No drops scheduled</h3></div>';
-}
-function renderAuctions(){
-  document.getElementById('auctions-listings').innerHTML=ADMIN_LISTINGS.filter(l=>l.listing_type==='auction').map(listingCard).join('')||'<div class="empty"><div class="empty-icon">⚡</div><h3>No live auctions</h3></div>';
-}
-
-// ─── DETAIL ───────────────────────────────────────────────────────────────────
-function openDetail(id,source){
-  prevPage=document.querySelector('.page.active')?.id?.replace('page-','')||'browse';
-  currentListing=source==='public'?PUBLIC_LISTINGS.find(l=>l.id===id):ADMIN_LISTINGS.find(l=>l.id===id);
-  if(!currentListing)return;
-  renderDetail();go('detail');
-}
-
-function renderDetail(){
-  const l=currentListing;
-  const isAuction=l.listing_type==='auction',isDrop=l.listing_type==='drop';
-  const dropLive=isDrop&&l.drop_time&&new Date()>=new Date(l.drop_time);
-  const canBuy=l.status==='active'&&!isAuction&&(!isDrop||dropLive);
-  const minBid=l.current_bid?l.current_bid+10:(l.starting_bid||0);
-  const isPublic=l.source==='public';
-  document.getElementById('detail-content').innerHTML=`
-    <div class="detail-layout">
-      <div><div class="detail-main-img">${l.emoji}</div></div>
-      <div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
-          ${isPublic?'<span class="badge b-purple">🪩 Public Collection</span>':'<span class="badge b-orange">HotWheelz BLR</span>'}
-          ${isAuction?'<span class="badge b-yellow">⚡ Auction</span>':''}
-          ${isDrop&&!dropLive?'<span class="badge b-red">🔥 Drop</span>':''}
-          ${isDrop&&dropLive?'<span class="badge b-green">🟢 Live</span>':''}
-          <span class="badge b-gray">${l.condition_label||l.condition_code}</span>
-        </div>
-        <h1 style="font-family:var(--ff-head);font-size:28px;font-weight:900;text-transform:uppercase;margin-bottom:4px">${l.car_name}</h1>
-        <p style="color:var(--muted2);font-size:13px;margin-bottom:4px">${l.series||''}${l.year?' · '+l.year:''}</p>
-        ${isPublic&&l.owner?`<p style="font-size:12px;color:var(--muted2);margin-bottom:12px">Listed by <strong style="color:var(--text)">${l.owner}</strong> · Bangalore</p>`:''}
-        <div class="verified-badge" style="margin-bottom:14px">✓ Platform Verified</div>
-        <p style="font-size:14px;color:var(--muted2);line-height:1.6;margin-bottom:16px">${l.description||''}</p>
-        <div style="display:flex;gap:14px;margin-bottom:14px;font-size:12px;color:var(--muted2)">
-          <span>👁 ${l.view_count||0} views</span>
-          ${isAuction?`<span>🔥 ${l.bid_count||0} bids</span>`:''}
-        </div>
-        ${isAuction?`
-          <div class="bid-box">
-            <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em">Current Bid</div>
-            <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px">
-              <div class="bid-amt">${INR(l.current_bid||l.starting_bid||0)}</div>
-              ${l.bid_count>0?`<span style="font-size:11px;color:var(--muted2)">(${l.bid_count} bids)</span>`:''}
-            </div>
-            ${l.auction_end?`<div class="auction-live" style="margin-bottom:12px"><div class="live-dot"></div> Ends <span id="det-cd" style="margin-left:4px">${cd(l.auction_end,true)}</span></div>`:''}
-            <div style="display:flex;gap:8px">
-              <input class="form-input" type="number" id="bid-input" placeholder="Min ${INR(minBid)}" style="flex:1">
-              <button class="btn btn-y" onclick="placeBid()">Place Bid</button>
-            </div>
-          </div>`:`
-          <div class="buy-box">
-            <div style="font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Price</div>
-            <div class="buy-price">${INR(l.selling_price)}</div>
-            ${isDrop&&!dropLive&&l.drop_time?`<div style="margin-bottom:14px"><div style="font-size:10px;color:var(--muted2);margin-bottom:5px">Drops in</div><div id="det-cd">${cd(l.drop_time)}</div></div>`:''}
-            ${canBuy?`<button class="btn btn-p btn-lg" style="width:100%" onclick="buyNow()">🏎️ Buy Now</button>`:isDrop&&!dropLive?`<button class="btn btn-s btn-lg" style="width:100%" disabled>Drops Soon</button>`:`<button class="btn btn-s btn-lg" style="width:100%" disabled>Unavailable</button>`}
-          </div>`}
-      </div>
-    </div>`;
-}
-
-function placeBid(){
-  if(!currentUser){toast('Login to bid','error');return}
-  const l=currentListing,amount=parseFloat(document.getElementById('bid-input').value);
-  const minBid=l.current_bid?l.current_bid+10:(l.starting_bid||0);
-  if(!amount||amount<minBid){toast(`Minimum bid is ${INR(minBid)}`,'error');return}
-  l.current_bid=amount;l.bid_count=(l.bid_count||0)+1;
-  toast(`Bid of ${INR(amount)} placed! 🎉`);renderDetail();
-}
-function buyNow(){
-  if(!currentUser){toast('Login to buy','error');return}
-  currentListing.status='sold';
-  toast(`${currentListing.car_name} is yours! 🏎️`);go(prevPage);
-}
-
-// ─── AUTH ─────────────────────────────────────────────────────────────────────
-function doLogin(){
-  const email=document.getElementById('login-email').value.trim();
-  if(!email){toast('Enter email','error');return}
-  const isAdmin=email.includes('admin');
-  currentUser={id:isAdmin?'admin1':'u1',email,name:isAdmin?'Admin':'Kiran M.',role:isAdmin?'admin':'user'};
-  renderNav();toast(`Welcome back, ${currentUser.name.split(' ')[0]}! 🏎️`);
-  go(isAdmin?'admin':'home');
-}
-function doRegister(){
-  const name=document.getElementById('reg-name').value.trim(),email=document.getElementById('reg-email').value.trim();
-  if(!name||!email){toast('Fill in all fields','error');return}
-  currentUser={id:'u'+Date.now(),email,name,role:'user'};
-  renderNav();toast(`Welcome, ${name.split(' ')[0]}! 🏎️`);go('home');
-}
-function doLogout(){currentUser=null;renderNav();toast('Logged out');go('home')}
-
-// ─── DASHBOARD ────────────────────────────────────────────────────────────────
-function renderDashboard(){
-  if(!currentUser){document.getElementById('dashboard-content').innerHTML='<div class="empty"><h3>Please login</h3><button class="btn btn-p" style="margin-top:14px" onclick="go(\'login\')">Login</button></div>';return}
-  const mine=USER_SUBMISSIONS;
-  document.getElementById('dashboard-content').innerHTML=`
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px">
-      <div style="width:48px;height:48px;border-radius:50%;background:rgba(232,0,29,.15);display:flex;align-items:center;justify-content:center;font-family:var(--ff-head);font-size:18px;font-weight:700;color:var(--red)">${currentUser.name[0]}</div>
-      <div>
-        <h1 style="font-family:var(--ff-head);font-size:24px;font-weight:800">${currentUser.name}</h1>
-        <div style="display:flex;gap:8px;align-items:center;margin-top:3px">
-          <span class="badge ${currentUser.role==='admin'?'b-red':'b-purple'}">${currentUser.role==='admin'?'Admin':'Collector'}</span>
-          <span style="font-size:12px;color:var(--muted2)">${currentUser.email}</span>
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">
-      <button class="btn btn-v" onclick="openListYourCar()">🪩 List a Car (Public)</button>
-      ${currentUser.role==='admin'?'<button class="btn btn-p" onclick="go(\'admin\')">⚙ Admin Panel</button>':''}
-    </div>
-    <h3 style="font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:14px">My Public Submissions</h3>
-    ${mine.length?mine.map(s=>`
-      <div class="sub-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-          <div>
-            <div style="font-family:var(--ff-head);font-size:16px;font-weight:700">${s.emoji} ${s.car_name}</div>
-            <div style="font-size:12px;color:var(--muted2);margin-top:2px">${s.condition_code} · Asking ${INR(s.selling_price)}</div>
-          </div>
-          <span class="badge ss-${s.status}" style="padding:3px 9px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase">${s.status}</span>
-        </div>
-        ${s.status==='approved'&&s.seller_payout?`<div style="margin-top:10px;padding:9px 12px;background:rgba(34,197,94,.08);border-radius:var(--r);border:1px solid rgba(34,197,94,.15)"><span style="color:#4ADE80;font-size:12px">✓ Approved · Your payout: <strong>${INR(s.seller_payout)}</strong></span></div>`:''}
-        ${s.status==='rejected'&&s.admin_notes?`<div style="margin-top:10px;padding:9px 12px;background:rgba(232,0,29,.08);border-radius:var(--r);border:1px solid rgba(232,0,29,.15)"><span style="color:#FF4D6A;font-size:12px">Reason: ${s.admin_notes}</span></div>`:''}
-        <div style="font-size:10px;color:var(--muted);margin-top:7px">${new Date(s.submitted_at).toLocaleDateString('en-IN')}</div>
-      </div>`).join(''):`<div class="empty"><div class="empty-icon">🪩</div><h3>No listings yet</h3><button class="btn btn-v" style="margin-top:12px" onclick="openListYourCar()">List Your First Car</button></div>`}`;
-}
-
-// ─── ADMIN ────────────────────────────────────────────────────────────────────
-const ADM_SECS=['dashboard','pub-submissions','collection','listings','orders','users'];
-const ADM_ICONS={dashboard:'📊','pub-submissions':'🪩',collection:'🗃',listings:'🏎️',orders:'📦',users:'👥'};
-const ADM_LABELS={dashboard:'Dashboard','pub-submissions':'Public Submissions',collection:'My Collection',listings:'Curated Listings',orders:'Orders',users:'Users'};
-const ADM_BADGES={'pub-submissions':PENDING_PUB.length};
-
-function renderAdmin(){
-  if(!currentUser||currentUser.role!=='admin'){document.getElementById('admin-content').innerHTML='<div class="empty"><h3>Admin only</h3></div>';return}
-  document.getElementById('admin-sidebar').innerHTML=`
-    <div style="font-family:var(--ff-head);font-size:15px;font-weight:800;padding:6px 10px;margin-bottom:8px;color:var(--red)">ADMIN</div>
-    ${ADM_SECS.map(s=>`<div class="sidebar-item ${adminSection===s?'a':''}" onclick="setAdminSec('${s}')">
-      ${ADM_ICONS[s]} ${ADM_LABELS[s]}
-      ${ADM_BADGES[s]>0?`<span style="margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 5px;border-radius:10px">${ADM_BADGES[s]}</span>`:''}
-    </div>`).join('')}`;
-  renderAdminContent();
-}
-function setAdminSec(s){adminSection=s;renderAdmin()}
-
-function renderAdminContent(){
-  const el=document.getElementById('admin-content');
-  if(adminSection==='dashboard')el.innerHTML=adminDashboard();
-  else if(adminSection==='pub-submissions')el.innerHTML=adminPubSubs();
-  else if(adminSection==='collection'){renderCollection();el.innerHTML='';document.getElementById('page-admin').style.display='none';go('collection');}
-  else if(adminSection==='listings')el.innerHTML=adminListings();
-  else if(adminSection==='orders')el.innerHTML=adminOrders();
-  else if(adminSection==='users')el.innerHTML=adminUsers();
-}
-
-function adminDashboard(){
-  const stats=[{l:'Platform Revenue',v:'₹1,86,000',cls:'profit'},{l:'Platform Profit',v:'₹42,500',cls:'profit'},{l:'Public Pending',v:PENDING_PUB.length,cls:'pending'},{l:'Active Listings',v:ADMIN_LISTINGS.length+PUBLIC_LISTINGS.length},{l:'Collection Size',v:ADMIN_COLLECTION.length},{l:'Total Users',v:124}];
-  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">Dashboard</h2>
-    <div class="stat-grid">${stats.map(s=>`<div class="stat-card ${s.cls||''}"><div class="stat-val">${s.v}</div><div class="stat-lbl">${s.l}</div></div>`).join('')}</div>
-    <h3 style="font-family:var(--ff-head);font-size:18px;font-weight:700;margin-bottom:14px">Pending Public Submissions</h3>
-    ${PENDING_PUB.length?PENDING_PUB.map(s=>`
-      <div style="background:var(--bg2);border:1px solid rgba(124,58,237,.2);border-radius:var(--rl);padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-        <div>
-          <div style="font-family:var(--ff-head);font-size:16px;font-weight:700">${s.emoji} ${s.car_name}</div>
-          <div style="font-size:12px;color:var(--muted2);margin-top:2px">by ${s.seller_name} · ${s.condition_code} · Asking ${INR(s.seller_expected_price)}</div>
-          ${s.description?`<div style="font-size:12px;color:var(--muted);margin-top:2px">${s.description}</div>`:''}
-        </div>
-        <button class="btn btn-v" style="font-size:12px;padding:6px 14px" onclick="approvePub('${s.id}')">✓ Approve & List</button>
-      </div>`).join(''):`<div class="empty"><div class="empty-icon">✅</div><h3>All clear!</h3><p>No pending submissions.</p></div>`}`;
-}
-
-function adminPubSubs(){
-  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">🪩 Public Submissions</h2>
-    ${PENDING_PUB.length?PENDING_PUB.map(s=>`
-      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:12px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
-          <div>
-            <div style="font-family:var(--ff-head);font-size:18px;font-weight:700">${s.emoji} ${s.car_name}</div>
-            <div style="font-size:12px;color:var(--muted2);margin-top:3px">by <strong style="color:var(--text)">${s.seller_name}</strong> · ${s.condition_code} · Asking ${INR(s.seller_expected_price)}</div>
-            ${s.description?`<p style="font-size:12px;color:var(--muted);margin-top:5px">${s.description}</p>`:''}
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-v" style="font-size:12px;padding:6px 14px" onclick="approvePub('${s.id}')">✓ Approve</button>
-            <button class="btn btn-g" style="font-size:12px;color:#FF4D6A" onclick="rejectPub('${s.id}')">✕ Reject</button>
-          </div>
-        </div>
-      </div>`).join(''):`<div class="empty"><div class="empty-icon">🪩</div><h3>No pending submissions</h3></div>`}`;
-}
-
-function approvePub(id){
-  const sub=PENDING_PUB.find(s=>s.id===id);
-  if(!sub)return;
-  openModal(`
-    <div class="modal-title">Approve: ${sub.car_name}</div>
-    <p style="color:var(--muted2);font-size:13px;margin-bottom:16px">Set the final listing price and seller payout. Only the payout is shown to the seller.</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div class="form-group"><label class="form-label">Listing Price (₹) *</label><input class="form-input" type="number" id="ap-price" value="${Math.round(sub.seller_expected_price*1.2)}" placeholder="Buyer pays"></div>
-      <div class="form-group"><label class="form-label">Seller Payout (₹) *</label><input class="form-input" type="number" id="ap-payout" value="${sub.seller_expected_price}" placeholder="Seller receives"></div>
-    </div>
-    <div id="ap-margin" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:var(--r);padding:9px 12px;font-size:12px;color:#4ADE80;margin-bottom:14px">Platform margin: ${INR(sub.seller_expected_price*0.2)}</div>
-    <button class="btn btn-v btn-lg" style="width:100%" onclick="confirmApprovePub('${id}')">✓ Approve & List Publicly</button>`);
-}
-
-function confirmApprovePub(id){
-  const sub=PENDING_PUB.find(s=>s.id===id);
-  if(!sub)return;
-  const price=parseFloat(document.getElementById('ap-price').value);
-  const payout=parseFloat(document.getElementById('ap-payout').value);
-  if(!price||!payout||payout>=price){toast('Check pricing — payout must be less than price','error');return}
-  PUBLIC_LISTINGS.push({id:'p'+Date.now(),car_name:sub.car_name,series:'Community',year:2024,condition_code:sub.condition_code,condition_label:sub.condition_code,selling_price:price,listing_type:'normal',status:'active',emoji:sub.emoji||'🚗',view_count:0,bid_count:0,source:'public',owner:sub.seller_name,owner_id:'u_ext',description:sub.description||'',verified:true});
-  const idx=PENDING_PUB.findIndex(s=>s.id===id);
-  if(idx>-1)PENDING_PUB.splice(idx,1);
-  const subIdx=USER_SUBMISSIONS.findIndex(s=>s.car_name===sub.car_name);
-  if(subIdx>-1){USER_SUBMISSIONS[subIdx].status='approved';USER_SUBMISSIONS[subIdx].seller_payout=payout;}
-  closeModal();toast(`${sub.car_name} approved and now live in Public Collection! 🪩`);renderAdmin();
-}
-
-function rejectPub(id){
-  const idx=PENDING_PUB.findIndex(s=>s.id===id);
-  if(idx>-1)PENDING_PUB.splice(idx,1);
-  toast('Submission rejected');renderAdmin();
-}
-
-function adminListings(){
-  const all=[...ADMIN_LISTINGS.map(l=>({...l,src:'Admin'})),...PUBLIC_LISTINGS.map(l=>({...l,src:'Public'}))];
-  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">All Listings</h2>
-    <div style="overflow-x:auto"><table>
-      <thead><tr><th>Car</th><th>Source</th><th>Type</th><th>Price</th><th>Status</th><th>Action</th></tr></thead>
-      <tbody>${all.map(l=>`<tr>
-        <td><strong>${l.car_name}</strong><br><span style="font-size:10px;color:var(--muted2)">${l.condition_code}</span></td>
-        <td><span class="badge ${l.src==='Public'?'b-purple':'b-orange'}">${l.src}</span></td>
-        <td><span class="badge ${l.listing_type==='auction'?'b-yellow':l.listing_type==='drop'?'b-red':'b-gray'}">${l.listing_type}</span></td>
-        <td>${INR(l.selling_price)}</td>
-        <td><span class="badge ${l.status==='active'?'b-green':l.status==='sold'?'b-blue':'b-gray'}">${l.status}</span></td>
-        <td><button class="btn btn-g" style="font-size:11px;padding:4px 10px;color:#FF4D6A" onclick="toast('Listing hidden')">Hide</button></td>
-      </tr>`).join('')}
-      </tbody>
-    </table></div>`;
-}
-
-function adminOrders(){return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">Orders</h2><div class="empty"><div class="empty-icon">📦</div><h3>No orders yet</h3><p>Orders appear here once buyers purchase listings.</p></div>`}
-
-function adminUsers(){
-  const users=[{name:'Kiran M.',email:'user@hwblr.in',role:'Collector',subs:3},{name:'Arjun K.',email:'arjun@gmail.com',role:'Collector',subs:1},{name:'Admin',email:'admin@hwblr.in',role:'Admin',subs:0}];
-  return`<h2 style="font-family:var(--ff-head);font-size:24px;font-weight:800;margin-bottom:20px">Users</h2>
-    <div style="overflow-x:auto"><table>
-      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Public Listings</th><th>Action</th></tr></thead>
-      <tbody>${users.map(u=>`<tr>
-        <td><strong>${u.name}</strong></td><td style="color:var(--muted2)">${u.email}</td>
-        <td><span class="badge ${u.role==='Admin'?'b-red':'b-purple'}">${u.role}</span></td>
-        <td>${u.subs}</td>
-        <td><button class="btn btn-g" style="font-size:11px;padding:4px 10px;color:#FF4D6A" onclick="toast('User deactivated')">Deactivate</button></td>
-      </tr>`).join('')}</tbody>
-    </table></div>`;
-}
-
-// ─── COUNTDOWN UPDATER ────────────────────────────────────────────────────────
-function startCd(){
-  cdInterval=setInterval(()=>{
-    const drop=ADMIN_LISTINGS.find(l=>l.listing_type==='drop');
-    const hcd=document.getElementById('home-drop-cd');
-    if(hcd&&drop)hcd.innerHTML=cd(drop.drop_time);
-    const detCd=document.getElementById('det-cd');
-    if(detCd&&currentListing){
-      const t=currentListing.listing_type==='auction'?currentListing.auction_end:currentListing.drop_time;
-      if(t)detCd.innerHTML=currentListing.listing_type==='auction'?cd(t,true):cd(t);
-    }
+auctions.forEach(a=>{
+  const el=document.getElementById('cd'+a.name.replace(/\W/g,''));
+  if(!el||!a.live)return;
+  let p=a.ends.split(':').map(Number);
+  setInterval(()=>{
+    p[2]--;
+    if(p[2]<0){p[2]=59;p[1]--;}
+    if(p[1]<0){p[1]=59;p[0]--;}
+    if(p[0]<0){p[0]=p[1]=p[2]=0;}
+    el.textContent=p.map(n=>String(n).padStart(2,'0')).join(':');
   },1000);
+});
+
+function setTab(el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
 }
 
-renderNav();
-go('home');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+setTimeout(()=>{
+  document.querySelectorAll('.pcard,.acard').forEach((el,i)=>{
+    el.classList.add('reveal');
+    el.style.transitionDelay=`${i*0.06}s`;
+    obs.observe(el);
+  });
+},80);
 </script>
 </body>
 </html>
