@@ -1,1327 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToysGuru.in — Bangalore's Diecast Marketplace</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>ToysGuru.in — Welcome</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --red: #e8001d;
-  --red2: #ff1f38;
-  --gold: #c9a84c;
-  --goldf: #f5d06e;
-  --bg: #000000;
-  --s1: #0c0c0c;
-  --s2: #111111;
-  --s3: #161616;
-  --bdr: rgba(201,168,76,0.14);
-  --txt: #ede8df;
-  --muted: #5a554f;
-  --white: #f7f2ea;
+
+:root{
+  --red:#e0001b;
+  --gold:#cfa84b;
+  --bg:#050505;
+  --text:#f4f1eb;
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-
-body {
-  background:#000;
-  color:var(--txt);
-  font-family:'Syne',sans-serif;
-  overflow-x:hidden;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-/* ─── GLOW CURSOR TEXT EFFECT ─── */
-.glow-text {
-  position:relative;
-  display:inline-block;
-  cursor:default;
-  transition:color 0.3s;
-}
-.glow-text:hover {
-  color:#fff;
-  text-shadow:
-    0 0 8px rgba(232,0,29,0.9),
-    0 0 20px rgba(232,0,29,0.6),
-    0 0 50px rgba(232,0,29,0.3);
-}
-.glow-text-gold:hover {
-  color:#fff;
-  text-shadow:
-    0 0 8px rgba(201,168,76,0.9),
-    0 0 24px rgba(201,168,76,0.6),
-    0 0 60px rgba(201,168,76,0.3);
-}
-.glow-text-white:hover {
-  color:#fff;
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.8),
-    0 0 30px rgba(255,255,255,0.4),
-    0 0 70px rgba(255,255,255,0.15);
-}
-
-/* ─── NAV ─── */
-nav {
-  position:fixed;
-  top:0;left:0;right:0;
-  z-index:200;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 48px;
-  height:62px;
-  background:rgba(0,0,0,0.88);
-  border-bottom:1px solid rgba(201,168,76,0.1);
-  backdrop-filter:blur(20px);
-}
-
-.logo {
-  display:flex;
-  align-items:center;
-  gap:0;
-  text-decoration:none;
-}
-.logo-main {
-  font-family:'Orbitron',sans-serif;
-  font-weight:900;
-  font-size:19px;
-  letter-spacing:3px;
-  color:#fff;
-  text-transform:uppercase;
-}
-.logo-main em {
-  font-style:normal;
-  color:var(--gold);
-}
-.logo-dot {
-  font-family:'DM Mono',monospace;
-  font-size:12px;
-  color:var(--muted);
-  letter-spacing:1px;
-  margin-left:2px;
-  padding-top:6px;
-}
-
-.nav-links {
-  display:flex;
-  gap:36px;
-  list-style:none;
-}
-.nav-links a {
-  font-family:'Syne',sans-serif;
-  font-weight:600;
-  font-size:12px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  text-decoration:none;
-  color:var(--muted);
-  transition:color 0.25s, text-shadow 0.25s;
-}
-.nav-links a:hover {
-  color:#fff;
-  text-shadow:0 0 16px rgba(232,0,29,0.7),0 0 40px rgba(232,0,29,0.3);
-}
-
-.nav-actions { display:flex; gap:10px; }
-
-.btn-ghost {
-  background:transparent;
-  border:1px solid rgba(255,255,255,0.1);
-  color:rgba(255,255,255,0.6);
-  padding:8px 22px;
-  font-family:'Syne',sans-serif;
-  font-weight:600;
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all 0.25s;
-}
-.btn-ghost:hover {
-  border-color:var(--gold);
-  color:var(--gold);
-  box-shadow:0 0 16px rgba(201,168,76,0.2),inset 0 0 12px rgba(201,168,76,0.04);
-}
-
-.btn-red {
-  background:var(--red);
-  border:1px solid var(--red);
-  color:#fff;
-  padding:8px 24px;
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all 0.25s;
-  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
-}
-.btn-red:hover {
-  background:#ff0020;
-  box-shadow:0 0 24px rgba(232,0,29,0.6),0 0 60px rgba(232,0,29,0.2);
-}
-
-/* ─── HERO ─── */
-.hero {
-  position:relative;
-  min-height:100vh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-  padding:62px 0 0;
+body{
   overflow:hidden;
   background:#000;
+  font-family:'Syne',sans-serif;
+  color:var(--text);
 }
 
-/* subtle scanline texture */
-.hero::before {
+/* BACKGROUND */
+
+.bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at top left, rgba(224,0,27,0.18), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(207,168,75,0.12), transparent 30%),
+    #000;
+  overflow:hidden;
+}
+
+.bg::before{
   content:'';
   position:absolute;
   inset:0;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(255,255,255,0.008) 3px,
-    rgba(255,255,255,0.008) 4px
-  );
-  pointer-events:none;
-  z-index:0;
-}
-
-/* radial light behind car */
-.hero-light {
-  position:absolute;
-  right:0;top:0;bottom:0;
-  width:55%;
   background:
-    radial-gradient(ellipse 70% 60% at 60% 55%, rgba(232,0,29,0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 30% at 65% 75%, rgba(201,168,76,0.04) 0%, transparent 60%);
-  pointer-events:none;
-  z-index:0;
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  opacity:0.3;
 }
 
-.hero-left {
-  position:relative;
-  z-index:2;
-  padding:0 0 0 64px;
-}
+/* PARTICLES */
 
-.hero-eyebrow {
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:36px;
-  opacity:0;
-  animation:fadeUp 0.7s 0.1s ease forwards;
-}
-.hero-eyebrow::before {
-  content:'';
-  width:28px;height:1px;
-  background:var(--gold);
-}
-.pulse-dot {
-  width:5px;height:5px;
+.particle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:rgba(255,255,255,0.6);
   border-radius:50%;
-  background:var(--red);
-  animation:blink 1.6s infinite;
-}
-@keyframes blink {0%,100%{opacity:1}50%{opacity:0.2}}
-
-.hero-h1 {
-  font-family:'Playfair Display',serif;
-  font-weight:900;
-  font-size:clamp(60px,7.5vw,100px);
-  line-height:0.9;
-  color:#fff;
-  letter-spacing:-1px;
-  margin-bottom:24px;
-  opacity:0;
-  animation:fadeUp 0.8s 0.2s ease forwards;
-}
-.hero-h1 .line2 {
-  font-family:'Orbitron',sans-serif;
-  font-weight:900;
-  font-size:clamp(28px,3.8vw,52px);
-  letter-spacing:6px;
-  color:var(--red);
-  display:block;
-  line-height:1.3;
-}
-.hero-h1 .line3 {
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-  font-size:clamp(50px,6vw,82px);
-  color:var(--gold);
-  display:block;
-  font-style:italic;
-  line-height:1;
+  animation:float 12s linear infinite;
 }
 
-.hero-desc {
-  font-size:15px;
-  line-height:1.75;
-  color:rgba(237,232,223,0.5);
-  max-width:400px;
-  margin-bottom:44px;
-  opacity:0;
-  animation:fadeUp 0.8s 0.35s ease forwards;
+@keyframes float{
+  from{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+  10%{
+    opacity:1;
+  }
+  to{
+    transform:translateY(-100vh);
+    opacity:0;
+  }
 }
-.hero-desc strong { color:rgba(237,232,223,0.85); font-weight:600; }
 
-.hero-cta {
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  opacity:0;
-  animation:fadeUp 0.8s 0.45s ease forwards;
-}
-.btn-lg { padding:15px 40px; font-size:12px; letter-spacing:2.5px; }
+/* CENTER AREA */
 
-/* ─── VINTAGE CAR SVG ─── */
-.hero-right {
+.center-wrap{
   position:relative;
   z-index:2;
+  min-height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
-  height:100%;
-  min-height:100vh;
-  padding-top:62px;
+  flex-direction:column;
+  text-align:center;
+  padding:20px;
+}
+
+/* HOT WHEELS */
+
+.hw-logo{
+  width:320px;
+  max-width:85vw;
+  margin-bottom:25px;
+  animation:logoEnter 2s ease forwards;
+  filter:drop-shadow(0 0 30px rgba(255,80,0,0.5));
+}
+
+@keyframes logoEnter{
+  from{
+    transform:translateX(-140vw);
+    opacity:0;
+  }
+  to{
+    transform:translateX(0);
+    opacity:1;
+  }
+}
+
+/* TOYS */
+
+.toy{
+  position:absolute;
+  width:170px;
+  object-fit:contain;
   opacity:0;
-  animation:fadeIn 1.2s 0.4s ease forwards;
 }
 
-.car-wrap {
-  position:relative;
-  width:90%;
-  max-width:600px;
+.toy1{
+  left:-250px;
+  bottom:10%;
+  animation:toy1 2.8s ease forwards;
 }
 
-.car-ground-glow {
-  position:absolute;
-  bottom:-20px;
-  left:50%;transform:translateX(-50%);
-  width:80%;height:40px;
-  background:radial-gradient(ellipse 100% 100% at 50% 50%, rgba(232,0,29,0.35) 0%, transparent 70%);
-  filter:blur(12px);
-  border-radius:50%;
-  animation:glowPulse 2.5s ease-in-out infinite;
-}
-.car-headlight-l {
-  position:absolute;
-  left:6%;bottom:30%;
-  width:80px;height:20px;
-  background:radial-gradient(ellipse 100% 100% at 0% 50%, rgba(255,220,120,0.7) 0%, transparent 100%);
-  filter:blur(6px);
-  animation:headlightFlicker 3s ease-in-out infinite;
-}
-.car-headlight-r {
-  position:absolute;
-  right:6%;bottom:30%;
-  width:80px;height:20px;
-  background:radial-gradient(ellipse 100% 100% at 100% 50%, rgba(255,220,120,0.7) 0%, transparent 100%);
-  filter:blur(6px);
-  animation:headlightFlicker 3s 0.3s ease-in-out infinite;
+.toy2{
+  right:-250px;
+  top:8%;
+  animation:toy2 3s ease forwards;
 }
 
-@keyframes glowPulse {
-  0%,100%{opacity:0.8;transform:translateX(-50%) scaleX(1);}
-  50%{opacity:1;transform:translateX(-50%) scaleX(1.08);}
-}
-@keyframes headlightFlicker {
-  0%,100%{opacity:0.7}50%{opacity:1}
-}
-@keyframes fadeUp {
-  from{opacity:0;transform:translateY(28px);}
-  to{opacity:1;transform:translateY(0);}
-}
-@keyframes fadeIn {
-  from{opacity:0;}to{opacity:1;}
+.toy3{
+  right:-220px;
+  bottom:14%;
+  animation:toy3 3.2s ease forwards;
 }
 
-/* ─── MARQUEE ─── */
-.ticker {
-  background:#0a0a0a;
-  border-top:1px solid rgba(232,0,29,0.25);
-  border-bottom:1px solid rgba(232,0,29,0.25);
-  padding:11px 0;
-  overflow:hidden;
-  position:relative;
-  z-index:1;
+@keyframes toy1{
+  to{
+    left:7%;
+    opacity:1;
+  }
 }
-.ticker-inner {
-  display:flex;
-  animation:ticker 22s linear infinite;
-  width:max-content;
+
+@keyframes toy2{
+  to{
+    right:7%;
+    opacity:1;
+  }
 }
-.ticker-item {
+
+@keyframes toy3{
+  to{
+    right:15%;
+    opacity:1;
+  }
+}
+
+/* TITLE */
+
+.title{
   font-family:'Orbitron',sans-serif;
-  font-size:11px;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:rgba(232,0,29,0.7);
-  padding:0 40px;
-  white-space:nowrap;
-}
-.ticker-item::after { content:'  ✦  '; color:rgba(201,168,76,0.4); }
-@keyframes ticker {
-  from{transform:translateX(0);}
-  to{transform:translateX(-50%);}
-}
-
-/* ─── SECTION SHELL ─── */
-section { position:relative; z-index:1; padding:88px 64px; }
-
-.sec-tag {
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:3.5px;
-  text-transform:uppercase;
-  color:var(--red);
-  margin-bottom:14px;
-  display:flex;align-items:center;gap:12px;
-}
-.sec-tag::before { content:''; width:20px;height:1px;background:var(--red); }
-
-.sec-title {
-  font-family:'Playfair Display',serif;
+  font-size:clamp(58px,10vw,140px);
   font-weight:900;
-  font-size:clamp(38px,4.5vw,58px);
-  letter-spacing:-0.5px;
-  color:#fff;
+  letter-spacing:6px;
   line-height:1;
-  margin-bottom:10px;
+  opacity:0;
+  animation:titleReveal 2s 1s forwards;
+  text-transform:uppercase;
+  background:linear-gradient(to bottom,#ffffff,#d7b45f);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:
+    0 0 20px rgba(255,255,255,0.15),
+    0 0 50px rgba(224,0,27,0.15);
 }
-.sec-title span {
-  font-family:'Orbitron',sans-serif;
-  font-size:0.6em;
-  font-weight:900;
+
+@keyframes titleReveal{
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.subtitle{
+  margin-top:18px;
+  color:rgba(255,255,255,0.7);
   letter-spacing:4px;
-  color:var(--red);
+  font-size:13px;
+  text-transform:uppercase;
+  opacity:0;
+  animation:fadeIn 2s 1.6s forwards;
 }
 
-.sec-sub {
-  font-size:14px;
-  color:var(--muted);
-  max-width:400px;
-  margin-bottom:52px;
-  line-height:1.65;
+@keyframes fadeIn{
+  to{
+    opacity:1;
+  }
 }
 
-/* ─── EXPLORE ─── */
-.explore-section { background:var(--s1); }
+/* BUTTON */
 
-.tabs {
-  display:flex;
-  gap:2px;
-  margin-bottom:36px;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.tab {
-  background:none;
+.enter-btn{
+  margin-top:50px;
+  padding:18px 48px;
+  background:linear-gradient(135deg,var(--red),#8f0011);
   border:none;
-  border-bottom:2px solid transparent;
-  padding:10px 20px 11px;
-  font-family:'Syne',sans-serif;
-  font-weight:700;
-  font-size:11px;
-  letter-spacing:2.5px;
-  text-transform:uppercase;
-  color:var(--muted);
-  cursor:pointer;
-  margin-bottom:-1px;
-  transition:all 0.2s;
-}
-.tab.active,.tab:hover { color:#fff; border-bottom-color:var(--red); }
-
-.product-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-  gap:18px;
-}
-
-.pcard {
-  background:var(--s2);
-  border:1px solid rgba(255,255,255,0.04);
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-  transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-.pcard:hover {
-  transform:translateY(-5px);
-  border-color:rgba(201,168,76,0.4);
-  box-shadow:0 12px 40px rgba(0,0,0,0.6),0 0 30px rgba(201,168,76,0.08);
-}
-.pcard:hover .pcard-name { text-shadow:0 0 16px rgba(255,255,255,0.5); }
-.pcard:hover .pcard-price { text-shadow:0 0 14px rgba(201,168,76,0.7); }
-.pcard:hover .pov { opacity:1; }
-
-.pbadge {
-  position:absolute;top:10px;left:10px;
-  background:var(--red);
   color:#fff;
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:1.5px;
-  padding:3px 8px;
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;
+  letter-spacing:3px;
+  cursor:pointer;
   text-transform:uppercase;
-  z-index:2;
+  transition:0.3s;
+  opacity:0;
+  animation:fadeIn 2s 2.2s forwards;
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
 }
-.pbadge.gold { background:var(--gold); color:#111; }
 
-.pimg {
-  width:100%;
-  aspect-ratio:4/3;
-  background:var(--s3);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
+.enter-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 0 25px rgba(224,0,27,0.5),
+    0 0 60px rgba(224,0,27,0.2);
+}
+
+/* LOGIN MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  backdrop-filter:blur(12px);
+}
+
+.modal-box{
+  width:90%;
+  max-width:420px;
+  background:#090909;
+  border:1px solid rgba(207,168,75,0.25);
+  padding:40px;
   position:relative;
-}
-.pov {
-  position:absolute;inset:0;
-  background:rgba(232,0,29,0.07);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;transition:opacity 0.3s;
-  z-index:3;
-}
-.pov-btn {
-  background:var(--red);color:#fff;border:none;
-  padding:9px 18px;
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;font-size:10px;letter-spacing:2px;
-  text-transform:uppercase;cursor:pointer;
-  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
-  transition:background 0.2s;
-}
-.pov-btn:hover { background:#ff0020; }
-
-.pbody { padding:14px 16px; }
-.pseries {
-  font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:2px;
-  color:var(--gold);text-transform:uppercase;margin-bottom:6px;
-}
-.pcard-name {
-  font-family:'Syne',sans-serif;
-  font-weight:700;font-size:14px;
-  color:#fff;margin-bottom:10px;
-  line-height:1.25;
-  transition:text-shadow 0.3s;
-}
-.pfoot {
-  display:flex;align-items:center;justify-content:space-between;
-  padding-top:10px;
-  border-top:1px solid rgba(255,255,255,0.05);
-}
-.pcard-price {
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;font-size:18px;
-  color:var(--goldf);
-  transition:text-shadow 0.3s;
-}
-.pcond {
-  font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:1.5px;
-  color:var(--muted);
-  background:rgba(255,255,255,0.03);
-  padding:3px 8px;
-  border:1px solid rgba(255,255,255,0.05);
-  text-transform:uppercase;
+  animation:modalIn 0.4s ease;
 }
 
-/* ─── AUCTIONS ─── */
-.auction-section { background:#000; }
+@keyframes modalIn{
+  from{
+    transform:translateY(30px);
+    opacity:0;
+  }
+  to{
+    transform:translateY(0);
+    opacity:1;
+  }
+}
 
-.auction-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
-  gap:22px;
-}
-.acard {
-  background:var(--s2);
-  border:1px solid var(--bdr);
-  padding:22px;
-  position:relative;
-  overflow:hidden;
-  transition:border-color 0.3s, box-shadow 0.3s;
-}
-.acard:hover {
-  border-color:rgba(201,168,76,0.5);
-  box-shadow:0 0 40px rgba(201,168,76,0.06);
-}
-.acard:hover .aname {
-  text-shadow:0 0 20px rgba(255,255,255,0.5);
-}
-.acard::before {
-  content:'';
-  position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--red),var(--gold));
-}
-.acard-top {
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:18px;
-}
-.atag {
-  font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:2px;
-  color:var(--red);
-  background:rgba(232,0,29,0.08);
-  border:1px solid rgba(232,0,29,0.2);
-  padding:4px 10px;text-transform:uppercase;
-}
-.live-ind {
-  display:flex;align-items:center;gap:5px;
-  font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;
-  color:#4ade80;
-}
-.live-ind::before {
-  content:'';width:5px;height:5px;
-  border-radius:50%;background:#4ade80;
-  animation:blink 1.2s infinite;
-}
-.aimg {
-  width:100%;aspect-ratio:16/9;
-  background:var(--s3);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;position:relative;overflow:hidden;
-}
-.aimg::after {
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to top,var(--s2) 0%,transparent 55%);
-}
-.aname {
-  font-family:'Playfair Display',serif;
-  font-weight:700;font-size:20px;
-  color:#fff;margin-bottom:4px;
-  transition:text-shadow 0.3s;
-}
-.aseries {
-  font-family:'DM Mono',monospace;
-  font-size:10px;color:var(--muted);
-  letter-spacing:1.5px;text-transform:uppercase;
-  margin-bottom:18px;
-}
-.abids {
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  margin-bottom:18px;padding:14px;
-  background:var(--s3);
-}
-.alabel {
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:4px;
-}
-.aval {
+.modal-box h2{
   font-family:'Orbitron',sans-serif;
-  font-weight:700;font-size:22px;color:var(--goldf);
+  margin-bottom:10px;
+  font-size:24px;
 }
-.acount { font-family:'Orbitron',sans-serif;font-weight:700;font-size:20px;color:#fff; }
-.atime {
-  font-family:'DM Mono',monospace;
-  font-weight:500;font-size:17px;color:var(--red);
-  letter-spacing:2px;
+
+.modal-box p{
+  color:rgba(255,255,255,0.55);
+  margin-bottom:30px;
+  font-size:14px;
 }
-.bid-btn {
+
+.input{
   width:100%;
-  background:linear-gradient(135deg,var(--red),#9b0013);
-  border:none;color:#fff;padding:13px;
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;font-size:11px;letter-spacing:2.5px;
-  text-transform:uppercase;cursor:pointer;
-  transition:all 0.25s;position:relative;overflow:hidden;
-}
-.bid-btn::after {
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,transparent,rgba(255,255,255,0.08));
-  opacity:0;transition:opacity 0.25s;
-}
-.bid-btn:hover::after{opacity:1;}
-.bid-btn:hover{box-shadow:0 4px 30px rgba(232,0,29,0.5),0 0 60px rgba(232,0,29,0.15);}
-
-/* ─── SELL ─── */
-.sell-section {
-  background:var(--s1);
-  border-top:1px solid var(--bdr);
-  border-bottom:1px solid var(--bdr);
-}
-.sell-inner {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:72px;align-items:center;
-}
-.sell-feats { display:flex;flex-direction:column;gap:18px; }
-.sfeat {
-  display:flex;gap:14px;align-items:flex-start;
-  padding:18px;
-  background:var(--s2);
-  border:1px solid rgba(255,255,255,0.04);
-  transition:border-color 0.2s, box-shadow 0.2s;
-}
-.sfeat:hover {
-  border-color:var(--bdr);
-  box-shadow:0 0 20px rgba(201,168,76,0.04);
-}
-.sfeat:hover .ftitle {
-  text-shadow:0 0 16px rgba(255,255,255,0.4);
-}
-.ficon {
-  width:38px;height:38px;flex-shrink:0;
-  background:rgba(232,0,29,0.08);
-  border:1px solid rgba(232,0,29,0.18);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;
-}
-.ftitle {
-  font-family:'Syne',sans-serif;
-  font-weight:700;font-size:15px;color:#fff;
-  margin-bottom:3px;
-  transition:text-shadow 0.3s;
-}
-.fdesc { font-size:13px;color:var(--muted);line-height:1.55; }
-
-.sell-form {
-  background:var(--s2);
-  border:1px solid var(--bdr);
-  padding:34px;position:relative;
-}
-.sell-form::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--gold),var(--red));
-}
-.form-title {
-  font-family:'Orbitron',sans-serif;
-  font-weight:900;font-size:20px;
-  letter-spacing:2px;color:#fff;margin-bottom:22px;
-}
-.frow { margin-bottom:14px; }
-.frow label {
-  display:block;
-  font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:2.5px;
-  text-transform:uppercase;color:var(--muted);margin-bottom:6px;
-}
-.frow input, .frow select {
-  width:100%;
-  background:var(--s3);
+  margin-bottom:16px;
+  background:#121212;
   border:1px solid rgba(255,255,255,0.06);
-  color:var(--txt);
-  padding:10px 14px;
-  font-family:'Syne',sans-serif;font-size:14px;
-  outline:none;
-  transition:border-color 0.2s, box-shadow 0.2s;
-  -webkit-appearance:none;
-}
-.frow input:focus, .frow select:focus {
-  border-color:var(--gold);
-  box-shadow:0 0 14px rgba(201,168,76,0.12);
-}
-.frow input::placeholder { color:rgba(90,85,79,0.5); }
-.frow select option { background:var(--s2); }
-.f2col { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
-.submit-btn {
-  width:100%;
-  background:var(--gold);color:#111;border:none;
-  padding:13px;
-  font-family:'Orbitron',sans-serif;
-  font-weight:700;font-size:12px;letter-spacing:2.5px;
-  text-transform:uppercase;cursor:pointer;
-  margin-top:6px;
-  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
-  transition:all 0.25s;
-}
-.submit-btn:hover {
-  background:var(--goldf);
-  box-shadow:0 4px 28px rgba(201,168,76,0.35);
-}
-
-/* ─── FOOTER ─── */
-footer {
-  background:#000;
-  border-top:1px solid var(--bdr);
-  padding:48px 64px 28px;
-  position:relative;z-index:1;
-}
-.footer-top {
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:48px;margin-bottom:40px;
-}
-.fbrand-logo {
-  font-family:'Orbitron',sans-serif;
-  font-weight:900;font-size:18px;
-  letter-spacing:3px;color:#fff;
-  display:block;margin-bottom:12px;
-}
-.fbrand-logo em { font-style:normal;color:var(--gold); }
-.fbrand p { font-size:13px;color:var(--muted);line-height:1.6;max-width:240px; }
-
-.fcol h4 {
-  font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:3px;
-  text-transform:uppercase;color:var(--gold);margin-bottom:16px;
-}
-.fcol ul { list-style:none;display:flex;flex-direction:column;gap:10px; }
-.fcol ul a {
-  font-size:13px;color:var(--muted);
-  text-decoration:none;letter-spacing:0.5px;
-  transition:color 0.2s, text-shadow 0.2s;
-}
-.fcol ul a:hover {
+  padding:14px;
   color:#fff;
-  text-shadow:0 0 14px rgba(255,255,255,0.4);
+  outline:none;
+  font-family:'Syne',sans-serif;
 }
-.fbot {
-  display:flex;justify-content:space-between;align-items:center;
-  padding-top:22px;
-  border-top:1px solid rgba(255,255,255,0.04);
+
+.input:focus{
+  border-color:var(--gold);
 }
-.fbot p {
-  font-family:'DM Mono',monospace;font-size:10px;
-  color:rgba(90,85,79,0.6);letter-spacing:1.5px;
-}
-.fbot p span { color:var(--red); }
-.socials { display:flex;gap:10px; }
-.sbtn {
-  width:30px;height:30px;
-  border:1px solid var(--bdr);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--muted);font-size:11px;font-weight:700;
+
+.login-btn{
+  width:100%;
+  padding:14px;
+  background:var(--gold);
+  border:none;
+  color:#111;
   font-family:'Orbitron',sans-serif;
-  text-decoration:none;letter-spacing:0;
-  transition:all 0.2s;
-}
-.sbtn:hover {
-  border-color:var(--gold);color:var(--gold);
-  box-shadow:0 0 14px rgba(201,168,76,0.25);
+  font-weight:700;
+  cursor:pointer;
+  letter-spacing:2px;
+  margin-top:10px;
 }
 
-/* ─── REVEAL ─── */
-.reveal { opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease; }
-.reveal.vis { opacity:1;transform:none; }
+.close{
+  position:absolute;
+  top:12px;
+  right:14px;
+  cursor:pointer;
+  color:#999;
+  font-size:22px;
+}
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:960px){
-  .hero{grid-template-columns:1fr;padding:62px 32px 48px;}
-  .hero-right{display:none;}
-  .hero-left{padding:48px 0 0;}
-  .sell-inner{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;}
-  section{padding:72px 32px;}
-  nav{padding:0 24px;}
+@media(max-width:900px){
+
+  .toy{
+    width:110px;
+    opacity:0.5;
+  }
+
 }
-@media(max-width:600px){
-  .footer-top{grid-template-columns:1fr;}
-  footer{padding:40px 24px 20px;}
-  .nav-links{display:none;}
-}
+
 </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="logo" href="#">
-    <span class="logo-main">Toys<em>Guru</em></span>
-    <span class="logo-dot">.in</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#explore" class="glow-text">Explore</a></li>
-    <li><a href="#auctions" class="glow-text">Auctions</a></li>
-    <li><a href="#sell" class="glow-text">Sell</a></li>
-    <li><a href="#" class="glow-text">About</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="btn-ghost">Login</button>
-    <button class="btn-red">Sign Up</button>
-  </div>
-</nav>
+<div class="bg">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-light"></div>
+  <div class="particle" style="left:10%; animation-delay:0s;"></div>
+  <div class="particle" style="left:20%; animation-delay:2s;"></div>
+  <div class="particle" style="left:30%; animation-delay:4s;"></div>
+  <div class="particle" style="left:40%; animation-delay:1s;"></div>
+  <div class="particle" style="left:50%; animation-delay:3s;"></div>
+  <div class="particle" style="left:60%; animation-delay:5s;"></div>
+  <div class="particle" style="left:70%; animation-delay:2s;"></div>
+  <div class="particle" style="left:80%; animation-delay:6s;"></div>
 
-  <div class="hero-left">
-    <div class="hero-eyebrow">
-      <div class="pulse-dot"></div>
-      Bangalore's Finest Die-cast
-    </div>
-    <h1 class="hero-h1 glow-text-white">
-      Collector<span class="line2">Die·Cast</span><span class="line3">Paradise</span>
-    </h1>
-    <p class="hero-desc">
-      Curated marketplace for <strong>serious collectors</strong>. Buy, sell & bid on premium Hot Wheels, Matchbox, Tomica & vintage die-cast — authenticated and delivered.
-    </p>
-    <div class="hero-cta">
-      <button class="btn-red btn-lg" onclick="document.getElementById('explore').scrollIntoView({behavior:'smooth'})">Explore Collection</button>
-      <button class="btn-ghost btn-lg" onclick="document.getElementById('auctions').scrollIntoView({behavior:'smooth'})">Live Auctions</button>
-    </div>
-  </div>
-
-  <!-- Vintage Car Front View -->
-  <div class="hero-right">
-    <div class="car-wrap">
-      <div class="car-ground-glow"></div>
-      <div class="car-headlight-l"></div>
-      <div class="car-headlight-r"></div>
-      <svg viewBox="0 0 540 480" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(0 30px 80px rgba(232,0,29,0.18))">
-
-        <!-- GROUND REFLECTION -->
-        <ellipse cx="270" cy="460" rx="230" ry="18" fill="rgba(232,0,29,0.12)"/>
-        <ellipse cx="270" cy="460" rx="170" ry="10" fill="rgba(232,0,29,0.08)"/>
-
-        <!-- BODY LOWER WIDE -->
-        <rect x="40" y="310" width="460" height="90" rx="10" fill="#0e0e0e"/>
-        <rect x="40" y="310" width="460" height="90" rx="10" fill="url(#bodyFill)" opacity="0.6"/>
-
-        <!-- BUMPER / FRONT FACE -->
-        <path d="M60 310 Q55 380 75 400 L465 400 Q485 380 480 310 Z" fill="#111111"/>
-        <path d="M60 310 Q55 380 75 400 L465 400 Q485 380 480 310 Z" fill="url(#faceShade)"/>
-
-        <!-- CHROME BUMPER BAR -->
-        <rect x="80" y="385" width="380" height="18" rx="5" fill="url(#chromeBumper)"/>
-        <rect x="80" y="385" width="380" height="4" rx="2" fill="rgba(255,255,255,0.25)"/>
-
-        <!-- GRILL CENTER -->
-        <rect x="170" y="325" width="200" height="55" rx="6" fill="#080808"/>
-        <rect x="172" y="327" width="196" height="51" rx="5" fill="url(#grillFill)"/>
-        <!-- grill slats -->
-        <line x1="172" y1="338" x2="368" y2="338" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-        <line x1="172" y1="349" x2="368" y2="349" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-        <line x1="172" y1="360" x2="368" y2="360" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-        <line x1="172" y1="371" x2="368" y2="371" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-        <!-- vertical slats -->
-        <line x1="210" y1="327" x2="210" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-        <line x1="250" y1="327" x2="250" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-        <line x1="290" y1="327" x2="290" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-        <line x1="330" y1="327" x2="330" y2="378" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-        <!-- grill chrome border -->
-        <rect x="170" y="325" width="200" height="55" rx="6" fill="none" stroke="url(#chromeLine)" stroke-width="1.5"/>
-
-        <!-- HEADLIGHT LEFT -->
-        <rect x="70" y="320" width="90" height="52" rx="8" fill="#0a0a0a" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
-        <rect x="75" y="325" width="80" height="42" rx="6" fill="url(#headlightL)"/>
-        <!-- headlight inner lens -->
-        <ellipse cx="115" cy="346" rx="28" ry="16" fill="rgba(255,220,100,0.06)" stroke="rgba(255,220,100,0.2)" stroke-width="1"/>
-        <ellipse cx="115" cy="346" rx="16" ry="9" fill="rgba(255,220,100,0.12)"/>
-        <ellipse cx="115" cy="346" rx="7" ry="4" fill="rgba(255,230,140,0.3)"/>
-        <!-- chrome ring -->
-        <ellipse cx="115" cy="346" rx="28" ry="16" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
-
-        <!-- HEADLIGHT RIGHT -->
-        <rect x="380" y="320" width="90" height="52" rx="8" fill="#0a0a0a" stroke="rgba(201,168,76,0.25)" stroke-width="1"/>
-        <rect x="385" y="325" width="80" height="42" rx="6" fill="url(#headlightR)"/>
-        <ellipse cx="425" cy="346" rx="28" ry="16" fill="rgba(255,220,100,0.06)" stroke="rgba(255,220,100,0.2)" stroke-width="1"/>
-        <ellipse cx="425" cy="346" rx="16" ry="9" fill="rgba(255,220,100,0.12)"/>
-        <ellipse cx="425" cy="346" rx="7" ry="4" fill="rgba(255,230,140,0.3)"/>
-        <ellipse cx="425" cy="346" rx="28" ry="16" fill="none" stroke="rgba(201,168,76,0.35)" stroke-width="1.5"/>
-
-        <!-- HOOD / TOP BODY -->
-        <path d="M80 310 Q100 240 140 200 L400 200 Q440 240 460 310 Z" fill="#0c0c0c"/>
-        <path d="M80 310 Q100 240 140 200 L400 200 Q440 240 460 310 Z" fill="url(#hoodShade)"/>
-
-        <!-- HOOD LINE CREASE -->
-        <path d="M200 200 Q220 255 240 310" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
-        <path d="M340 200 Q320 255 300 310" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
-
-        <!-- WINDSHIELD -->
-        <path d="M155 200 L180 130 L360 130 L385 200 Z" fill="rgba(80,160,220,0.05)" stroke="rgba(80,160,220,0.12)" stroke-width="1"/>
-        <path d="M160 198 L183 136 L357 136 L380 198 Z" fill="url(#glassShade)"/>
-        <!-- windshield glare -->
-        <path d="M175 145 L195 195 L250 195 L235 145 Z" fill="rgba(255,255,255,0.025)"/>
-
-        <!-- ROOF -->
-        <path d="M180 130 Q270 90 360 130 L385 200 L155 200 Z" fill="#0a0a0a"/>
-        <path d="M180 130 Q270 90 360 130 L385 200 L155 200 Z" fill="url(#roofShade)"/>
-
-        <!-- ROOF CHROME TRIM -->
-        <path d="M180 130 Q270 88 360 130" stroke="url(--chromeLine)" stroke-width="2" fill="none" stroke="rgba(201,168,76,0.3)"/>
-
-        <!-- SIDE MIRROR L -->
-        <ellipse cx="100" cy="225" rx="22" ry="11" fill="#111" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
-        <ellipse cx="100" cy="225" rx="17" ry="8" fill="rgba(80,160,220,0.06)"/>
-
-        <!-- SIDE MIRROR R -->
-        <ellipse cx="440" cy="225" rx="22" ry="11" fill="#111" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
-        <ellipse cx="440" cy="225" rx="17" ry="8" fill="rgba(80,160,220,0.06)"/>
-
-        <!-- BADGE CENTER GRILL -->
-        <circle cx="270" cy="350" r="14" fill="#0a0a0a" stroke="url(#goldRing)" stroke-width="1.5"/>
-        <circle cx="270" cy="350" r="10" fill="rgba(201,168,76,0.08)"/>
-        <text x="270" y="354" text-anchor="middle" font-family="'Orbitron',sans-serif" font-size="8" font-weight="900" fill="rgba(201,168,76,0.8)" letter-spacing="0.5">TG</text>
-
-        <!-- WHEELS FRONT VIEW (showing as circles) -->
-        <!-- left wheel -->
-        <ellipse cx="105" cy="420" rx="60" ry="28" fill="#080808" stroke="rgba(201,168,76,0.2)" stroke-width="1.5"/>
-        <ellipse cx="105" cy="420" rx="44" ry="20" fill="#0e0e0e"/>
-        <ellipse cx="105" cy="420" rx="28" ry="13" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
-        <!-- spokes -->
-        <line x1="105" y1="407" x2="105" y2="400" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="105" y1="433" x2="105" y2="440" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="77" y1="420" x2="70" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="133" y1="420" x2="140" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="85" y1="410" x2="80" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <line x1="125" y1="430" x2="130" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <line x1="125" y1="410" x2="130" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <line x1="85" y1="430" x2="80" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <ellipse cx="105" cy="420" rx="8" ry="4" fill="var(--gold)"/>
-        <ellipse cx="105" cy="420" rx="8" ry="4" fill="url(#hubcap)"/>
-
-        <!-- right wheel -->
-        <ellipse cx="435" cy="420" rx="60" ry="28" fill="#080808" stroke="rgba(201,168,76,0.2)" stroke-width="1.5"/>
-        <ellipse cx="435" cy="420" rx="44" ry="20" fill="#0e0e0e"/>
-        <ellipse cx="435" cy="420" rx="28" ry="13" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
-        <line x1="435" y1="407" x2="435" y2="400" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="435" y1="433" x2="435" y2="440" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="407" y1="420" x2="400" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="463" y1="420" x2="470" y2="420" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
-        <line x1="415" y1="410" x2="410" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <line x1="455" y1="430" x2="460" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <line x1="455" y1="410" x2="460" y2="405" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <line x1="415" y1="430" x2="410" y2="435" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
-        <ellipse cx="435" cy="420" rx="8" ry="4" fill="var(--gold)"/>
-        <ellipse cx="435" cy="420" rx="8" ry="4" fill="url(#hubcap2)"/>
-
-        <!-- CHROME TRIM ACCENT LINE SIDES -->
-        <path d="M60 340 Q60 395 80 400" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" fill="none"/>
-        <path d="M480 340 Q480 395 460 400" stroke="rgba(201,168,76,0.3)" stroke-width="1.5" fill="none"/>
-
-        <!-- RED ACCENT STRIP -->
-        <rect x="80" y="375" width="380" height="5" fill="rgba(232,0,29,0.6)"/>
-        <rect x="80" y="375" width="380" height="1.5" fill="rgba(255,50,70,0.8)"/>
-
-        <defs>
-          <linearGradient id="bodyFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(232,0,29,0.12)"/>
-            <stop offset="100%" stop-color="rgba(100,5,15,0.04)"/>
-          </linearGradient>
-          <linearGradient id="faceShade" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="rgba(40,40,40,0.3)"/>
-            <stop offset="100%" stop-color="rgba(0,0,0,0.5)"/>
-          </linearGradient>
-          <linearGradient id="chromeBumper" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#4a4a4a"/>
-            <stop offset="30%" stop-color="#d0d0d0"/>
-            <stop offset="60%" stop-color="#8a8a8a"/>
-            <stop offset="100%" stop-color="#2a2a2a"/>
-          </linearGradient>
-          <linearGradient id="chromeLine" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="rgba(201,168,76,0)"/>
-            <stop offset="50%" stop-color="rgba(201,168,76,0.6)"/>
-            <stop offset="100%" stop-color="rgba(201,168,76,0)"/>
-          </linearGradient>
-          <linearGradient id="grillFill" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="#1a1a1a"/>
-            <stop offset="100%" stop-color="#050505"/>
-          </linearGradient>
-          <linearGradient id="headlightL" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#1a1a14"/>
-            <stop offset="100%" stop-color="#080808"/>
-          </linearGradient>
-          <linearGradient id="headlightR" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1a1a14"/>
-            <stop offset="100%" stop-color="#080808"/>
-          </linearGradient>
-          <linearGradient id="hoodShade" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="rgba(40,40,40,0.4)"/>
-            <stop offset="50%" stop-color="rgba(232,0,29,0.04)"/>
-            <stop offset="100%" stop-color="rgba(0,0,0,0.2)"/>
-          </linearGradient>
-          <linearGradient id="glassShade" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="rgba(80,160,220,0.06)"/>
-            <stop offset="100%" stop-color="rgba(80,160,220,0.01)"/>
-          </linearGradient>
-          <linearGradient id="roofShade" x1="0.5" y1="0" x2="0.5" y2="1">
-            <stop offset="0%" stop-color="rgba(50,50,50,0.3)"/>
-            <stop offset="100%" stop-color="rgba(0,0,0,0.4)"/>
-          </linearGradient>
-          <radialGradient id="goldRing" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="rgba(201,168,76,0.8)"/>
-            <stop offset="100%" stop-color="rgba(201,168,76,0.2)"/>
-          </radialGradient>
-          <radialGradient id="hubcap" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="rgba(245,208,110,0.9)"/>
-            <stop offset="100%" stop-color="rgba(140,95,20,0.8)"/>
-          </radialGradient>
-          <radialGradient id="hubcap2" cx="30%" cy="30%" r="70%">
-            <stop offset="0%" stop-color="rgba(245,208,110,0.9)"/>
-            <stop offset="100%" stop-color="rgba(140,95,20,0.8)"/>
-          </radialGradient>
-        </defs>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner" id="ti">
-    <span class="ticker-item">Hot Wheels Treasure Hunt</span>
-    <span class="ticker-item">Matchbox Superfast</span>
-    <span class="ticker-item">Tomica Limited Vintage</span>
-    <span class="ticker-item">Greenlight Hollywood</span>
-    <span class="ticker-item">Super Treasure Hunt</span>
-    <span class="ticker-item">1:64 Diecast Scale</span>
-    <span class="ticker-item">RLC Exclusive</span>
-    <span class="ticker-item">Hot Wheels Treasure Hunt</span>
-    <span class="ticker-item">Matchbox Superfast</span>
-    <span class="ticker-item">Tomica Limited Vintage</span>
-    <span class="ticker-item">Greenlight Hollywood</span>
-    <span class="ticker-item">Super Treasure Hunt</span>
-    <span class="ticker-item">1:64 Diecast Scale</span>
-    <span class="ticker-item">RLC Exclusive</span>
-  </div>
 </div>
 
-<!-- AUCTIONS -->
-<section class="auction-section" id="auctions">
-  <div class="sec-tag">Live Now</div>
-  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
-    <div>
-      <h2 class="sec-title glow-text-white">Live <span>Auctions</span></h2>
-      <p class="sec-sub">Bid on rare and exclusive diecast. Every auction is authenticated by our team.</p>
-    </div>
-    <button class="btn-ghost" style="margin-bottom:52px;">All Auctions →</button>
-  </div>
-  <div class="auction-grid" id="agrid"></div>
-</section>
+<!-- TOYS -->
 
-<!-- SELL -->
-<section class="sell-section" id="sell">
-  <div class="sell-inner">
-    <div>
-      <div class="sec-tag">For Sellers</div>
-      <h2 class="sec-title glow-text-white">Sell Your<br><span>Collection</span></h2>
-      <p class="sec-sub" style="margin-bottom:34px;">Turn your cars into cash. List in minutes, reach thousands of serious buyers.</p>
-      <div class="sell-feats">
-        <div class="sfeat">
-          <div class="ficon">🔐</div>
-          <div>
-            <div class="ftitle glow-text-white">Verified Listings</div>
-            <div class="fdesc">Every listing is reviewed. Buyers trust your product before they bid.</div>
-          </div>
-        </div>
-        <div class="sfeat">
-          <div class="ficon">⚡</div>
-          <div>
-            <div class="ftitle glow-text-white">Instant Payout</div>
-            <div class="fdesc">Get paid within 24 hours of a confirmed sale. Zero delays.</div>
-          </div>
-        </div>
-        <div class="sfeat">
-          <div class="ficon">📦</div>
-          <div>
-            <div class="ftitle glow-text-white">Secure Shipping</div>
-            <div class="fdesc">Specialist diecast packaging. Arrive mint, every time.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="sell-form reveal">
-      <div class="form-title">List Your Car</div>
-      <div class="frow">
-        <label>Car Name / Model</label>
-        <input type="text" placeholder="e.g. Hot Wheels Treasure Hunt Camaro">
-      </div>
-      <div class="frow f2col">
-        <div>
-          <label>Brand</label>
-          <select>
-            <option value="">Select Brand</option>
-            <option>Hot Wheels</option>
-            <option>Matchbox</option>
-            <option>Tomica</option>
-            <option>Greenlight</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div>
-          <label>Scale</label>
-          <select>
-            <option>1:64</option><option>1:43</option><option>1:32</option><option>1:18</option>
-          </select>
-        </div>
-      </div>
-      <div class="frow f2col">
-        <div>
-          <label>Asking Price (₹)</label>
-          <input type="number" placeholder="e.g. 499">
-        </div>
-        <div>
-          <label>Condition</label>
-          <select>
-            <option>Mint on Card</option>
-            <option>Near Mint</option>
-            <option>Loose / Played</option>
-            <option>Custom</option>
-          </select>
-        </div>
-      </div>
-      <div class="frow">
-        <label>Your Phone</label>
-        <input type="tel" placeholder="+91 98765 43210">
-      </div>
-      <button class="submit-btn">Submit Listing →</button>
-    </div>
-  </div>
-</section>
+<img class="toy toy1" src="https://pngimg.com/d/hot_wheels_PNG32.png">
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div class="fbrand">
-      <span class="fbrand-logo">Toys<em>Guru</em><span style="font-size:12px;color:var(--muted);font-weight:400;">.in</span></span>
-      <p>Bangalore's curated die-cast marketplace. Connecting collectors, one car at a time.</p>
-    </div>
-    <div class="fcol">
-      <h4>Marketplace</h4>
-      <ul>
-        <li><a href="#" class="glow-text">Explore All</a></li>
-        <li><a href="#" class="glow-text">Hot Wheels</a></li>
-        <li><a href="#" class="glow-text">Matchbox</a></li>
-        <li><a href="#" class="glow-text">Auctions</a></li>
-        <li><a href="#" class="glow-text">New Arrivals</a></li>
-      </ul>
-    </div>
-    <div class="fcol">
-      <h4>Sellers</h4>
-      <ul>
-        <li><a href="#" class="glow-text">List a Car</a></li>
-        <li><a href="#" class="glow-text">Seller FAQ</a></li>
-        <li><a href="#" class="glow-text">Pricing</a></li>
-        <li><a href="#" class="glow-text">Guidelines</a></li>
-      </ul>
-    </div>
-    <div class="fcol">
-      <h4>Company</h4>
-      <ul>
-        <li><a href="#" class="glow-text">About Us</a></li>
-        <li><a href="#" class="glow-text">Contact</a></li>
-        <li><a href="#" class="glow-text">Privacy</a></li>
-        <li><a href="#" class="glow-text">Terms</a></li>
-      </ul>
-    </div>
+<img class="toy toy2" src="https://purepng.com/public/uploads/large/purepng.com-unicornunicornmythical-creaturehorse-with-a-large-pointed-spiraling-hornprojecting-from-its-forehead-1701527715478shk6u.png">
+
+<img class="toy toy3" src="https://purepng.com/public/uploads/large/purepng.com-elmoelmosesame-streetmuppetcharacter-1701528659670szyra.png">
+
+<!-- CENTER -->
+
+<div class="center-wrap">
+
+  <img
+    class="hw-logo"
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Hot_Wheels_logo.svg/2560px-Hot_Wheels_logo.svg.png"
+  >
+
+  <div class="title">
+    ToysGuru
   </div>
-  <div class="fbot">
-    <p>© 2025 ToysGuru.in — Made with <span>♥</span> in Bangalore</p>
-    <div class="socials">
-      <a class="sbtn" href="#">IG</a>
-      <a class="sbtn" href="#">WA</a>
-      <a class="sbtn" href="#">YT</a>
-    </div>
+
+  <div class="subtitle">
+    Rare Toys • Serious Collectors
   </div>
-</footer>
+
+  <button class="enter-btn" onclick="openModal()">
+    Enter Garage
+  </button>
+
+</div>
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+
+  <div class="modal-box">
+
+    <div class="close" onclick="closeModal()">×</div>
+
+    <h2>Garage Access</h2>
+
+    <p>
+      Enter your credentials to access the private collector marketplace.
+    </p>
+
+    <input class="input" type="text" id="email" placeholder="Email">
+
+    <input class="input" type="password" id="password" placeholder="Password">
+
+    <button class="login-btn" onclick="login()">
+      Login
+    </button>
+
+  </div>
+
+</div>
 
 <script>
-const products = [
-  {name:"Dodge Charger Daytona",series:"Treasure Hunt 2023",price:"₹649",cond:"MOC",badge:"TH",c:"#b00010"},
-  {name:"Ferrari F40",series:"Speed Machines",price:"₹899",cond:"Mint",badge:null,c:"#cc0000"},
-  {name:"Porsche 911 GT3",series:"Car Culture 2024",price:"₹1,199",cond:"MOC",badge:"New",c:"#333"},
-  {name:"Lamborghini Huracán",series:"Exotics Series",price:"₹749",cond:"Loose",badge:null,c:"#b88800"},
-  {name:"McLaren Senna",series:"Super TH",price:"₹2,499",cond:"MOC",badge:"STH",c:"#c07000"},
-  {name:"Nissan Skyline R34",series:"Fast & Furious",price:"₹599",cond:"Mint",badge:null,c:"#003366"},
-  {name:"Ford Mustang Shelby",series:"American Muscle",price:"₹449",cond:"MOC",badge:null,c:"#c03020"},
-  {name:"Toyota Supra MK4",series:"Import Racer",price:"₹799",cond:"MOC",badge:"Rare",c:"#004433"},
-];
 
-function miniCar(c){
-  return `<svg viewBox="0 0 180 110" width="130" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="90" cy="100" rx="75" ry="8" fill="rgba(0,0,0,0.5)"/>
-    <rect x="18" y="58" width="144" height="28" rx="4" fill="${c}" opacity="0.85"/>
-    <path d="M40 58 L58 34 L122 34 L140 58Z" fill="${c}" opacity="0.9"/>
-    <path d="M52 36 L68 54 L112 54 L128 36Z" fill="rgba(140,200,240,0.07)" stroke="rgba(140,200,240,0.12)" stroke-width="0.8"/>
-    <rect x="18" y="65" width="144" height="4" fill="rgba(232,0,29,0.8)"/>
-    <rect x="18" y="69" width="144" height="1" fill="rgba(201,168,76,0.4)"/>
-    <circle cx="48" cy="87" r="14" fill="#080808" stroke="rgba(201,168,76,0.35)" stroke-width="1.2"/>
-    <circle cx="48" cy="87" r="8" fill="#111"/>
-    <circle cx="48" cy="87" r="4" fill="rgba(201,168,76,0.5)"/>
-    <circle cx="132" cy="87" r="14" fill="#080808" stroke="rgba(201,168,76,0.35)" stroke-width="1.2"/>
-    <circle cx="132" cy="87" r="8" fill="#111"/>
-    <circle cx="132" cy="87" r="4" fill="rgba(201,168,76,0.5)"/>
-    <rect x="20" y="61" width="18" height="10" rx="2" fill="rgba(255,220,100,0.1)" stroke="rgba(255,220,100,0.25)" stroke-width="0.8"/>
-    <rect x="142" y="61" width="18" height="10" rx="2" fill="rgba(232,0,29,0.35)" stroke="rgba(232,0,29,0.5)" stroke-width="0.8"/>
-  </svg>`;
+function openModal(){
+  document.getElementById('loginModal').style.display='flex';
 }
 
-document.getElementById('pgrid').innerHTML = products.map(p=>`
-  <div class="pcard">
-    ${p.badge?`<div class="pbadge${p.badge==='New'||p.badge==='Rare'?' gold':''}">${p.badge}</div>`:''}
-    <div class="pimg">
-      <div style="padding:8px;">${miniCar(p.c)}</div>
-      <div class="pov"><button class="pov-btn">Quick View</button></div>
-    </div>
-    <div class="pbody">
-      <div class="pseries">${p.series}</div>
-      <div class="pcard-name glow-text-white">${p.name}</div>
-      <div class="pfoot">
-        <div class="pcard-price">${p.price}</div>
-        <div class="pcond">${p.cond}</div>
-      </div>
-    </div>
-  </div>
-`).join('');
-
-const auctions = [
-  {name:"Enzo Ferrari",series:"Hot Wheels Legends 2023",bid:"₹4,200",bids:14,ends:"02:14:38",live:true,c:"#cc0000"},
-  {name:"Bugatti Veyron Super Sport",series:"Super TH — MOC",bid:"₹8,750",bids:31,ends:"05:42:11",live:true,c:"#0055bb"},
-  {name:"Dodge Viper GTS-R",series:"Car Culture Racing Circuit",bid:"₹2,900",bids:9,ends:"11:05:22",live:false,c:"#660000"},
-];
-
-document.getElementById('agrid').innerHTML = auctions.map(a=>`
-  <div class="acard">
-    <div class="acard-top">
-      <span class="atag">Auction</span>
-      ${a.live?'<span class="live-ind">LIVE</span>':'<span style="font-family:DM Mono,monospace;font-size:9px;color:var(--muted);letter-spacing:1px">UPCOMING</span>'}
-    </div>
-    <div class="aimg"><div style="padding:12px;">${miniCar(a.c)}</div></div>
-    <div class="aname glow-text-white">${a.name}</div>
-    <div class="aseries">${a.series}</div>
-    <div class="abids">
-      <div><div class="alabel">Current Bid</div><div class="aval">${a.bid}</div></div>
-      <div><div class="alabel">Ends In</div><div class="atime" id="cd${a.name.replace(/\W/g,'')}">${a.ends}</div></div>
-      <div><div class="alabel">Total Bids</div><div class="acount">${a.bids}</div></div>
-    </div>
-    <button class="bid-btn">Place Bid →</button>
-  </div>
-`).join('');
-
-auctions.forEach(a=>{
-  const el=document.getElementById('cd'+a.name.replace(/\W/g,''));
-  if(!el||!a.live)return;
-  let p=a.ends.split(':').map(Number);
-  setInterval(()=>{
-    p[2]--;
-    if(p[2]<0){p[2]=59;p[1]--;}
-    if(p[1]<0){p[1]=59;p[0]--;}
-    if(p[0]<0){p[0]=p[1]=p[2]=0;}
-    el.textContent=p.map(n=>String(n).padStart(2,'0')).join(':');
-  },1000);
-});
-
-function setTab(el){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
+function closeModal(){
+  document.getElementById('loginModal').style.display='none';
 }
 
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
-},{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function login(){
 
-setTimeout(()=>{
-  document.querySelectorAll('.pcard,.acard').forEach((el,i)=>{
-    el.classList.add('reveal');
-    el.style.transitionDelay=`${i*0.06}s`;
-    obs.observe(el);
-  });
-},80);
+  const email=document.getElementById('email').value;
+  const password=document.getElementById('password').value;
+
+  if(email==="admin" && password==="1234"){
+
+    window.location.href="marketplace.html";
+
+  }else{
+
+    alert("Invalid Credentials");
+
+  }
+
+}
+
 </script>
+
 </body>
 </html>
