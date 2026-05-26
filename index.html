@@ -226,31 +226,37 @@ body{
 
 .title{
     font-family:'Orbitron',sans-serif;
-    font-size:clamp(58px,10vw,140px);
+
+    font-size:clamp(62px,10vw,150px);
     font-weight:900;
-    letter-spacing:6px;
+    letter-spacing:8px;
     line-height:1;
     text-transform:uppercase;
 
     background:linear-gradient(
-        to bottom,
-        #ffffff 0%,
-        #ffe3b3 25%,
+        180deg,
+        #f5f5f5 0%,
+        #d9d9d9 18%,
+        #9f9f9f 32%,
         #ffb347 55%,
-        #ff6a00 100%
+        #ff7a00 72%,
+        #c24d00 100%
     );
 
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+
     display:inline-block;
 
     text-shadow:
-        0 0 8px rgba(255,120,0,0.35),
-        0 0 18px rgba(255,80,0,0.22),
-        0 4px 12px rgba(0,0,0,0.55);
+        0 2px 3px rgba(0,0,0,0.55),
+        0 0 10px rgba(255,120,0,0.18),
+        0 0 24px rgba(255,90,0,0.12);
 
     opacity:0;
     animation:titleReveal 2s 1s forwards;
+
+    transform:perspective(500px) translateZ(0);
 }
 
 @keyframes titleReveal{
