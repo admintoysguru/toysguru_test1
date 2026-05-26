@@ -157,7 +157,19 @@ body{
   left:35%;
   animation:toy5 4s ease forwards;
 }
-
+.hotwheels-logo{
+  position:absolute;
+  width:340px;
+  top:-120px;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0;
+  z-index:5;
+  animation:hotwheelsEntry 2.5s ease forwards;
+  filter:
+    drop-shadow(0 0 25px rgba(255,80,0,0.5))
+    drop-shadow(0 0 60px rgba(255,0,0,0.25));
+}
 @keyframes toy1{
   to{
     left:7%;
@@ -188,6 +200,19 @@ body{
   to{
     bottom:8%;
     opacity:1;
+  }
+}
+  @keyframes hotwheelsEntry{
+  from{
+    top:-220px;
+    opacity:0;
+    transform:translateX(-50%) scale(0.7);
+  }
+
+  to{
+    top:30px;
+    opacity:1;
+    transform:translateX(-50%) scale(1);
   }
 }
 /* TITLE */
