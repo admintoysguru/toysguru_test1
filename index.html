@@ -429,6 +429,24 @@ function login(){
     alert("Invalid Credentials");
 
   }
+  function signup(){
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  if(email === "" || password === ""){
+
+    alert("Please enter email and password");
+    return;
+
+  }
+
+  localStorage.setItem("toysguru_user", email);
+  localStorage.setItem("toysguru_pass", password);
+
+  alert("Account Created Successfully!");
+
+}
 
 }
 
