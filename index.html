@@ -233,12 +233,25 @@ body{
   opacity:0;
   animation:titleReveal 2s 1s forwards;
   text-transform:uppercase;
-  background:linear-gradient(to bottom,#ffffff,#d7b45f);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  text-shadow:
-    0 0 20px rgba(255,255,255,0.15),
-    0 0 50px rgba(224,0,27,0.15);
+  background:linear-gradient(
+    180deg,
+    #fff8dc 0%,
+    #ffe9a8 12%,
+    #ffd76a 28%,
+    #ffbf33 45%,
+    #d89b00 58%,
+    #ffcf5c 72%,
+    #fff2b5 86%,
+    #b97a00 100%
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+    0 0 8px rgba(255,220,120,0.25),
+    0 0 20px rgba(255,170,0,0.22),
+    0 4px 12px rgba(0,0,0,0.55);
 }
 
 @keyframes titleReveal{
