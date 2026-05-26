@@ -99,13 +99,14 @@ body{
 /* HOT WHEELS */
 
 .hw-logo{
-  width:320px;
+  width:460px;
   max-width:85vw;
   margin-bottom:25px;
   animation:logoEnter 2s ease forwards;
-  filter:drop-shadow(0 0 30px rgba(255,80,0,0.5));
+  filter:
+    drop-shadow(0 0 40px rgba(255,80,0,0.55))
+    drop-shadow(0 0 80px rgba(255,80,0,0.2));
 }
-
 @keyframes logoEnter{
   from{
     transform:translateX(-140vw);
@@ -121,9 +122,12 @@ body{
 
 .toy{
   position:absolute;
-  width:170px;
+  width:220px;
   object-fit:contain;
   opacity:0;
+  filter:
+    drop-shadow(0 0 25px rgba(255,255,255,0.08))
+    drop-shadow(0 0 40px rgba(224,0,27,0.12));
 }
 
 .toy1{
@@ -142,6 +146,16 @@ body{
   right:-220px;
   bottom:14%;
   animation:toy3 3.2s ease forwards;
+}
+  .toy4{
+  left:-300px;
+  top:20%;
+  animation:toy4 3.5s ease forwards;
+}
+.toy5{
+  bottom:-300px;
+  left:35%;
+  animation:toy5 4s ease forwards;
 }
 
 @keyframes toy1{
@@ -164,7 +178,18 @@ body{
     opacity:1;
   }
 }
-
+@keyframes toy4{
+  to{
+    left:10%;
+    opacity:1;
+  }
+}
+  @keyframes toy5{
+  to{
+    bottom:8%;
+    opacity:1;
+  }
+}
 /* TITLE */
 
 .title{
@@ -349,12 +374,17 @@ body{
 
 <!-- TOYS -->
 
-<img class="toy toy1" src="https://pngimg.com/d/hot_wheels_PNG32.png">
+<!-- TOYS -->
 
-<img class="toy toy2" src="https://purepng.com/public/uploads/large/purepng.com-unicornunicornmythical-creaturehorse-with-a-large-pointed-spiraling-hornprojecting-from-its-forehead-1701527715478shk6u.png">
+<img class="toy toy1" src="Hotwheels.png">
 
-<img class="toy toy3" src="https://purepng.com/public/uploads/large/purepng.com-elmoelmosesame-streetmuppetcharacter-1701528659670szyra.png">
+<img class="toy toy2" src="cute unicorn plush.png">
 
+<img class="toy toy3" src="Robot.png">
+
+<img class="toy toy4" src="monster truck.png">
+
+<img class="toy toy5" src="sport car.png">
 <!-- CENTER -->
 
 <div class="center-wrap">
