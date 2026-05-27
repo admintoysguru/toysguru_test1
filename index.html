@@ -651,16 +651,16 @@ function showForgot(){
   showSuccess('Reset Link Sent 📧','Check your inbox for a<br>password reset link.');
 }
 
-window.addEventListener("load", () => {
+setTimeout(() => {
 
-  setTimeout(() => {
+  const loader = document.getElementById("loader");
 
-    const loader = document.getElementById("loader");
+  loader.style.opacity = "0";
+  loader.style.visibility = "hidden";
 
-    loader.style.opacity = "0";
-    loader.style.visibility = "hidden";
+  loader.style.pointerEvents = "none";
 
-  }, 3200);
+}, 3200);
 
 });
 </script>
