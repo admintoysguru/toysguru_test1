@@ -10,6 +10,22 @@
 html,body{width:100%;min-height:100%;background:#000;color:#fff;font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
 body{cursor:none;}
 
+/* ═════════ LOADER ═════════ */
+
+#loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:99999;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  transition:opacity 1s ease, visibility 1s ease;
+}
+
 /* ── CURSOR ── */
 #cur{position:fixed;width:8px;height:8px;background:#e8001d;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
 #cur-r{position:fixed;width:28px;height:28px;border:1px solid rgba(232,0,29,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s ease,top .1s ease;}
