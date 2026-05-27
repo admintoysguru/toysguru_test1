@@ -7,8 +7,73 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+ 
 html,body{width:100%;min-height:100%;background:#000;color:#fff;font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
 body{cursor:none;}
+  /* ===== FLOATING STARS ===== */
+
+.ftoys{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:1;
+}
+
+.star{
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    background:rgba(255,255,255,0.95);
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 6px rgba(255,120,0,.9),
+        0 0 12px rgba(255,80,0,.7),
+        0 0 20px rgba(255,40,0,.5);
+
+    animation:floatStar linear infinite;
+}
+
+@keyframes floatStar{
+
+    0%{
+        transform:
+            translateY(120vh)
+            translateX(0px)
+            scale(.4);
+
+        opacity:0;
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:.9;
+    }
+
+    100%{
+        transform:
+            translateY(-120vh)
+            translateX(80px)
+            scale(1.2);
+
+        opacity:0;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="ftoys" id="ftoys"></div>
 
 /* ═════════ LOADER ═════════ */
 
@@ -653,16 +718,54 @@ function showForgot(){
 
 setTimeout(() => {
 
-  const loader = document.getElementById("loader");
+    const loader = document.getElementById("loader");
 
-  loader.style.opacity = "0";
-  loader.style.visibility = "hidden";
+    loader.style.opacity = "0";
+    loader.style.visibility = "hidden";
 
-  loader.style.pointerEvents = "none";
+    loader.style.pointerEvents = "none";
 
 }, 3200);
 
 });
+
+// ===== FLOATING STARS =====
+
+const starsContainer = document.getElementById("ftoys");
+
+for(let i = 0; i < 120; i++){
+
+    const star = document.createElement("div");
+
+    star.classList.add("star");
+
+    star.style.left =
+        Math.random() * 100 + "vw";
+
+    star.style.top =
+        Math.random() * 100 + "vh";
+
+    star.style.animationDuration =
+        (5 + Math.random() * 10) + "s";
+
+    star.style.animationDelay =
+        Math.random() * 5 + "s";
+
+    star.style.opacity =
+        Math.random();
+
+    const size =
+        Math.random() * 3 + 1;
+
+    star.style.width =
+        size + "px";
+
+    star.style.height =
+        size + "px";
+
+    starsContainer.appendChild(star);
+
+}
 </script>
 </body>
 </html>
