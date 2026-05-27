@@ -6,69 +6,72 @@
 <title>Toys Guru — Rare Toys. Serious Collectors.</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
- 
-html,body{width:100%;min-height:100%;background:#000;color:#fff;font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
-body{cursor:none;}
-  /* ===== FLOATING STARS ===== */
+*,
+*::before,
+*::after{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+  background:#000;
+  color:#fff;
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+}
+
+body{
+  cursor:none;
+}
+
+/* ===== FLOATING STARS ===== */
 
 .ftoys{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:1;
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
 }
 
 .star{
-    position:absolute;
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:rgba(255,255,255,.95);
+  border-radius:50%;
 
-    width:2px;
-    height:2px;
+  box-shadow:
+    0 0 6px rgba(255,120,0,.9),
+    0 0 12px rgba(255,80,0,.7),
+    0 0 20px rgba(255,40,0,.5);
 
-    background:rgba(255,255,255,0.95);
-
-    border-radius:50%;
-
-    box-shadow:
-        0 0 6px rgba(255,120,0,.9),
-        0 0 12px rgba(255,80,0,.7),
-        0 0 20px rgba(255,40,0,.5);
-
-    animation:floatStar linear infinite;
+  animation:floatStar linear infinite;
 }
 
 @keyframes floatStar{
+  0%{
+    transform:translateY(0px);
+    opacity:0;
+  }
 
-    0%{
-        transform:
-            translateY(120vh)
-            translateX(0px)
-            scale(.4);
+  10%{
+    opacity:1;
+  }
 
-        opacity:0;
-    }
+  90%{
+    opacity:1;
+  }
 
-    10%{
-        opacity:1;
-    }
-
-    50%{
-        opacity:.9;
-    }
-
-    100%{
-        transform:
-            translateY(-120vh)
-            translateX(80px)
-            scale(1.2);
-
-        opacity:0;
-    }
+  100%{
+    transform:translateY(-120vh);
+    opacity:0;
+  }
 }
-
-</style>
-
+ </style>
 </head>
 
 <body>
