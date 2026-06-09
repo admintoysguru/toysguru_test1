@@ -467,56 +467,103 @@ function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
 function isValidPhone(p){return /^[+\d\s\-]{8,15}$/.test(p.trim());}
 
 /* ── LOGIN SUBMIT ── */
-function handleLogin(e){
-  e.preventDefault();
-  const email=document.getElementById('loginEmail').value.trim();
-  const pass=document.getElementById('loginPassword').value;
-  let valid=true;
-  if(!isValidEmail(email)){showErr('loginEmailErr',true);markField('loginEmail',true);valid=false;}
-  else{showErr('loginEmailErr',false);markField('loginEmail',false);}
-  if(!pass){showErr('loginPassErr',true);markField('loginPassword',true);valid=false;}
-  else{showErr('loginPassErr',false);markField('loginPassword',false);}
-  if(!valid)return false;
+async function handleLogin(e){
+    e.preventDefault();
 
-  const btn=document.getElementById('loginBtn');
-  btn.classList.add('loading');btn.disabled=true;
-  setTimeout(()=>{
-    btn.classList.remove('loading');btn.disabled=false;
-    showSuccess('You\'re In! 🏁','Welcome back to Toys Guru.<br>Redirecting to the garage…');
-  },1600);
-  return false;
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    try {
+
+        const response = await fetch("http://127.0.0.1:5000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if(response.ok){
+
+            showSuccess(
+                "You're In! 🏁",
+                "Welcome back to Toys Guru.<br>Opening Marketplace..."
+            );
+
+            setTimeout(() => {
+                window.location.href = "marketplace.html";
+            }, 1500);
+
+        } else {
+
+            alert(data.message);
+
+        }
+
+    } catch(err) {
+
+        alert("Backend connection failed");
+
+    }
+
+    return false;
 }
 
 /* ── SIGNUP SUBMIT ── */
-function handleSignup(e){
-  e.preventDefault();
-  const first=document.getElementById('signupFirst').value.trim();
-  const last=document.getElementById('signupLast').value.trim();
-  const email=document.getElementById('signupEmail').value.trim();
-  const phone=document.getElementById('signupPhone').value.trim();
-  const pass=document.getElementById('signupPassword').value;
-  const confirm=document.getElementById('signupConfirm').value;
-  const agreed=document.getElementById('agreeTerms').checked;
-  let valid=true;
+async function handleSignup(e){
+    e.preventDefault();
 
-  if(!first){showErr('firstErr',true);markField('signupFirst',true);valid=false;}else{showErr('firstErr',false);markField('signupFirst',false);}
-  if(!last){showErr('lastErr',true);markField('signupLast',true);valid=false;}else{showErr('lastErr',false);markField('signupLast',false);}
-  if(!isValidEmail(email)){showErr('signupEmailErr',true);markField('signupEmail',true);valid=false;}else{showErr('signupEmailErr',false);markField('signupEmail',false);}
-  if(!isValidPhone(phone)){showErr('phoneErr',true);markField('signupPhone',true);valid=false;}else{showErr('phoneErr',false);markField('signupPhone',false);}
-  if(pass.length<8){showErr('signupPassErr',true);markField('signupPassword',true);valid=false;}else{showErr('signupPassErr',false);markField('signupPassword',false);}
-  if(pass!==confirm||!confirm){showErr('confirmErr',true);markField('signupConfirm',true);valid=false;}else{showErr('confirmErr',false);markField('signupConfirm',false);}
-  if(!agreed){showErr('termsErr',true);valid=false;}else{showErr('termsErr',false);}
+    const first = document.getElementById('signupFirst').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
 
-  if(!valid)return false;
-  const btn=document.getElementById('signupBtn');
-  btn.classList.add('loading');btn.disabled=true;
-  setTimeout(()=>{
-    btn.classList.remove('loading');btn.disabled=false;
-    showSuccess('Account Created! 🎉',`Welcome to Toys Guru, ${first}!<br>Your collector journey starts now.`);
-  },1800);
-  return false;
+    try {
+
+        const response = await fetch("http://127.0.0.1:5000/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: first,
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if(response.ok){
+
+            showSuccess(
+                "Account Created! 🎉",
+                "Redirecting to Marketplace..."
+            );
+
+            setTimeout(() => {
+                window.location.href = "marketplace.html";
+            }, 1500);
+
+        } else {
+
+            alert(data.message);
+
+        }
+
+    } catch(err) {
+
+        alert("Backend connection failed");
+
+    }
+
+    return false;
 }
-
+   
 function showForgot(){
   showSuccess('Reset Link Sent 📧','Check your inbox for a<br>password reset link.');
 }
