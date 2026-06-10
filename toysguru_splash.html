@@ -487,8 +487,11 @@ async function handleLogin(e){
         });
 
         const data = await response.json();
+        console.log("LOGIN RESPONSE:", data);
+alert("LOGIN RESPONSE RECEIVED");
 
         if(response.ok){
+            alert("INSIDE SUCCESS BLOCK");
 
             showSuccess(
                 "You're In! 🏁",
@@ -496,9 +499,10 @@ async function handleLogin(e){
             );
 
             setTimeout(() => {
-                window.location.href = "marketplace.html";
-            }, 1500);
-
+    console.log("REDIRECTING NOW");
+    alert("REDIRECTING NOW");
+    window.location.href = "marketplace.html";
+}, 1500);
         } else {
 
             alert(data.message);
@@ -546,7 +550,7 @@ async function handleSignup(e){
             );
 
             setTimeout(() => {
-                window.location.href = "marketplace.html";
+                window.location.href = "/frontend/marketplace.html";
             }, 1500);
 
         } else {
