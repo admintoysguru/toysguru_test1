@@ -1,0 +1,1112 @@
+/* ===========================================================
+   TOYSGURU
+   PART 1
+   FOUNDATION + LAYOUT + HERO
+=========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+
+    background:#050505;
+
+    font-family:'Inter',sans-serif;
+
+    color:white;
+
+    position:relative;
+
+}
+
+
+/* ===========================================================
+   BACKGROUND
+=========================================================== */
+
+#backgroundGlow{
+
+    position:fixed;
+    inset:0;
+
+    background:
+        radial-gradient(circle at center,
+            rgba(255,110,20,.18),
+            transparent 60%);
+
+    pointer-events:none;
+
+    z-index:0;
+
+}
+
+
+#dust{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:2;
+
+    opacity:.35;
+
+}
+
+
+#smokeLayer{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    z-index:20;
+
+}
+
+
+#skidMarks{
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:15;
+
+}
+
+
+/* ===========================================================
+   INTRO BMW ANIMATION
+=========================================================== */
+
+#introAnimation{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:25;
+
+}
+
+
+.bmwCar{
+
+    position:absolute;
+
+    width:300px;
+
+    top:62%;
+
+    opacity:0;
+
+    will-change:transform;
+
+}
+
+
+#bmwLeft{
+
+    left:-420px;
+
+}
+
+
+#bmwRight{
+
+    right:-420px;
+
+}
+
+
+/* ===========================================================
+   ROOM
+=========================================================== */
+
+.room{
+
+    position:relative;
+
+    width:100%;
+
+    height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+}
+
+
+/* ===========================================================
+   HERO
+=========================================================== */
+
+.hero{
+
+    position:relative;
+
+    z-index:30;
+
+    text-align:center;
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:1s ease;
+
+}
+
+
+.hero.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+/* ===========================================================
+   VAULT TITLE
+=========================================================== */
+
+.vaultTitle{
+
+    font-size:14px;
+
+    letter-spacing:10px;
+
+    color:#b98b4c;
+
+    margin-bottom:35px;
+
+    text-transform:uppercase;
+
+}
+
+
+/* ===========================================================
+   LOGO
+=========================================================== */
+
+#logo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    line-height:.85;
+
+    margin-bottom:35px;
+
+}
+
+
+.toys{
+
+    font-family:'Cinzel',serif;
+
+    font-size:7rem;
+
+    font-weight:600;
+
+    color:#f3ede7;
+
+    text-shadow:
+        0 0 18px rgba(255,255,255,.10);
+
+}
+
+
+.guru{
+
+    font-family:'Cinzel',serif;
+
+    font-size:7.3rem;
+
+    font-weight:700;
+
+    margin-top:8px;
+
+    background:linear-gradient(
+        180deg,
+        #ffb15c,
+        #ff6422,
+        #d92300
+    );
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    filter:drop-shadow(0 0 28px rgba(255,85,20,.55));
+
+}
+
+
+/* ===========================================================
+   TAGLINE
+=========================================================== */
+
+.tagline{
+
+    max-width:900px;
+
+    margin:auto;
+
+    color:#bdb3ab;
+
+    letter-spacing:6px;
+
+    font-size:16px;
+
+    margin-bottom:55px;
+
+    text-transform:uppercase;
+
+}
+/* ===========================================================
+   PART 2
+   SPOTLIGHTS + POWER SWITCH + BUTTONS
+=========================================================== */
+
+
+/* ===========================
+   CEILING SPOTLIGHTS
+=========================== */
+
+.spotlights{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:240px;
+
+    display:flex;
+
+    justify-content:space-evenly;
+
+    align-items:flex-start;
+
+    z-index:5;
+
+}
+
+
+.spotlight{
+
+    position:relative;
+
+    width:16px;
+
+    height:16px;
+
+    background:#c89a55;
+
+    border-radius:4px;
+
+    box-shadow:
+        0 0 8px rgba(255,190,90,.25);
+
+}
+
+
+/* Ceiling mount */
+
+.spotlight::before{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:100%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:3px;
+
+    height:80px;
+
+    background:#555;
+
+}
+
+
+/* Hidden light cone */
+
+.spotlight::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:14px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:320px;
+
+    height:760px;
+
+    background:linear-gradient(
+        to bottom,
+        rgba(255,175,70,.22),
+        rgba(255,120,20,.10),
+        transparent 88%
+    );
+
+    clip-path:polygon(
+        47% 0%,
+        53% 0%,
+        100% 100%,
+        0% 100%
+    );
+
+    filter:blur(10px);
+
+    opacity:.92;
+
+}
+
+
+/* Warm glowing LED */
+
+.spotlight .light{
+
+    position:absolute;
+
+    top:16px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:#ffd18a;
+
+    box-shadow:
+        0 0 18px #ffbd5c,
+        0 0 45px #ff7b22,
+        0 0 80px rgba(255,120,0,.5);
+
+}
+
+
+/* ===========================
+   FLOOR REFLECTION
+=========================== */
+
+.room::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    right:0;
+
+    bottom:-120px;
+
+    height:260px;
+
+    background:
+
+    radial-gradient(
+
+        ellipse at center,
+
+        rgba(255,120,20,.10),
+
+        transparent 70%
+
+    );
+
+    filter:blur(40px);
+
+    z-index:1;
+
+}
+
+
+/* ===========================
+   POWER SWITCH
+=========================== */
+
+.switch-container{
+
+    position:fixed;
+
+    right:40px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+
+    z-index:60;
+
+}
+
+
+#powerSwitch{
+
+    width:72px;
+
+    height:150px;
+
+    border-radius:40px;
+
+    background:
+
+    linear-gradient(
+
+        180deg,
+
+        #333,
+
+        #161616
+
+    );
+
+    border:2px solid rgba(255,255,255,.12);
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.4s;
+
+    box-shadow:
+
+        inset 0 0 20px rgba(255,255,255,.04),
+
+        0 0 30px rgba(0,0,0,.4);
+
+}
+
+
+.switch-knob{
+
+    position:absolute;
+
+    width:46px;
+
+    height:46px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    top:10px;
+
+    border-radius:50%;
+
+    background:#555;
+
+    transition:.55s cubic-bezier(.25,.8,.25,1);
+
+}
+
+
+#powerSwitch.active .switch-knob{
+
+    top:92px;
+
+    background:#ffa037;
+
+    box-shadow:
+
+        0 0 20px #ff8b00,
+
+        0 0 45px rgba(255,120,0,.6);
+
+}
+
+
+.switch-container span{
+
+    color:#c8c8c8;
+
+    font-size:13px;
+
+    letter-spacing:7px;
+
+}
+
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:30px;
+
+    margin-top:10px;
+
+}
+
+
+.buttons button{
+
+    width:240px;
+
+    height:62px;
+
+    border:none;
+
+    cursor:pointer;
+
+    letter-spacing:4px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:.35s;
+
+}
+
+
+.loginBtn{
+
+    background:transparent;
+
+    color:white;
+
+    border:1px solid rgba(255,175,90,.35) !important;
+
+}
+
+
+.loginBtn:hover{
+
+    background:rgba(255,170,70,.08);
+
+    transform:translateY(-4px);
+
+}
+
+
+.joinBtn{
+
+    background:linear-gradient(
+
+        90deg,
+
+        #ffb057,
+
+        #ff7422,
+
+        #ff4300
+
+    );
+
+    color:white;
+
+    box-shadow:
+
+        0 12px 40px rgba(255,95,20,.35);
+
+}
+
+
+.joinBtn:hover{
+
+    transform:translateY(-4px) scale(1.03);
+
+    box-shadow:
+
+        0 18px 55px rgba(255,110,20,.55);
+
+}
+/* ==========================================================
+   PART 3
+   CINEMATIC EFFECTS & ANIMATIONS
+==========================================================*/
+
+
+/* ===============================
+   HERO INITIAL STATE
+================================*/
+
+.vaultTitle,
+#logo,
+.tagline,
+.buttons{
+
+    opacity:0;
+
+    transform:translateY(30px);
+
+    transition:all 1s ease;
+
+}
+
+.vaultTitle.show,
+#logo.show,
+.tagline.show,
+.buttons.show{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+/* ===============================
+   GURU GLOW
+================================*/
+
+.guru{
+
+    animation:logoGlow 4s ease-in-out infinite;
+
+}
+
+@keyframes logoGlow{
+
+    0%{
+
+        filter:
+        drop-shadow(0 0 8px rgba(255,90,20,.20));
+
+    }
+
+    50%{
+
+        filter:
+        drop-shadow(0 0 20px rgba(255,80,20,.55))
+        drop-shadow(0 0 60px rgba(255,60,0,.35));
+
+    }
+
+    100%{
+
+        filter:
+        drop-shadow(0 0 8px rgba(255,90,20,.20));
+
+    }
+
+}
+
+
+/* ===============================
+   BACKGROUND GLOW
+================================*/
+
+#backgroundGlow{
+
+    opacity:0;
+
+    transition:2s;
+
+}
+
+#backgroundGlow.active{
+
+    opacity:1;
+
+    animation:roomGlow 7s ease-in-out infinite;
+
+}
+
+@keyframes roomGlow{
+
+    0%{
+
+        filter:brightness(.92);
+
+    }
+
+    50%{
+
+        filter:brightness(1.1);
+
+    }
+
+    100%{
+
+        filter:brightness(.92);
+
+    }
+
+}
+
+
+/* ===============================
+   DUST
+================================*/
+
+#dust{
+
+    background-image:
+
+    radial-gradient(
+        rgba(255,255,255,.25) 1px,
+        transparent 1px
+    );
+
+    background-size:170px 170px;
+
+}
+
+#dust.active{
+
+    animation:dustFloat 22s linear infinite;
+
+}
+
+@keyframes dustFloat{
+
+    from{
+
+        transform:translateY(0);
+
+    }
+
+    to{
+
+        transform:translateY(-500px);
+
+    }
+
+}
+
+
+/* ===============================
+   SMOKE
+================================*/
+
+#smokeLayer{
+
+    background:
+
+    radial-gradient(circle,
+    rgba(255,255,255,.18),
+    transparent 70%);
+
+    filter:blur(35px);
+
+}
+
+#smokeLayer.show{
+
+    animation:smokeReveal 3.5s ease forwards;
+
+}
+
+@keyframes smokeReveal{
+
+    0%{
+
+        opacity:0;
+
+        transform:scale(.6);
+
+    }
+
+    30%{
+
+        opacity:.75;
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:scale(1.35);
+
+    }
+
+}
+
+
+/* ===============================
+   SKID MARKS
+================================*/
+
+#skidMarks{
+
+    background-image:
+
+    linear-gradient(
+        80deg,
+        transparent 47%,
+        rgba(0,0,0,.22) 50%,
+        transparent 53%
+    ),
+
+    linear-gradient(
+        -80deg,
+        transparent 47%,
+        rgba(0,0,0,.22) 50%,
+        transparent 53%
+    );
+
+    opacity:0;
+
+}
+
+#skidMarks.show{
+
+    opacity:.45;
+
+    transition:1.2s;
+
+}
+
+
+/* ===============================
+   BMW CARS
+================================*/
+
+.bmwCar{
+
+    transition:none;
+
+    filter:
+
+    drop-shadow(0 12px 20px rgba(0,0,0,.45));
+
+}
+
+
+/* ===============================
+   SPOTLIGHTS
+================================*/
+
+.spotlight{
+
+    opacity:.15;
+
+    transition:.6s;
+
+}
+
+.spotlight.active{
+
+    opacity:1;
+
+    box-shadow:
+
+        0 0 10px rgba(255,200,120,.6),
+
+        0 0 35px rgba(255,170,70,.4);
+
+}
+
+.spotlight.active::after{
+
+    opacity:1;
+
+}
+
+
+/* ===============================
+   POWER SWITCH
+================================*/
+
+#powerSwitch{
+
+    transition:.35s;
+
+}
+
+#powerSwitch:active{
+
+    transform:scale(.97);
+
+}
+
+
+/* ===============================
+   BUTTON HOVER
+================================*/
+
+.loginBtn,
+.joinBtn{
+
+    transition:
+
+        .35s ease;
+
+}
+
+.loginBtn:hover{
+
+    transform:
+
+        translateY(-4px);
+
+}
+
+.joinBtn:hover{
+
+    transform:
+
+        translateY(-4px)
+        scale(1.03);
+
+}
+
+
+/* ===============================
+   CINEMATIC VIGNETTE
+================================*/
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        transparent 45%,
+
+        rgba(0,0,0,.65)
+
+    );
+
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================*/
+
+@media(max-width:900px){
+
+    .buttons{
+
+        flex-direction:column;
+
+        align-items:center;
+
+    }
+
+    .buttons button{
+
+        width:260px;
+
+    }
+
+    .spotlights{
+
+        transform:scale(.8);
+
+    }
+
+    .switch-container{
+
+        right:18px;
+
+    }
+
+    .toys{
+
+        font-size:5rem;
+
+    }
+
+    .guru{
+
+        font-size:5.5rem;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .spotlights{
+
+        display:none;
+
+    }
+
+    .tagline{
+
+        width:90%;
+
+        font-size:12px;
+
+        letter-spacing:3px;
+
+    }
+
+    .vaultTitle{
+
+        letter-spacing:5px;
+
+    }
+
+}
