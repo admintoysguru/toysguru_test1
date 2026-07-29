@@ -1,0 +1,736 @@
+/*==========================================================
+  TOYSGURU — THE MARKETPLACE
+  Same vault DNA as the landing page. Signature: every listing
+  is treated as a museum/auction lot — lot number, condition
+  grading scale, brass vitrine corners on hover — not a generic
+  product card with a paint job.
+==========================================================*/
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+    --bg:#070605;
+    --bg-soft:#0b0a08;
+    --bg-card:#100e0b;
+    --bg-raised:#141210;
+
+    --text:#F2EBDD;
+    --text-soft:#9C948A;
+    --text-faint:#6B6459;
+
+    --brass:#B8925A;
+    --brass-light:#E8CB9C;
+    --brass-dim:#6E5837;
+
+    --oxblood:#7A3226;
+    --oxblood-light:#B9573F;
+
+    --glass-border:rgba(232,201,156,.14);
+    --ease:.4s cubic-bezier(.22,.61,.36,1);
+}
+
+html{scroll-behavior:smooth;}
+html,body{width:100%;min-height:100%;overflow-x:hidden;}
+
+body{
+    background:radial-gradient(circle at top,#0e0c09 0%,#0a0908 30%,#070605 65%,#050403 100%);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+}
+
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+::selection{background:var(--brass);color:#0a0908;}
+
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg,var(--brass-dim),var(--brass),var(--brass-dim));
+    border-radius:100px;border:2px solid var(--bg);
+}
+
+/*==========================================================
+NAV
+==========================================================*/
+
+.nav{
+    position:sticky;
+    top:0;
+    z-index:200;
+    display:flex;
+    align-items:center;
+    gap:32px;
+    height:72px;
+    padding:0 48px;
+    background:rgba(7,6,5,.92);
+    border-bottom:1px solid var(--glass-border);
+    backdrop-filter:blur(16px);
+}
+
+.navLogo{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:2px;
+    color:var(--text);
+    white-space:nowrap;
+}
+.navLogo em{
+    font-style:normal;
+    color:var(--brass-light);
+}
+
+.navSearch{
+    flex:1;
+    max-width:420px;
+    position:relative;
+}
+.navSearch input{
+    width:100%;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--glass-border);
+    color:var(--text);
+    padding:10px 16px 10px 38px;
+    font-size:13px;
+    letter-spacing:.3px;
+    border-radius:2px;
+    outline:none;
+    transition:border-color .3s ease;
+}
+.navSearch input::placeholder{color:var(--text-faint);}
+.navSearch input:focus{border-color:var(--brass);}
+.navSearch svg{
+    position:absolute;
+    left:12px;top:50%;
+    transform:translateY(-50%);
+    width:14px;height:14px;
+    stroke:var(--text-faint);
+}
+
+.navLinks{
+    display:flex;
+    gap:28px;
+    list-style:none;
+    margin-left:auto;
+}
+.navLinks a{
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--text-soft);
+    transition:color .25s ease;
+}
+.navLinks a:hover,
+.navLinks a.active{color:var(--brass-light);}
+
+.navAccount{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding-left:20px;
+    border-left:1px solid var(--glass-border);
+}
+.navAccount span{
+    font-size:12px;
+    color:var(--text-soft);
+}
+.navAccount strong{color:var(--text);font-weight:600;}
+
+@media(max-width:1000px){
+    .navLinks{display:none;}
+    .nav{padding:0 24px;gap:16px;}
+}
+@media(max-width:640px){
+    .navSearch{display:none;}
+}
+
+/*==========================================================
+VAULT ENTRANCE BANNER
+==========================================================*/
+
+.entrance{
+    position:relative;
+    padding:56px 48px 44px;
+    border-bottom:1px solid var(--glass-border);
+    overflow:hidden;
+}
+.entrance::before{
+    content:"";
+    position:absolute;
+    top:-40%;left:50%;
+    transform:translateX(-50%);
+    width:900px;height:300px;
+    background:radial-gradient(ellipse,rgba(184,146,90,.1),transparent 70%);
+    pointer-events:none;
+}
+.entranceEyebrow{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin-bottom:14px;
+}
+.entrance h1{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:2.4rem;
+    letter-spacing:1px;
+    color:var(--text);
+    margin-bottom:10px;
+}
+.entrance h1 em{
+    font-style:normal;
+    color:var(--brass-light);
+}
+.entrance p{
+    color:var(--text-soft);
+    font-size:14.5px;
+    max-width:560px;
+    line-height:1.7;
+}
+
+/* Category rooms — engraved plaque tabs */
+.rooms{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:32px;
+}
+.roomTab{
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--glass-border);
+    color:var(--text-soft);
+    padding:9px 20px;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    border-radius:2px;
+    transition:all .3s ease;
+}
+.roomTab:hover{border-color:var(--brass);color:var(--text);}
+.roomTab.active{
+    background:var(--brass);
+    border-color:var(--brass);
+    color:#100e0b;
+}
+
+@media(max-width:640px){
+    .entrance{padding:40px 24px 32px;}
+    .entrance h1{font-size:1.8rem;}
+}
+
+/*==========================================================
+SECTION SHELL
+==========================================================*/
+
+.section{
+    padding:64px 48px;
+}
+.sectionHead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:34px;
+    gap:20px;
+    flex-wrap:wrap;
+}
+.sectionHead h2{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:1.7rem;
+    letter-spacing:1px;
+    color:var(--text);
+}
+.sectionHead p{
+    color:var(--text-faint);
+    font-size:13px;
+    margin-top:6px;
+}
+.sectionLink{
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--brass);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease;
+}
+.sectionLink:hover{border-color:var(--brass);}
+
+@media(max-width:640px){
+    .section{padding:48px 24px;}
+}
+
+/*==========================================================
+FEATURED CASE — asymmetric hero listing + 3 supporting
+==========================================================*/
+
+.featuredGrid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:24px;
+}
+.featuredSide{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+@media(max-width:1000px){
+    .featuredGrid{grid-template-columns:1fr;}
+}
+
+/*==========================================================
+LOT CARD — the signature element
+==========================================================*/
+
+.lot{
+    position:relative;
+    background:linear-gradient(150deg,rgba(255,255,255,.03),rgba(255,255,255,.008));
+    border:1px solid var(--glass-border);
+    border-radius:4px;
+    overflow:hidden;
+    transition:border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+    cursor:pointer;
+}
+.lot:hover{
+    border-color:rgba(184,146,90,.4);
+    transform:translateY(-4px);
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+
+/* Vitrine corner brackets — appear on hover, like catching a display case's light */
+.lot::before,.lot::after,
+.lotFrame::before,.lotFrame::after{
+    content:"";
+    position:absolute;
+    width:16px;height:16px;
+    border:1.5px solid var(--brass-light);
+    opacity:0;
+    transition:opacity .35s ease;
+    z-index:3;
+}
+.lot::before{top:8px;left:8px;border-right:none;border-bottom:none;}
+.lot::after{top:8px;right:8px;border-left:none;border-bottom:none;}
+.lotFrame::before{bottom:8px;left:8px;border-right:none;border-top:none;}
+.lotFrame::after{bottom:8px;right:8px;border-left:none;border-top:none;}
+.lot:hover::before,.lot:hover::after,
+.lot:hover .lotFrame::before,.lot:hover .lotFrame::after{opacity:.9;}
+
+.lotFrame{
+    position:relative;
+    aspect-ratio:4/3;
+    background:var(--bg-card);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.lotFrame svg{width:58%;opacity:.92;}
+
+.lotNumber{
+    position:absolute;
+    top:10px;left:10px;
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    letter-spacing:1px;
+    color:var(--brass-light);
+    background:rgba(7,6,5,.7);
+    padding:3px 8px;
+    border:1px solid var(--glass-border);
+    z-index:2;
+}
+
+.lotVerified{
+    position:absolute;
+    top:10px;right:10px;
+    font-size:9.5px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    background:rgba(7,6,5,.7);
+    padding:3px 8px;
+    border:1px solid var(--glass-border);
+    z-index:2;
+}
+
+.lotBody{padding:18px 20px 20px;}
+.lotSeries{
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:6px;
+}
+.lotName{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--text);
+    margin-bottom:14px;
+    line-height:1.3;
+}
+
+/* Condition grading scale — real collector grading, not a generic badge */
+.gradeScale{
+    margin-bottom:16px;
+}
+.gradeLabels{
+    display:flex;
+    justify-content:space-between;
+    font-size:8.5px;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:6px;
+}
+.gradeTrack{
+    position:relative;
+    height:2px;
+    background:rgba(255,255,255,.08);
+    border-radius:2px;
+}
+.gradeDot{
+    position:absolute;
+    top:50%;
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--brass-light);
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 8px rgba(232,201,156,.5);
+}
+
+.lotFoot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:14px;
+    border-top:1px solid rgba(255,255,255,.05);
+}
+.lotPrice{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--brass-light);
+}
+.lotGradeText{
+    font-size:11px;
+    color:var(--text-soft);
+    letter-spacing:.5px;
+}
+
+/* Large featured variant */
+.lot.featured .lotFrame{aspect-ratio:16/10;}
+.lot.featured .lotFrame svg{width:44%;}
+.lot.featured .lotName{font-size:19px;}
+.lot.featured .lotPrice{font-size:20px;}
+
+/*==========================================================
+GRID
+==========================================================*/
+
+.lotGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:20px;
+}
+
+/*==========================================================
+THE ROSTRUM — live auctions
+==========================================================*/
+
+.rostrumSection{
+    background:var(--bg-soft);
+    border-top:1px solid var(--glass-border);
+    border-bottom:1px solid var(--glass-border);
+}
+
+.rostrumGrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:22px;
+}
+
+.rostrumCard{
+    position:relative;
+    background:var(--bg-card);
+    border:1px solid var(--glass-border);
+    padding:22px;
+    transition:border-color .35s ease;
+}
+.rostrumCard:hover{border-color:rgba(184,146,90,.4);}
+.rostrumCard::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--brass),var(--oxblood-light));
+}
+
+.rostrumTop{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:16px;
+}
+.rostrumTag{
+    font-family:'DM Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--brass);
+}
+.liveTag{
+    display:flex;align-items:center;gap:6px;
+    font-family:'DM Mono',monospace;
+    font-size:9.5px;letter-spacing:1.5px;
+    color:var(--oxblood-light);
+}
+.liveTag::before{
+    content:"";width:5px;height:5px;border-radius:50%;
+    background:var(--oxblood-light);
+    animation:pulse 1.6s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+.rostrumFrame{
+    aspect-ratio:16/9;
+    background:var(--bg-raised);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:16px;
+}
+.rostrumFrame svg{width:38%;opacity:.9;}
+
+.rostrumName{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--text);
+    margin-bottom:4px;
+}
+.rostrumSeries{
+    font-size:11.5px;
+    color:var(--text-faint);
+    letter-spacing:.5px;
+    margin-bottom:16px;
+}
+
+.rostrumStats{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+    padding:14px;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--glass-border);
+    margin-bottom:16px;
+}
+.statLabel{
+    font-size:9px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:4px;
+}
+.statValue{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--brass-light);
+}
+.statValue.time{
+    font-family:'DM Mono',monospace;
+    font-weight:500;
+    color:var(--oxblood-light);
+    font-size:14px;
+}
+
+.bidBtn{
+    width:100%;
+    background:linear-gradient(135deg,var(--brass-light),var(--brass));
+    border:none;
+    color:#100e0b;
+    padding:13px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    transition:box-shadow .3s ease, transform .3s ease;
+}
+.bidBtn:hover{
+    box-shadow:0 14px 34px rgba(184,146,90,.28);
+    transform:translateY(-2px);
+}
+
+/*==========================================================
+SUBMIT FOR APPRAISAL (sell)
+==========================================================*/
+
+.appraisalSection{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:start;
+    padding:80px 48px;
+}
+
+.appraisalIntro .entranceEyebrow{margin-bottom:14px;}
+.appraisalIntro h2{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:2rem;
+    color:var(--text);
+    margin-bottom:16px;
+    letter-spacing:1px;
+}
+.appraisalIntro > p{
+    color:var(--text-soft);
+    font-size:14.5px;
+    line-height:1.75;
+    margin-bottom:32px;
+    max-width:480px;
+}
+
+.appraisalFeats{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+.aFeat{
+    display:flex;
+    gap:14px;
+    padding:16px;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--glass-border);
+}
+.aFeatIcon{
+    width:34px;height:34px;flex-shrink:0;
+    border:1px solid var(--glass-border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--brass-light);
+    font-size:14px;
+}
+.aFeat strong{
+    display:block;
+    font-size:14px;
+    color:var(--text);
+    margin-bottom:3px;
+}
+.aFeat span{
+    font-size:12.5px;
+    color:var(--text-faint);
+    line-height:1.5;
+}
+
+.appraisalForm{
+    background:var(--bg-card);
+    border:1px solid var(--glass-border);
+    padding:36px;
+    position:relative;
+}
+.appraisalForm::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--brass),var(--brass-light));
+}
+.formTitle{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:1.2rem;
+    color:var(--text);
+    margin-bottom:22px;
+    letter-spacing:.5px;
+}
+.frow{margin-bottom:16px;}
+.frow label{
+    display:block;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:7px;
+}
+.frow input,.frow select{
+    width:100%;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--glass-border);
+    color:var(--text);
+    padding:11px 14px;
+    font-size:13.5px;
+    outline:none;
+    transition:border-color .3s ease;
+}
+.frow input:focus,.frow select:focus{border-color:var(--brass);}
+.frow input::placeholder{color:var(--text-faint);}
+.f2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+.submitBtn{
+    width:100%;
+    background:var(--brass);
+    color:#100e0b;
+    border:none;
+    padding:14px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-top:8px;
+    transition:background .3s ease, box-shadow .3s ease;
+}
+.submitBtn:hover{
+    background:var(--brass-light);
+    box-shadow:0 14px 34px rgba(184,146,90,.25);
+}
+
+@media(max-width:900px){
+    .appraisalSection{grid-template-columns:1fr;padding:60px 24px;}
+}
+
+/*==========================================================
+REVEAL ON SCROLL
+==========================================================*/
+
+.reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.show{opacity:1;transform:none;}
+
+@media(prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;}
+}
+
+/*==========================================================
+FOOTER
+==========================================================*/
+
+.footer{
+    padding:44px 48px 26px;
+    border-top:1px solid var(--glass-border);
+}
+.footerTop{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:24px;
+    margin-bottom:28px;
+}
+.footerBrand{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:1.5px;
+    color:var(--text);
+}
+.footerBrand em{font-style:normal;color:var(--brass-light);}
+.footerMeta{
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:.5px;
+}
+
+@media(max-width:640px){
+    .footer{padding:36px 24px 20px;}
+}

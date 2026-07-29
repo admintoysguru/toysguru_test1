@@ -1,988 +1,777 @@
-/* ===========================================================
-   TOYSGURU
-   PART 1
-   FOUNDATION + LAYOUT + HERO
-=========================================================== */
+/*==========================================================
+  TOYSGURU — THE COLLECTOR'S VAULT
+  Premium rebuild: single warm light source, restrained brass
+  palette, one signature moment (the vault reveal).
+==========================================================*/
 
-*{
+*,
+*::before,
+*::after{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-body{
-
-    background:#050505;
-
-    font-family:'Inter',sans-serif;
-
-    color:white;
-
-    position:relative;
-
-}
-
-
-/* ===========================================================
-   BACKGROUND
-=========================================================== */
-
-#backgroundGlow{
-
-    position:fixed;
-    inset:0;
-
-    background:
-        radial-gradient(circle at center,
-            rgba(255,110,20,.18),
-            transparent 60%);
-
-    pointer-events:none;
-
-    z-index:0;
-
-}
-
-
-#dust{
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    z-index:2;
-
-    opacity:.35;
-
-}
-
-
-#smokeLayer{
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    opacity:0;
-
-    z-index:20;
-
-}
-
-
-#skidMarks{
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    z-index:15;
-
-}
-
-
-/* ===========================================================
-   INTRO BMW ANIMATION
-=========================================================== */
-
-#introAnimation{
-
-    position:fixed;
-
-    inset:0;
-
-    overflow:hidden;
-
-    pointer-events:none;
-
-    z-index:25;
-
-}
-
-
-.bmwCar{
-
-    position:absolute;
-
-    width:300px;
-
-    top:62%;
-
-    opacity:0;
-
-    will-change:transform;
-
-}
-
-
-#bmwLeft{
-
-    left:-420px;
-
-}
-
-
-#bmwRight{
-
-    right:-420px;
-
-}
-
-
-/* ===========================================================
-   ROOM
-=========================================================== */
-
-.room{
-
-    position:relative;
-
-    width:100%;
-
-    height:100vh;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-}
-
-
-/* ===========================================================
-   HERO
-=========================================================== */
-
-.hero{
-
-    position: relative;
-
-    z-index: 30;
-
-    text-align: center;
-
-    opacity: 0;
-
-    transform: translateY(25px) scale(.97);
-
-    transition:
-        opacity 1.2s ease,
-        transform 1.2s ease;
-
-}
-
-.hero.show{
-
-    opacity: 1;
-
-    transform: translateY(0) scale(1);
-
-}
-
-
-/* ===========================================================
-   VAULT TITLE
-=========================================================== */
-
-.vaultTitle,
-#logo,
-.tagline,
-.buttons{
-
-    opacity: 0;
-
-    transform: translateY(20px);
-
-    transition:
-        opacity .8s ease,
-        transform .8s ease;
-
-}
-
-.vaultTitle.show,
-#logo.show,
-.tagline.show,
-.buttons.show{
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-}
-
-/* ===========================================================
-   LOGO
-=========================================================== */
-
-#logo{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    line-height:.85;
-
-    margin-bottom:35px;
-
-}
-
-
-.toys{
-
-    font-family:'Cinzel',serif;
-
-    font-size:7rem;
-
-    font-weight:600;
-
-    color:#f3ede7;
-
-    text-shadow:
-        0 0 18px rgba(255,255,255,.10);
-
-}
-
-
-.guru{
-
-    font-family:'Cinzel',serif;
-
-    font-size:7.3rem;
-
-    font-weight:700;
-
-    margin-top:8px;
-
-    background:linear-gradient(
-        180deg,
-        #ffb15c,
-        #ff6422,
-        #d92300
-    );
-
-    -webkit-background-clip:text;
-
-    -webkit-text-fill-color:transparent;
-
-    filter:drop-shadow(0 0 28px rgba(255,85,20,.55));
-
-}
-
-
-/* ===========================================================
-   TAGLINE
-=========================================================== */
-
-.tagline{
-
-    max-width:900px;
-
-    margin:auto;
-
-    color:#bdb3ab;
-
-    letter-spacing:6px;
-
-    font-size:16px;
-
-    margin-bottom:55px;
-
-    text-transform:uppercase;
-
-}
-/* ===========================================================
-   PART 2
-   SPOTLIGHTS + POWER SWITCH + BUTTONS
-=========================================================== */
-
-
-/* ===========================
-   CEILING SPOTLIGHTS
-=========================== */
-
-.spotlights{
-
-    position:absolute;
-
-    top:0;
-
-    left:0;
-
-    width:100%;
-
-    height:240px;
-
-    display:flex;
-
-    justify-content:space-evenly;
-
-    align-items:flex-start;
-
-    z-index:5;
-
-}
-
-
-.spotlight{
-
-    position:relative;
-
-    width:16px;
-
-    height:16px;
-
-    background:#c89a55;
-
-    border-radius:4px;
-
-    box-shadow:
-        0 0 8px rgba(255,190,90,.25);
-
-}
-
-
-/* Ceiling mount */
-
-.spotlight::before{
-
-    content:"";
-
-    position:absolute;
-
-    bottom:100%;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:3px;
-
-    height:80px;
-
-    background:#555;
-
-}
-
-
-/* Hidden light cone */
-
-.spotlight::after{
-
-    content:"";
-
-    position:absolute;
-
-    top:14px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:320px;
-
-    height:760px;
-
-    background:linear-gradient(
-        to bottom,
-        rgba(255,175,70,.22),
-        rgba(255,120,20,.10),
-        transparent 88%
-    );
-
-    clip-path:polygon(
-        47% 0%,
-        53% 0%,
-        100% 100%,
-        0% 100%
-    );
-
-    filter:blur(10px);
-
-    opacity:.92;
-
-}
-
-
-/* Warm glowing LED */
-
-.spotlight .light{
-
-    position:absolute;
-
-    top:16px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:8px;
-
-    height:8px;
-
-    border-radius:50%;
-
-    background:#ffd18a;
-
-    box-shadow:
-        0 0 18px #ffbd5c,
-        0 0 45px #ff7b22,
-        0 0 80px rgba(255,120,0,.5);
-
-}
-
-
-/* ===========================
-   FLOOR REFLECTION
-=========================== */
-
-.room::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    right:0;
-
-    bottom:-120px;
-
-    height:260px;
-
-    background:
-
-    radial-gradient(
-
-        ellipse at center,
-
-        rgba(255,120,20,.10),
-
-        transparent 70%
-
-    );
-
-    filter:blur(40px);
-
-    z-index:1;
-
-}
-
-
-/* ===========================
-   BUTTONS
-=========================== */
-
-.buttons{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:30px;
-
-    margin-top:10px;
-
-}
-
-
-.buttons button{
-
-    width:240px;
-
-    height:62px;
-
-    border:none;
-
-    cursor:pointer;
-
-    letter-spacing:4px;
-
-    font-size:14px;
-
-    font-weight:700;
-
-    transition:.35s;
-
-}
-
-
-.loginBtn{
-
-    background:transparent;
-
-    color:white;
-
-    border:1px solid rgba(255,175,90,.35) !important;
-
-}
-
-
-.loginBtn:hover{
-
-    background:rgba(255,170,70,.08);
-
-    transform:translateY(-4px);
-
-}
-
-
-.joinBtn{
-
-    background:linear-gradient(
-
-        90deg,
-
-        #ffb057,
-
-        #ff7422,
-
-        #ff4300
-
-    );
-
-    color:white;
-
-    box-shadow:
-
-        0 12px 40px rgba(255,95,20,.35);
-
-}
-
-
-.joinBtn:hover{
-
-    transform:translateY(-4px) scale(1.03);
-
-    box-shadow:
-
-        0 18px 55px rgba(255,110,20,.55);
-
-}
-/* ==========================================================
-   PART 3
-   CINEMATIC EFFECTS & ANIMATIONS
+/*==========================================================
+ROOT VARIABLES
 ==========================================================*/
 
+:root{
 
-/* ===============================
-   HERO INITIAL STATE
-================================*/
+    --bg:#070605;
+    --bg-soft:#0b0a08;
+    --bg-card:#100e0b;
 
-.vaultTitle,
-#logo,
-.tagline,
-.buttons{
+    --text:#F2EBDD;
+    --text-soft:#9C948A;
+    --text-faint:#6B6459;
 
-    opacity:0;
+    --brass:#B8925A;
+    --brass-light:#E8CB9C;
+    --brass-dim:#6E5837;
 
-    transform:translateY(30px);
+    --glass:rgba(255,255,255,.04);
+    --glass-border:rgba(232,201,156,.14);
 
-    transition:all 1s ease;
+    --shadow-large:0 40px 90px rgba(0,0,0,.55);
+    --shadow-soft:0 18px 40px rgba(0,0,0,.35);
 
-}
-
-.vaultTitle.show,
-#logo.show,
-.tagline.show,
-.buttons.show{
-
-    opacity:1;
-
-    transform:translateY(0);
+    --ease:.5s cubic-bezier(.22,.61,.36,1);
 
 }
 
+/*==========================================================
+HTML / BODY
+==========================================================*/
 
-/* ===============================
-   GURU GLOW
-================================*/
-
-.guru{
-
-    animation:logoGlow 4s ease-in-out infinite;
-
+html{
+    scroll-behavior:smooth;
+    scroll-padding-top:80px;
 }
 
-@keyframes logoGlow{
-
-    0%{
-
-        filter:
-        drop-shadow(0 0 8px rgba(255,90,20,.20));
-
-    }
-
-    50%{
-
-        filter:
-        drop-shadow(0 0 20px rgba(255,80,20,.55))
-        drop-shadow(0 0 60px rgba(255,60,0,.35));
-
-    }
-
-    100%{
-
-        filter:
-        drop-shadow(0 0 8px rgba(255,90,20,.20));
-
-    }
-
+html,body{
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
 }
 
+body{
+    position:relative;
+    font-family:'Inter',sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at top,#0e0c09 0%,#0a0908 28%,#070605 60%,#050403 100%);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    animation:pageFade 1s ease;
+}
 
-/* ===============================
-   BACKGROUND GLOW
-================================*/
+@keyframes pageFade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/*==========================================================
+AMBIENT LAYERS (kept minimal — one warm source, one grain)
+==========================================================*/
 
 #backgroundGlow{
-
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
     opacity:0;
-
-    transition:2s;
-
+    transition:opacity 2.2s ease;
+    background:
+        radial-gradient(
+            ellipse at 50% 30%,
+            rgba(184,146,90,.16) 0%,
+            rgba(150,115,65,.08) 30%,
+            rgba(110,85,50,.04) 55%,
+            transparent 80%
+        );
 }
 
 #backgroundGlow.active{
-
     opacity:1;
-
-    animation:roomGlow 7s ease-in-out infinite;
-
 }
-
-@keyframes roomGlow{
-
-    0%{
-
-        filter:brightness(.92);
-
-    }
-
-    50%{
-
-        filter:brightness(1.1);
-
-    }
-
-    100%{
-
-        filter:brightness(.92);
-
-    }
-
-}
-
-
-/* ===============================
-   DUST
-================================*/
 
 #dust{
-
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2;
+    opacity:0;
+    transition:opacity 1.5s ease;
     background-image:
-
-    radial-gradient(
-        rgba(255,255,255,.25) 1px,
-        transparent 1px
-    );
-
-    background-size:170px 170px;
-
+        radial-gradient(rgba(232,201,156,.18) .7px,transparent .7px);
+    background-size:200px 200px;
 }
 
 #dust.active{
-
-    animation:dustFloat 22s linear infinite;
-
+    opacity:.35;
 }
 
-@keyframes dustFloat{
-
-    from{
-
-        transform:translateY(0);
-
-    }
-
-    to{
-
-        transform:translateY(-500px);
-
-    }
-
-}
-
-
-/* ===============================
-   SMOKE
-================================*/
-
-#smokeLayer{
-
-    background:
-
-    radial-gradient(circle,
-    rgba(255,255,255,.18),
-    transparent 70%);
-
-    filter:blur(35px);
-
-}
-
-#smokeLayer.show{
-
-    animation:smokeReveal 3.5s ease forwards;
-
-}
-
-@keyframes smokeReveal{
-
-    0%{
-
-        opacity:0;
-
-        transform:scale(.6);
-
-    }
-
-    30%{
-
-        opacity:.75;
-
-    }
-
-    100%{
-
-        opacity:0;
-
-        transform:scale(1.35);
-
-    }
-
-}
-
-
-/* ===============================
-   SKID MARKS
-================================*/
-
+/* Unused decorative layers from the old build (smoke, skid marks)
+   are intentionally left empty — one texture is enough. */
+#smokeLayer,
 #skidMarks{
+    display:none;
+}
 
-    background-image:
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:998;
+    opacity:.025;
+    background-image:radial-gradient(circle,rgba(255,255,255,.2) .6px,transparent .6px);
+    background-size:5px 5px;
+    mix-blend-mode:soft-light;
+}
 
-    linear-gradient(
-        80deg,
-        transparent 47%,
-        rgba(0,0,0,.22) 50%,
-        transparent 53%
-    ),
+/*==========================================================
+ROOM / HERO WRAPPER
+==========================================================*/
 
-    linear-gradient(
-        -80deg,
-        transparent 47%,
-        rgba(0,0,0,.22) 50%,
-        transparent 53%
-    );
+.room{
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:70px 0 30px;
+    overflow:hidden;
+}
 
+.room::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    bottom:-180px;
+    transform:translateX(-50%);
+    width:1400px;
+    height:460px;
+    pointer-events:none;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(184,146,90,.14) 0%,
+            rgba(150,115,65,.07) 34%,
+            transparent 78%
+        );
+    filter:blur(70px);
+    z-index:1;
+}
+
+section{
+    position:relative;
+    z-index:5;
+}
+
+::selection{
+    background:var(--brass);
+    color:#0a0908;
+}
+
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg,var(--brass-dim),var(--brass),var(--brass-dim));
+    border-radius:100px;
+    border:2px solid var(--bg);
+}
+
+/*==========================================================
+HERO
+==========================================================*/
+
+.hero{
+    position:relative;
+    z-index:20;
+    width:min(92%,1200px);
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
     opacity:0;
-
+    transform:translateY(30px);
+    transition:opacity 1.2s ease, transform 1.2s ease;
 }
 
-#skidMarks.show{
-
-    opacity:.45;
-
-    transition:1.2s;
-
+.hero.show{
+    opacity:1;
+    transform:translateY(0);
 }
 
-
-/* ===============================
-   BMW CARS
-================================*/
-
-.bmwCar{
-
-    transition:none;
-
-    filter:
-
-    drop-shadow(0 12px 20px rgba(0,0,0,.45));
-
+.vaultTitle{
+    font-family:'Inter',sans-serif;
+    font-size:.78rem;
+    font-weight:600;
+    letter-spacing:9px;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    margin-bottom:28px;
+    opacity:0;
+    transform:translateY(16px);
+    transition:.9s ease;
 }
 
+.vaultTitle.show{
+    opacity:1;
+    transform:translateY(0);
+}
 
-/* ===============================
-   SPOTLIGHTS
-================================*/
+#logo{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    line-height:.86;
+    margin-bottom:30px;
+    opacity:0;
+    transform:translateY(20px);
+    transition:.9s ease;
+}
+
+#logo.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+#logo::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:600px;
+    height:320px;
+    border-radius:50%;
+    background:radial-gradient(ellipse,rgba(184,146,90,.16),transparent 72%);
+    filter:blur(55px);
+    z-index:-1;
+}
+
+.toys{
+    font-family:'Cinzel',serif;
+    font-size:6.6rem;
+    font-weight:500;
+    letter-spacing:6px;
+    color:var(--text);
+    opacity:.86;
+}
+
+.guru{
+    margin-top:6px;
+    font-family:'Cinzel',serif;
+    font-size:7.1rem;
+    font-weight:700;
+    letter-spacing:6px;
+    line-height:.95;
+    background:linear-gradient(
+        180deg,
+        #E8A66C 0%,
+        #D9682E 45%,
+        #A83A1D 100%
+    );
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,.4)) drop-shadow(0 0 26px rgba(217,104,46,.18));
+}
+
+.tagline{
+    max-width:760px;
+    margin-inline:auto;
+    margin-bottom:54px;
+    color:var(--text-soft);
+    font-size:13px;
+    letter-spacing:5px;
+    line-height:2;
+    text-transform:uppercase;
+    opacity:0;
+    transform:translateY(16px);
+    transition:.9s ease;
+}
+
+.tagline.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/*==========================================================
+SPOTLIGHTS — the signature moment
+==========================================================*/
+
+.spotlights{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:220px;
+    display:flex;
+    justify-content:space-evenly;
+    align-items:flex-start;
+    pointer-events:none;
+    z-index:5;
+}
 
 .spotlight{
-
+    position:relative;
+    width:16px;
+    height:16px;
+    border-radius:4px;
+    background:linear-gradient(180deg,var(--brass-light),var(--brass),var(--brass-dim));
     opacity:.15;
+    transition:opacity 1.1s ease, box-shadow 1.1s ease;
+}
 
-    transition:.6s;
+.spotlight::before{
+    content:"";
+    position:absolute;
+    bottom:100%;
+    left:50%;
+    transform:translateX(-50%);
+    width:2px;
+    height:90px;
+    background:linear-gradient(to top,#4a4640,transparent);
+}
 
+.spotlight::after{
+    content:"";
+    position:absolute;
+    top:16px;
+    left:50%;
+    transform:translateX(-50%);
+    width:320px;
+    height:720px;
+    opacity:0;
+    transition:opacity 1s ease;
+    clip-path:polygon(49% 0%,51% 0%,100% 100%,0% 100%);
+    background:linear-gradient(
+        to bottom,
+        rgba(232,201,156,.14) 0%,
+        rgba(184,146,90,.08) 26%,
+        rgba(140,110,65,.04) 52%,
+        transparent 90%
+    );
+    filter:blur(14px);
 }
 
 .spotlight.active{
-
     opacity:1;
-
-    box-shadow:
-
-        0 0 10px rgba(255,200,120,.6),
-
-        0 0 35px rgba(255,170,70,.4);
-
+    box-shadow:0 0 16px rgba(232,201,156,.35);
 }
 
 .spotlight.active::after{
-
     opacity:1;
-
 }
 
+@media(max-width:1000px){
+    .toys{font-size:5.4rem;}
+    .guru{font-size:5.8rem;}
+}
 
-/* ===============================
-   BUTTON HOVER
-================================*/
+@media(max-width:768px){
+    .spotlights{display:none;}
+    .vaultTitle{letter-spacing:5px; font-size:.72rem;}
+    .tagline{width:90%; font-size:11.5px; letter-spacing:2px; line-height:1.8;}
+}
 
-.loginBtn,
-.joinBtn{
+@media(max-width:500px){
+    .toys{font-size:3.6rem;}
+    .guru{font-size:4rem;}
+}
 
-    transition:
+/*==========================================================
+BUTTONS — calm, no tilt/magnetic gimmicks
+==========================================================*/
 
-        .35s ease;
+.buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:22px;
+    margin-top:8px;
+    margin-bottom:16px;
+    opacity:0;
+    transform:translateY(16px);
+    transition:.9s ease;
+}
 
+.buttons.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.buttons button{
+    position:relative;
+    overflow:hidden;
+    width:220px;
+    height:58px;
+    border:none;
+    border-radius:2px;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+}
+
+.loginBtn{
+    color:var(--text);
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--glass-border);
 }
 
 .loginBtn:hover{
+    transform:translateY(-3px);
+    border-color:var(--brass);
+    box-shadow:var(--shadow-soft);
+}
 
-    transform:
-
-        translateY(-4px);
-
+.joinBtn{
+    color:#100e0b;
+    background:linear-gradient(135deg,var(--brass-light),var(--brass));
+    box-shadow:0 14px 34px rgba(184,146,90,.22);
 }
 
 .joinBtn:hover{
-
-    transform:
-
-        translateY(-4px)
-        scale(1.03);
-
+    transform:translateY(-3px);
+    box-shadow:0 20px 46px rgba(184,146,90,.32);
 }
 
-
-/* ===============================
-   CINEMATIC VIGNETTE
-================================*/
-
-body::after{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-
-    radial-gradient(
-
-        circle,
-
-        transparent 45%,
-
-        rgba(0,0,0,.65)
-
-    );
-
+.buttons button:active{
+    transform:scale(.98);
 }
 
-
-/* ===============================
-   RESPONSIVE
-================================*/
+.buttons button:focus-visible{
+    outline:none;
+    box-shadow:0 0 0 2px rgba(184,146,90,.5);
+}
 
 @media(max-width:900px){
-
-    .buttons{
-
-        flex-direction:column;
-
-        align-items:center;
-
-    }
-
-    .buttons button{
-
-        width:260px;
-
-    }
-
-    .spotlights{
-
-        transform:scale(.8);
-
-    }
-
-    .toys{
-
-        font-size:5rem;
-
-    }
-
-    .guru{
-
-        font-size:5.5rem;
-
-    }
-
+    .buttons{flex-direction:column; gap:16px;}
 }
 
-@media(max-width:600px){
+@media(max-width:768px){
+    .buttons button{width:270px;}
+}
 
-    .spotlights{
+/*==========================================================
+SCROLL INDICATOR
+==========================================================*/
 
-        display:none;
+.scrollIndicator{
+    margin-top:36px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    opacity:0;
+    transform:translateY(14px);
+    transition:.9s ease;
+}
 
+.scrollIndicator.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.scrollIndicator span{
+    width:1px;
+    height:64px;
+    background:linear-gradient(to bottom,rgba(242,235,221,.5),rgba(184,146,90,.4),transparent);
+}
+
+.scrollIndicator p{
+    font-size:9.5px;
+    letter-spacing:6px;
+    color:var(--text-faint);
+    text-transform:uppercase;
+}
+
+/*==========================================================
+TRUST STRIP
+==========================================================*/
+
+.trustStrip{
+    position:relative;
+    margin-top:-10px;
+    padding:80px 0 90px;
+    background:linear-gradient(180deg,rgba(7,6,5,0) 0%,rgba(10,9,8,.6) 45%,var(--bg-soft) 100%);
+}
+
+.trustStripContainer{
+    position:relative;
+    z-index:2;
+    max-width:1300px;
+    margin:auto;
+    text-align:center;
+    padding:0 40px;
+}
+
+.trustHeading{
+    display:block;
+    font-family:'Cinzel',serif;
+    font-size:.92rem;
+    font-weight:600;
+    letter-spacing:6px;
+    color:var(--brass-light);
+    margin-bottom:46px;
+}
+
+.trustDivider{
+    width:90px;
+    height:1px;
+    margin:0 auto 46px;
+    background:linear-gradient(90deg,transparent,var(--brass),transparent);
+}
+
+.trustPoints{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.trustPoints p{
+    position:relative;
+    padding:0 22px;
+    color:var(--text-soft);
+    font-size:13.5px;
+    font-weight:500;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    transition:color .35s ease;
+}
+
+.trustPoints p:hover{
+    color:var(--text);
+}
+
+.trustPoints p:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    right:-10px;
+    top:50%;
+    transform:translateY(-50%);
+    width:1px;
+    height:16px;
+    background:linear-gradient(transparent,rgba(184,146,90,.7),transparent);
+}
+
+@media(max-width:900px){
+    .trustPoints{flex-direction:column; gap:18px;}
+    .trustPoints p::after{display:none;}
+}
+
+@media(max-width:768px){
+    .trustStrip{padding:70px 24px;}
+    .trustHeading{font-size:.75rem; letter-spacing:4px;}
+    .trustPoints p{font-size:12px; letter-spacing:2px;}
+}
+
+/*==========================================================
+WHY TOYSGURU
+==========================================================*/
+
+.trustSection{
+    position:relative;
+    padding:110px 8% 160px;
+    background:linear-gradient(180deg,var(--bg-soft) 0%,#080706 45%,var(--bg) 100%);
+}
+
+.trustSection::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:1px;
+    height:70px;
+    background:linear-gradient(to bottom,rgba(184,146,90,.5),transparent);
+}
+
+.trustHeader{
+    max-width:860px;
+    margin:0 auto 80px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(36px);
+    transition:.9s ease;
+}
+
+.trustHeader.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.sectionLine{
+    display:block;
+    width:80px;
+    height:1px;
+    margin:auto;
+    background:linear-gradient(90deg,transparent,var(--brass),transparent);
+}
+
+.trustHeader h2{
+    margin-top:32px;
+    margin-bottom:24px;
+    font-family:'Cinzel',serif;
+    font-size:2.9rem;
+    font-weight:600;
+    letter-spacing:4px;
+    color:var(--text);
+}
+
+.trustHeader p{
+    max-width:700px;
+    margin:auto;
+    color:var(--text-soft);
+    font-size:16px;
+    line-height:1.9;
+}
+
+.trustContainer{
+    max-width:1280px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:28px;
+}
+
+.trustCard{
+    position:relative;
+    overflow:hidden;
+    padding:46px;
+    border-radius:6px;
+    background:linear-gradient(150deg,rgba(255,255,255,.035),rgba(255,255,255,.01));
+    border:1px solid var(--glass-border);
+    box-shadow:inset 0 1px rgba(255,255,255,.04), var(--shadow-soft);
+    opacity:0;
+    transform:translateY(32px);
+    transition:opacity .8s ease, transform .8s ease, border-color .4s ease, box-shadow .4s ease;
+}
+
+.trustCard.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.trustCard::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:0;
+    height:1px;
+    background:var(--brass);
+    transition:width .5s var(--ease);
+}
+
+.trustCard:hover{
+    border-color:rgba(184,146,90,.4);
+    box-shadow:inset 0 1px rgba(255,255,255,.05), 0 24px 60px rgba(0,0,0,.4);
+    transform:translateY(-6px);
+}
+
+.trustCard:hover::before{
+    width:100%;
+}
+
+.trustCard h3{
+    font-family:'Cinzel',serif;
+    font-size:1.3rem;
+    color:var(--text);
+    letter-spacing:1.5px;
+    margin-bottom:18px;
+    transition:color .35s ease;
+}
+
+.caseNumber{
+    display:inline-block;
+    font-family:'Inter',sans-serif;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:3px;
+    color:var(--brass);
+    margin-bottom:16px;
+    opacity:.75;
+    transition:opacity .35s ease, color .35s ease;
+}
+
+.trustCard:hover .caseNumber{
+    opacity:1;
+    color:var(--brass-light);
+}
+
+.trustCard:hover h3{
+    color:var(--brass-light);
+}
+
+.trustCard p{
+    color:var(--text-soft);
+    font-size:14.5px;
+    line-height:1.9;
+}
+
+.trustCard:nth-child(1){transition-delay:.03s;}
+.trustCard:nth-child(2){transition-delay:.1s;}
+.trustCard:nth-child(3){transition-delay:.17s;}
+.trustCard:nth-child(4){transition-delay:.24s;}
+
+@media(max-width:1100px){
+    .trustContainer{grid-template-columns:1fr;}
+}
+
+@media(max-width:768px){
+    .trustSection{padding:80px 24px 100px;}
+    .trustHeader{margin-bottom:54px;}
+    .trustHeader h2{font-size:2.1rem;}
+    .trustHeader p{font-size:15px;}
+    .trustCard{padding:32px;}
+}
+
+@media(max-width:480px){
+    .vaultTitle{letter-spacing:3px; font-size:.68rem;}
+    .tagline{letter-spacing:1.5px; font-size:10.5px;}
+    .buttons button{width:100%; max-width:300px;}
+    .trustCard{padding:26px;}
+    .trustHeader h2{font-size:1.8rem;}
+}
+
+/*==========================================================
+MISC
+==========================================================*/
+
+a{
+    color:inherit;
+    text-decoration:none;
+    transition:.3s ease;
+}
+
+a:hover{
+    color:var(--brass-light);
+}
+
+button:focus-visible{
+    outline:none;
+    box-shadow:0 0 0 2px rgba(184,146,90,.5);
+}
+
+@media(prefers-reduced-motion:reduce){
+    *{
+        animation:none !important;
+        transition:none !important;
     }
-
-    .tagline{
-
-        width:90%;
-
-        font-size:12px;
-
-        letter-spacing:3px;
-
-    }
-
-    .vaultTitle{
-
-        letter-spacing:5px;
-
-    }
-
 }

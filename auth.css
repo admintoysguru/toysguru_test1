@@ -1,0 +1,156 @@
+/*==========================================================
+  TOYSGURU — VAULT ENTRANCE (Login / Sign Up)
+==========================================================*/
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+    --bg:#070605;
+    --bg-card:#100e0b;
+    --text:#F2EBDD;
+    --text-soft:#9C948A;
+    --text-faint:#6B6459;
+    --brass:#B8925A;
+    --brass-light:#E8CB9C;
+    --brass-dim:#6E5837;
+    --oxblood-light:#B9573F;
+    --glass-border:rgba(232,201,156,.14);
+}
+
+html,body{width:100%;min-height:100%;}
+
+body{
+    background:radial-gradient(circle at top,#0e0c09 0%,#0a0908 30%,#070605 65%,#050403 100%);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+}
+
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:inherit;}
+
+.gateWrap{
+    width:100%;
+    max-width:420px;
+}
+
+.gateLogo{
+    display:block;
+    text-align:center;
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:17px;
+    letter-spacing:2px;
+    color:var(--text);
+    margin-bottom:32px;
+}
+.gateLogo em{font-style:normal;color:var(--brass-light);}
+
+.gateCard{
+    background:var(--bg-card);
+    border:1px solid var(--glass-border);
+    padding:36px;
+    position:relative;
+}
+.gateCard::before{
+    content:"";
+    position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,var(--brass),var(--brass-light));
+}
+
+.gateTabs{
+    display:flex;
+    gap:0;
+    margin-bottom:28px;
+    border-bottom:1px solid var(--glass-border);
+}
+.gateTab{
+    flex:1;
+    background:none;
+    border:none;
+    border-bottom:2px solid transparent;
+    padding:10px 0 14px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    transition:color .25s ease, border-color .25s ease;
+}
+.gateTab.active{color:var(--brass-light);border-color:var(--brass);}
+
+.gateForm{display:none;flex-direction:column;gap:16px;}
+.gateForm.active{display:flex;}
+
+.gRow label{
+    display:block;
+    font-size:10px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-bottom:7px;
+}
+.gRow input{
+    width:100%;
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--glass-border);
+    color:var(--text);
+    padding:11px 14px;
+    font-size:13.5px;
+    outline:none;
+    transition:border-color .3s ease;
+}
+.gRow input:focus{border-color:var(--brass);}
+.gRow input::placeholder{color:var(--text-faint);}
+
+.gateError{
+    font-size:12.5px;
+    color:var(--oxblood-light);
+    display:none;
+    padding:10px 12px;
+    background:rgba(185,87,63,.08);
+    border:1px solid rgba(185,87,63,.25);
+}
+.gateError.show{display:block;}
+
+.gateSubmit{
+    background:var(--brass);
+    color:#100e0b;
+    border:none;
+    padding:14px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    transition:background .3s ease, box-shadow .3s ease;
+    margin-top:4px;
+}
+.gateSubmit:hover{
+    background:var(--brass-light);
+    box-shadow:0 14px 34px rgba(184,146,90,.25);
+}
+
+.gateFooter{
+    text-align:center;
+    margin-top:22px;
+    font-size:12.5px;
+    color:var(--text-faint);
+}
+.gateFooter a{color:var(--brass-light);border-bottom:1px solid transparent;}
+.gateFooter a:hover{border-color:var(--brass-light);}
+
+.gateBack{
+    display:block;
+    text-align:center;
+    margin-top:24px;
+    font-size:11.5px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--text-faint);
+}
+.gateBack:hover{color:var(--brass-light);}

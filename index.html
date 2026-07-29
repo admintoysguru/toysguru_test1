@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 
@@ -19,7 +19,9 @@
 
 <body>
 
-    <!-- ================= BACKGROUND ================= -->
+    <!-- ===========================================================
+         BACKGROUND
+    ============================================================ -->
 
     <div id="backgroundGlow"></div>
 
@@ -29,11 +31,12 @@
 
     <div id="skidMarks"></div>
 
-    <!-- ================= ROOM ================= -->
 
-    <div class="room">
+    <!-- ===========================================================
+         HERO
+    ============================================================ -->
 
-        <!-- Ceiling Spotlights -->
+    <main class="room">
 
         <div class="spotlights">
 
@@ -47,59 +50,208 @@
 
         </div>
 
-        <!-- HERO -->
-
         <section class="hero">
 
             <p class="vaultTitle">
-
                 THE COLLECTOR'S VAULT
-
             </p>
 
             <h1 id="logo">
 
                 <span class="toys">
-
                     TOYS
-
                 </span>
 
                 <span class="guru">
-
                     GURU
-
                 </span>
 
             </h1>
 
             <p class="tagline">
 
-                RARE TOYS • AUTHENTIC COLLECTIBLES • STORIES WORTH PRESERVING
+                INDIA'S PREMIUM MARKETPLACE FOR AUTHENTIC COLLECTIBLES
 
             </p>
 
-            <div class="buttons">
+           <div class="buttons">
 
-                <button class="loginBtn">
+    <button class="loginBtn" onclick="window.location.href='auth.html?mode=login'">
 
-                    LOGIN
+        LOGIN
 
-                </button>
+    </button>
 
-                <button class="joinBtn">
+    <button class="joinBtn" onclick="window.location.href='auth.html?mode=signup'">
 
-                    JOIN THE VAULT
+        SIGN UP
 
-                </button>
+    </button>
+
+</div>
+
+            <div class="scrollIndicator">
+
+                <span></span>
+
+                <p>
+
+                    SCROLL TO DISCOVER
+
+                </p>
 
             </div>
 
         </section>
 
-    </div>
+    </main>
 
-    <!-- ================= JAVASCRIPT ================= -->
+
+    <!-- ===========================================================
+         TRUST STRIP
+    ============================================================ -->
+
+    <section class="trustStrip">
+
+        <div class="trustStripContainer">
+
+            <span class="trustHeading">
+
+                BENGALURU'S TRUSTED COLLECTIBLES MARKETPLACE
+
+            </span>
+
+            <div class="trustDivider"></div>
+
+            <div class="trustPoints">
+
+                <p>AADHAAR VERIFIED</p>
+
+                <p>AUTHENTIC SELLERS</p>
+
+                <p>PAN-INDIA DELIVERY</p>
+
+                <p>COLLECTOR PROTECTION</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===========================================================
+         WHY TOYSGURU
+    ============================================================ -->
+
+    <section class="trustSection">
+
+        <div class="trustHeader">
+
+            <span class="sectionLine"></span>
+
+            <h2>
+
+                WHY COLLECTORS CHOOSE TOYSGURU
+
+            </h2>
+
+            <p>
+
+                Every piece here has a story and an owner who cared enough
+                to keep it in condition. We built the vault to protect that —
+                verified people, honest listings, and a marketplace that
+                treats a collection like it's worth something.
+
+            </p>
+
+        </div>
+
+        <div class="trustContainer">
+
+            <div class="trustCard">
+
+                <span class="caseNumber">CASE 01</span>
+
+                <h3>
+
+                    BUILT IN BENGALURU
+
+                </h3>
+
+                <p>
+
+                    Started in one of India's fastest-growing collector
+                    circles, with a simple goal — connect enthusiasts
+                    across the country the way local meet-ups already do.
+
+                </p>
+
+            </div>
+
+            <div class="trustCard">
+
+                <span class="caseNumber">CASE 02</span>
+
+                <h3>
+
+                    VERIFIED COMMUNITY
+
+                </h3>
+
+                <p>
+
+                    Every seller is Aadhaar-verified before their first
+                    listing goes live. No anonymous accounts, no guessing
+                    who you're buying from.
+
+                </p>
+
+            </div>
+
+            <div class="trustCard">
+
+                <span class="caseNumber">CASE 03</span>
+
+                <h3>
+
+                    TRADE WITH CONFIDENCE
+
+                </h3>
+
+                <p>
+
+                    Condition, provenance and pricing are laid out upfront —
+                    no back-and-forth just to find out what you're actually
+                    getting.
+
+                </p>
+
+            </div>
+
+            <div class="trustCard">
+
+                <span class="caseNumber">CASE 04</span>
+
+                <h3>
+
+                    BUILT FOR COLLECTORS
+
+                </h3>
+
+                <p>
+
+                    Not a general marketplace with a toys category bolted
+                    on — every feature here is built around how collectors
+                    actually buy, sell and talk shop.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
 
     <script src="script.js"></script>
 
