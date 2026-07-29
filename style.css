@@ -171,26 +171,27 @@ body{
 
 .hero{
 
-    position:relative;
+    position: relative;
 
-    z-index:30;
+    z-index: 30;
 
-    text-align:center;
+    text-align: center;
 
-    opacity:0;
+    opacity: 0;
 
-    transform:translateY(40px);
+    transform: translateY(25px) scale(.97);
 
-    transition:1s ease;
+    transition:
+        opacity 1.2s ease,
+        transform 1.2s ease;
 
 }
 
-
 .hero.show{
 
-    opacity:1;
+    opacity: 1;
 
-    transform:translateY(0);
+    transform: translateY(0) scale(1);
 
 }
 
@@ -199,20 +200,31 @@ body{
    VAULT TITLE
 =========================================================== */
 
-.vaultTitle{
+.vaultTitle,
+#logo,
+.tagline,
+.buttons{
 
-    font-size:14px;
+    opacity: 0;
 
-    letter-spacing:10px;
+    transform: translateY(20px);
 
-    color:#b98b4c;
-
-    margin-bottom:35px;
-
-    text-transform:uppercase;
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
 
 }
 
+.vaultTitle.show,
+#logo.show,
+.tagline.show,
+.buttons.show{
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
 
 /* ===========================================================
    LOGO
@@ -470,119 +482,6 @@ body{
     filter:blur(40px);
 
     z-index:1;
-
-}
-
-
-/* ===========================
-   POWER SWITCH
-=========================== */
-
-.switch-container{
-
-    position:fixed;
-
-    right:40px;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:18px;
-
-    z-index:60;
-
-}
-
-
-#powerSwitch{
-
-    width:72px;
-
-    height:150px;
-
-    border-radius:40px;
-
-    background:
-
-    linear-gradient(
-
-        180deg,
-
-        #333,
-
-        #161616
-
-    );
-
-    border:2px solid rgba(255,255,255,.12);
-
-    position:relative;
-
-    cursor:pointer;
-
-    transition:.4s;
-
-    box-shadow:
-
-        inset 0 0 20px rgba(255,255,255,.04),
-
-        0 0 30px rgba(0,0,0,.4);
-
-}
-
-
-.switch-knob{
-
-    position:absolute;
-
-    width:46px;
-
-    height:46px;
-
-    left:50%;
-
-    transform:translateX(-50%);
-
-    top:10px;
-
-    border-radius:50%;
-
-    background:#555;
-
-    transition:.55s cubic-bezier(.25,.8,.25,1);
-
-}
-
-
-#powerSwitch.active .switch-knob{
-
-    top:92px;
-
-    background:#ffa037;
-
-    box-shadow:
-
-        0 0 20px #ff8b00,
-
-        0 0 45px rgba(255,120,0,.6);
-
-}
-
-
-.switch-container span{
-
-    color:#c8c8c8;
-
-    font-size:13px;
-
-    letter-spacing:7px;
 
 }
 
@@ -963,23 +862,6 @@ body{
 
 
 /* ===============================
-   POWER SWITCH
-================================*/
-
-#powerSwitch{
-
-    transition:.35s;
-
-}
-
-#powerSwitch:active{
-
-    transform:scale(.97);
-
-}
-
-
-/* ===============================
    BUTTON HOVER
 ================================*/
 
@@ -1062,12 +944,6 @@ body::after{
     .spotlights{
 
         transform:scale(.8);
-
-    }
-
-    .switch-container{
-
-        right:18px;
 
     }
 

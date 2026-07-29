@@ -1,5 +1,3 @@
-const powerSwitch = document.getElementById("powerSwitch");
-
 const hero = document.querySelector(".hero");
 
 const glow = document.getElementById("backgroundGlow");
@@ -16,37 +14,17 @@ const tagline = document.querySelector(".tagline");
 
 const buttons = document.querySelector(".buttons");
 
-const switchClick = document.getElementById("switchClick");
+window.addEventListener("load", startIntro);
 
-const relayClick = document.getElementById("relayClick");
-
-const roomHum = document.getElementById("roomHum");
-
-const logoBoom = document.getElementById("logoBoom");
-
-let powered = false;
-
-powerSwitch.onclick = async () => {
-
-    if(powered) return;
-
-    powered = true;
-
-    powerSwitch.classList.add("active");
-
-    play(switchClick);
-
-    await wait(250);
+async function startIntro() {
 
     glow.classList.add("active");
 
-    play(roomHum);
+    await wait(250);
 
-    for(const light of spotlights){
+    for (const light of spotlights) {
 
         light.classList.add("active");
-
-        play(relayClick);
 
         await wait(180);
 
@@ -66,25 +44,13 @@ powerSwitch.onclick = async () => {
 
     buttons.classList.add("show");
 
-    play(logoBoom);
-
-};
-
-function play(audio){
-
-    if(!audio) return;
-
-    audio.currentTime = 0;
-
-    audio.play().catch(()=>{});
-
 }
 
-function wait(ms){
+function wait(ms) {
 
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
 
-        setTimeout(resolve,ms);
+        setTimeout(resolve, ms);
 
     });
 

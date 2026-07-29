@@ -3,134 +3,105 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ToysGuru | The Collector's Vault</title>
+    <title>ToysGuru | The Collector's Vault</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<!-- ================= BACKGROUND ================= -->
+    <!-- ================= BACKGROUND ================= -->
 
-<div id="backgroundGlow"></div>
+    <div id="backgroundGlow"></div>
 
-<div id="dust"></div>
+    <div id="dust"></div>
 
-<div id="smokeLayer"></div>
+    <div id="smokeLayer"></div>
 
-<div id="skidMarks"></div>
+    <div id="skidMarks"></div>
 
+    <!-- ================= ROOM ================= -->
 
-<!-- ================= ROOM ================= -->
+    <div class="room">
 
-<div class="room">
+        <!-- Ceiling Spotlights -->
 
-    <!-- Ceiling Spotlights -->
+        <div class="spotlights">
 
-    <div class="spotlights">
-
-        <div class="spotlight"></div>
-        <div class="spotlight"></div>
-        <div class="spotlight"></div>
-        <div class="spotlight center"></div>
-        <div class="spotlight"></div>
-        <div class="spotlight"></div>
-        <div class="spotlight"></div>
-
-    </div>
-
-    <!-- POWER SWITCH -->
-
-    <div class="switch-container">
-
-        <div id="powerSwitch">
-
-            <div class="switch-knob"></div>
+            <div class="spotlight"></div>
+            <div class="spotlight"></div>
+            <div class="spotlight"></div>
+            <div class="spotlight center"></div>
+            <div class="spotlight"></div>
+            <div class="spotlight"></div>
+            <div class="spotlight"></div>
 
         </div>
 
-        <span>POWER</span>
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <p class="vaultTitle">
+
+                THE COLLECTOR'S VAULT
+
+            </p>
+
+            <h1 id="logo">
+
+                <span class="toys">
+
+                    TOYS
+
+                </span>
+
+                <span class="guru">
+
+                    GURU
+
+                </span>
+
+            </h1>
+
+            <p class="tagline">
+
+                RARE TOYS • AUTHENTIC COLLECTIBLES • STORIES WORTH PRESERVING
+
+            </p>
+
+            <div class="buttons">
+
+                <button class="loginBtn">
+
+                    LOGIN
+
+                </button>
+
+                <button class="joinBtn">
+
+                    JOIN THE VAULT
+
+                </button>
+
+            </div>
+
+        </section>
 
     </div>
 
-    <!-- HERO -->
+    <!-- ================= JAVASCRIPT ================= -->
 
-    <section class="hero">
-
-        <p class="vaultTitle">
-
-            THE COLLECTOR'S VAULT
-
-        </p>
-
-        <h1 id="logo">
-
-            <span class="toys">
-
-                TOYS
-
-            </span>
-
-            <span class="guru">
-
-                GURU
-
-            </span>
-
-        </h1>
-
-        <p class="tagline">
-
-            RARE TOYS • AUTHENTIC COLLECTIBLES • STORIES WORTH PRESERVING
-
-        </p>
-
-        <div class="buttons">
-
-            <button class="loginBtn">
-
-                LOGIN
-
-            </button>
-
-            <button class="joinBtn">
-
-                JOIN THE VAULT
-
-            </button>
-
-        </div>
-
-    </section>
-
-</div>
-
-<!-- ================= AUDIO ================= -->
-
-<audio id="engineSound" preload="auto">
-
-    <source src="audio/bmw-engine.mp3" type="audio/mpeg">
-
-</audio>
-
-<audio id="driftSound" preload="auto">
-
-    <source src="audio/drift.mp3" type="audio/mpeg">
-
-</audio>
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 
