@@ -1,26 +1,9 @@
 "use strict";
 
 /*==========================================================
-DEMO AUTH — stored in localStorage on this browser only.
-Not secure (plain-text passwords, no server). Good enough to
-demonstrate the flow; swap for a real backend later.
-==========================================================*/
-
-const USERS_KEY = "toysguru_users";
-const SESSION_KEY = "toysguru_session";
-
-function getUsers(){
-    return JSON.parse(localStorage.getItem(USERS_KEY) || "[]");
-}
-function saveUsers(users){
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
-function setSession(user){
-    localStorage.setItem(SESSION_KEY, JSON.stringify({ name: user.name, email: user.email }));
-}
-
-/*==========================================================
-TAB SWITCHING
+  TOYSGURU — REAL AUTH (Firebase)
+  Requires firebase-*-compat CDN scripts + firebaseClient.js
+  loaded first (see auth.html).
 ==========================================================*/
 
 const tabs = document.querySelectorAll(".gateTab");
@@ -32,11 +15,8 @@ function showTab(name){
     clearErrors();
 }
 
-tabs.forEach(tab => {
-    tab.addEventListener("click", () => showTab(tab.dataset.tab));
-});
+tabs.forEach(tab => tab.addEventListener("click", () => showTab(tab.dataset.tab)));
 
-// Preselect tab from ?mode=login|signup
 const params = new URLSearchParams(window.location.search);
 showTab(params.get("mode") === "signup" ? "signup" : "login");
 
@@ -59,7 +39,7 @@ SIGN UP
 ==========================================================*/
 
 const signupForm = document.getElementById("signupForm");
-signupForm?.addEventListener("submit", e => {
+signupForm?.addEventListener("submit", async e => {
     e.preventDefault();
     clearErrors();
 
@@ -85,18 +65,27 @@ signupForm?.addEventListener("submit", e => {
         return;
     }
 
-    const users = getUsers();
-    if (users.some(u => u.email === email)) {
-        showError("signup", "An account with this email already exists — try logging in.");
-        return;
+    const submitBtn = signupForm.querySelector(".gateSubmit");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating account…";
+
+    try {
+        const cred = await auth.createUserWithEmailAndPassword(email, password);
+
+        // Firebase Auth only stores the login itself — we store the
+        // name and admin flag ourselves in a "profiles" document.
+        await db.collection("profiles").doc(cred.user.uid).set({
+            name,
+            isAdmin: false,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        window.location.href = "marketplace.html";
+    } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create account";
+        showError("signup", friendlyError(error));
     }
-
-    const newUser = { name, email, password };
-    users.push(newUser);
-    saveUsers(users);
-    setSession(newUser);
-
-    window.location.href = "marketplace.html";
 });
 
 /*==========================================================
@@ -104,7 +93,7 @@ LOGIN
 ==========================================================*/
 
 const loginForm = document.getElementById("loginForm");
-loginForm?.addEventListener("submit", e => {
+loginForm?.addEventListener("submit", async e => {
     e.preventDefault();
     clearErrors();
 
@@ -116,14 +105,37 @@ loginForm?.addEventListener("submit", e => {
         return;
     }
 
-    const users = getUsers();
-    const match = users.find(u => u.email === email && u.password === password);
+    const submitBtn = loginForm.querySelector(".gateSubmit");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Entering…";
 
-    if (!match) {
-        showError("login", "Email or password is incorrect.");
-        return;
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+        window.location.href = "marketplace.html";
+    } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enter the vault";
+        showError("login", friendlyError(error));
     }
-
-    setSession(match);
-    window.location.href = "marketplace.html";
 });
+
+/*==========================================================
+ERROR MESSAGES — Firebase error codes translated to plain English
+==========================================================*/
+
+function friendlyError(error){
+    switch (error.code) {
+        case "auth/email-already-in-use":
+            return "An account with this email already exists — try logging in.";
+        case "auth/invalid-email":
+            return "That email address doesn't look right.";
+        case "auth/weak-password":
+            return "Password needs at least 6 characters.";
+        case "auth/user-not-found":
+        case "auth/wrong-password":
+        case "auth/invalid-credential":
+            return "Email or password is incorrect.";
+        default:
+            return error.message;
+    }
+}

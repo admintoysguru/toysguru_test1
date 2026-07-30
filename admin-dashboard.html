@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | ToysGuru</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="admin-dashboard.css">
+</head>
+<body>
+
+<nav class="nav">
+    <span class="navLogo">Toys<em>Guru</em></span>
+    <span class="navTag">OWNER DASHBOARD</span>
+    <div class="navRight">
+        <span>Signed in as <strong id="adminName">Owner</strong></span>
+        <button id="adminLogoutBtn" class="logoutBtn">Logout</button>
+    </div>
+</nav>
+
+<div class="wrap">
+
+    <div class="statsGrid">
+        <div class="statCard"><div class="label">Total Listings</div><div class="value" id="statTotal">—</div></div>
+        <div class="statCard"><div class="label">Pending Approval</div><div class="value" id="statPending">—</div></div>
+        <div class="statCard"><div class="label">Approved Listings</div><div class="value" id="statApproved">—</div></div>
+        <div class="statCard"><div class="label">Active Sellers</div><div class="value" id="statSellers">—</div></div>
+        <div class="statCard"><div class="label">Registered Collectors</div><div class="value" id="statCollectors">—</div></div>
+    </div>
+
+    <div class="panelTitle">Product Approval Queue</div>
+    <div class="queueList" id="queueList">
+        <p class="emptyNote">Loading…</p>
+    </div>
+
+    <div class="panelTitle">Inventory by Brand</div>
+    <div class="inventoryList" id="inventoryList"></div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+<script src="firebaseClient.js"></script>
+<script src="admin-dashboard.js"></script>
+</body>
+</html>

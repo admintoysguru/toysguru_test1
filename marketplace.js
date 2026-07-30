@@ -1,23 +1,45 @@
 "use strict";
 
 /*==========================================================
-DATA
-Grade scale is fixed order: MOC -> Near Mint -> Loose
-gradePosition (0-100) drives the dot on the grading track.
+  TOYSGURU — MARKETPLACE (Firebase-backed)
+  Requires firebase-*-compat CDN scripts + firebaseClient.js loaded first.
 ==========================================================*/
 
 const GRADE_POSITIONS = { "MOC": 8, "Near Mint": 50, "Loose": 92 };
 
-const listings = [
-    { lot:"TG-0847", series:"Hot Wheels · Treasure Hunt 2023", name:"Dodge Charger Daytona", price:"₹649", grade:"MOC", verified:true, featured:true },
-    { lot:"TG-0812", series:"Mini GT · Car Culture", name:"Porsche 911 GT3 RS", price:"₹1,199", grade:"MOC", verified:true },
-    { lot:"TG-0790", series:"Kaido House · V2", name:"Nissan Skyline GT-R", price:"₹2,899", grade:"Near Mint", verified:true },
-    { lot:"TG-0765", series:"Tarmac Works · Global64", name:"McLaren Senna", price:"₹1,449", grade:"MOC", verified:true },
-    { lot:"TG-0741", series:"Matchbox · Superfast", name:"Ford Mustang Shelby", price:"₹449", grade:"Loose", verified:false },
-    { lot:"TG-0730", series:"Hot Wheels · Super TH", name:"Bugatti Veyron", price:"₹2,499", grade:"MOC", verified:true },
-    { lot:"TG-0718", series:"Mini GT · JDM Collection", name:"Toyota Supra MK4", price:"₹899", grade:"Near Mint", verified:true },
-    { lot:"TG-0702", series:"Greenlight · Hollywood", name:"Ferrari F40", price:"₹799", grade:"Loose", verified:false }
-];
+let currentUser = null;
+
+/*==========================================================
+SESSION GUARD
+==========================================================*/
+
+auth.onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "auth.html?mode=login";
+        return;
+    }
+
+    currentUser = user;
+
+    db.collection("profiles").doc(user.uid).get().then(doc => {
+        const name = doc.exists ? doc.data().name : user.email;
+        const nameEl = document.getElementById("navUserName");
+        if (nameEl) nameEl.textContent = name.split(" ")[0];
+    });
+
+    renderListings();
+    renderAuctions();
+});
+
+document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+    await auth.signOut();
+    window.location.href = "index.html";
+});
+
+/*==========================================================
+AUCTIONS — still a simple front-end mock, unrelated to the
+approval workflow for now
+==========================================================*/
 
 const auctions = [
     { lot:"TG-A014", series:"Hot Wheels Legends 2023", name:"Enzo Ferrari", bid:"₹4,200", bids:14, ends:"02:14:38", live:true },
@@ -26,9 +48,7 @@ const auctions = [
 ];
 
 /*==========================================================
-MINIMAL LINE-ART CAR ICON — kept deliberately simple so the
-lot card (frame, number, grading) carries the visual weight,
-not the illustration.
+MINIMAL LINE-ART CAR ICON
 ==========================================================*/
 
 function carIcon(){
@@ -44,20 +64,37 @@ function carIcon(){
 }
 
 /*==========================================================
+DATA — real queries against the "listings" collection
+==========================================================*/
+
+async function fetchApprovedListings(){
+    try {
+        const snap = await db.collection("listings")
+            .where("status", "==", "approved")
+            .orderBy("createdAt", "desc")
+            .get();
+        return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
+
+/*==========================================================
 RENDER — LOT CARDS
 ==========================================================*/
 
 function lotCard(item, featured = false){
-    const gradePos = GRADE_POSITIONS[item.grade];
+    const gradePos = GRADE_POSITIONS[item.grade] ?? 50;
     return `
     <div class="lot reveal${featured ? " featured" : ""}">
         <div class="lotFrame">
-            <span class="lotNumber">LOT ${item.lot}</span>
-            ${item.verified ? '<span class="lotVerified">Verified</span>' : ''}
+            <span class="lotNumber">LOT ${item.lotNumber}</span>
+            <span class="lotVerified">Verified</span>
             ${carIcon()}
         </div>
         <div class="lotBody">
-            <div class="lotSeries">${item.series}</div>
+            <div class="lotSeries">${item.series || item.brand}</div>
             <div class="lotName">${item.name}</div>
             <div class="gradeScale">
                 <div class="gradeLabels"><span>MOC</span><span>Near Mint</span><span>Loose</span></div>
@@ -73,19 +110,21 @@ function lotCard(item, featured = false){
     </div>`;
 }
 
-function renderListings(filtered = listings){
-    const featured = filtered.find(l => l.featured) || filtered[0];
-    const rest = filtered.filter(l => l !== featured);
+async function renderListings(filterFn){
+    const all = await fetchApprovedListings();
+    const approved = filterFn ? all.filter(filterFn) : all;
+
+    const featured = approved.find(l => l.featured) || approved[0];
+    const rest = approved.filter(l => l !== featured);
 
     const featuredEl = document.getElementById("featuredGrid");
     const gridEl = document.getElementById("catalogGrid");
 
     if (featuredEl) {
-        featuredEl.innerHTML = `
-            ${featured ? lotCard(featured, true) : ""}
-            <div class="featuredSide">
-                ${rest.slice(0, 3).map(l => lotCard(l)).join("")}
-            </div>`;
+        featuredEl.innerHTML = featured
+            ? `${lotCard(featured, true)}
+               <div class="featuredSide">${rest.slice(0, 3).map(l => lotCard(l)).join("")}</div>`
+            : `<p style="color:var(--text-faint);font-size:13px;">No approved listings yet in this wing.</p>`;
     }
 
     if (gridEl) {
@@ -96,7 +135,7 @@ function renderListings(filtered = listings){
 }
 
 /*==========================================================
-RENDER — ROSTRUM (auctions)
+ROSTRUM (auctions — front-end mock)
 ==========================================================*/
 
 function rostrumCard(item){
@@ -149,36 +188,88 @@ CATEGORY ROOMS (filter)
 ==========================================================*/
 
 const roomMap = {
-    "All": () => listings,
-    "Hot Wheels": () => listings.filter(l => l.series.startsWith("Hot Wheels")),
-    "Mini GT": () => listings.filter(l => l.series.startsWith("Mini GT")),
-    "Vintage": () => listings.filter(l => l.grade === "Loose")
+    "All": null,
+    "Hot Wheels": l => l.brand === "Hot Wheels",
+    "Mini GT": l => l.brand === "Mini GT",
+    "Vintage": l => l.grade === "Loose"
 };
 
 document.querySelectorAll(".roomTab").forEach(tab => {
     tab.addEventListener("click", () => {
         document.querySelectorAll(".roomTab").forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
-        const key = tab.dataset.room;
-        const fn = roomMap[key] || roomMap["All"];
-        renderListings(fn());
+        renderListings(roomMap[tab.dataset.room] || null);
     });
 });
 
 /*==========================================================
-SEARCH (simple client-side filter across name/series)
+SEARCH
 ==========================================================*/
 
 const searchInput = document.getElementById("marketSearch");
-if (searchInput) {
-    searchInput.addEventListener("input", e => {
-        const q = e.target.value.trim().toLowerCase();
-        if (!q) { renderListings(); return; }
-        renderListings(listings.filter(l =>
-            l.name.toLowerCase().includes(q) || l.series.toLowerCase().includes(q)
-        ));
-    });
-}
+searchInput?.addEventListener("input", e => {
+    const q = e.target.value.trim().toLowerCase();
+    renderListings(q ? (l => l.name.toLowerCase().includes(q) || (l.series || "").toLowerCase().includes(q)) : null);
+});
+
+/*==========================================================
+SUBMIT FOR APPRAISAL — real write into the listings collection,
+starts as "pending" until the owner approves it.
+==========================================================*/
+
+const appraisalForm = document.getElementById("appraisalForm");
+appraisalForm?.addEventListener("submit", async e => {
+    e.preventDefault();
+
+    const name = document.getElementById("aName").value.trim();
+    const brand = document.getElementById("aBrand").value;
+    const price = document.getElementById("aPrice").value.trim();
+    const grade = document.getElementById("aCondition").value;
+
+    const statusEl = document.getElementById("appraisalStatus");
+    statusEl.classList.remove("show", "success");
+
+    if (!name || !brand || !price) {
+        statusEl.textContent = "Please fill in the model name, brand and price.";
+        statusEl.classList.add("show");
+        return;
+    }
+
+    const submitBtn = appraisalForm.querySelector(".submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting…";
+
+    const lotNumber = `TG-${Date.now().toString().slice(-6)}`;
+
+    try {
+        const profileDoc = await db.collection("profiles").doc(currentUser.uid).get();
+        const sellerName = profileDoc.exists ? profileDoc.data().name : currentUser.email;
+
+        await db.collection("listings").add({
+            lotNumber,
+            name,
+            brand,
+            series: brand,
+            price: `₹${price}`,
+            grade,
+            sellerId: currentUser.uid,
+            sellerName,
+            status: "pending",
+            featured: false,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        statusEl.textContent = "Submitted — the owner will review this before it goes live in the vault.";
+        statusEl.classList.add("show", "success");
+        appraisalForm.reset();
+    } catch (error) {
+        statusEl.textContent = error.message;
+        statusEl.classList.add("show");
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit for appraisal →";
+});
 
 /*==========================================================
 SCROLL REVEAL
@@ -198,12 +289,3 @@ function initReveal(){
     }
     document.querySelectorAll(".reveal:not(.show)").forEach(el => revealObserver.observe(el));
 }
-
-/*==========================================================
-BOOT
-==========================================================*/
-
-window.addEventListener("load", () => {
-    renderListings();
-    renderAuctions();
-});

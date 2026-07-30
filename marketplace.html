@@ -29,7 +29,8 @@
     </ul>
 
     <div class="navAccount">
-        <span>Welcome back, <strong>Sidharth</strong></span>
+        <span>Welcome back, <strong id="navUserName">Collector</strong></span>
+        <button id="logoutBtn" class="logoutBtn">Logout</button>
     </div>
 </nav>
 
@@ -97,16 +98,17 @@
         </div>
     </div>
 
-    <div class="appraisalForm reveal">
+    <form class="appraisalForm reveal" id="appraisalForm">
         <div class="formTitle">Piece details</div>
+        <div class="gateError" id="appraisalStatus"></div>
         <div class="frow">
             <label>Model name</label>
-            <input type="text" placeholder="e.g. Hot Wheels Treasure Hunt Camaro">
+            <input type="text" id="aName" placeholder="e.g. Hot Wheels Treasure Hunt Camaro">
         </div>
         <div class="frow f2col">
             <div>
                 <label>Brand</label>
-                <select>
+                <select id="aBrand">
                     <option value="">Select brand</option>
                     <option>Hot Wheels</option>
                     <option>Mini GT</option>
@@ -118,7 +120,7 @@
             </div>
             <div>
                 <label>Scale</label>
-                <select>
+                <select id="aScale">
                     <option>1:64</option>
                     <option>1:43</option>
                     <option>1:32</option>
@@ -129,23 +131,19 @@
         <div class="frow f2col">
             <div>
                 <label>Asking price (₹)</label>
-                <input type="number" placeholder="e.g. 899">
+                <input type="number" id="aPrice" placeholder="e.g. 899">
             </div>
             <div>
                 <label>Condition</label>
-                <select>
+                <select id="aCondition">
                     <option>Mint on Card</option>
-                    <option>Near Mint</option>
+                    <option value="Near Mint">Near Mint</option>
                     <option>Loose</option>
                 </select>
             </div>
         </div>
-        <div class="frow">
-            <label>Your phone</label>
-            <input type="tel" placeholder="+91 98765 43210">
-        </div>
-        <button class="submitBtn">Submit for appraisal →</button>
-    </div>
+        <button type="submit" class="submitBtn">Submit for appraisal →</button>
+    </form>
 </section>
 
 <!-- FOOTER -->
@@ -157,6 +155,10 @@
     <span class="footerMeta">© 2026 ToysGuru — Bengaluru</span>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+<script src="firebaseClient.js"></script>
 <script src="marketplace.js"></script>
 </body>
 </html>
