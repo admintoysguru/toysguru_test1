@@ -143,7 +143,7 @@ loginForm?.addEventListener("submit", async e => {
     showSignupSuggestion(email);
 }
     }
-});
+);
 
 /*==========================================================
 ERROR MESSAGES — Firebase error codes translated to plain English
