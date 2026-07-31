@@ -29,3 +29,12 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+
+// Some networks (certain ISPs, antivirus software, proxies) interfere with
+// Firestore's default streaming connection in a way that makes requests
+// look successful (200 status) while the SDK still thinks it's offline.
+// This tells it to auto-detect and fall back to a more compatible method.
+db.settings({
+    experimentalAutoDetectLongPolling: true,
+    useFetchStreams: false
+});
