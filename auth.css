@@ -154,3 +154,48 @@ button{cursor:pointer;font-family:inherit;}
     color:var(--text-faint);
 }
 .gateBack:hover{color:var(--brass-light);}
+/*==============================
+ACCOUNT ASSISTANT
+==============================*/
+
+.signupSuggestion{
+    margin-top:18px;
+    padding:18px;
+    border:1px solid rgba(201,160,91,.25);
+    background:rgba(201,160,91,.06);
+    text-align:center;
+    border-radius:8px;
+}
+
+.signupSuggestion p{
+    margin:0;
+    color:#EFD8B1;
+    font-size:16px;
+}
+
+.signupSuggestion span{
+    display:block;
+    margin-top:8px;
+    color:#9E9486;
+    font-size:14px;
+}
+
+.suggestionBtn{
+    margin-top:16px;
+    padding:12px 24px;
+    background:#C9A05B;
+    color:#111;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    border-radius:6px;
+    transition:.2s;
+}
+
+.suggestionBtn:hover{
+    background:#D9B06B;
+}
+
+.hidden{
+    display:none;
+}

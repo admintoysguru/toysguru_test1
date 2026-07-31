@@ -21,10 +21,15 @@ const params = new URLSearchParams(window.location.search);
 showTab(params.get("mode") === "signup" ? "signup" : "login");
 
 function clearErrors(){
-    document.querySelectorAll(".gateError").forEach(el => {
+
+    document.querySelectorAll(".gateError").forEach(el=>{
         el.classList.remove("show");
-        el.textContent = "";
+        el.textContent="";
     });
+
+    document
+        .getElementById("signupSuggestion")
+        ?.classList.add("hidden");
 }
 
 function showError(formName, message){
@@ -32,6 +37,23 @@ function showError(formName, message){
     if (!el) return;
     el.textContent = message;
     el.classList.add("show");
+}
+function showSignupSuggestion(email = ""){
+
+    const suggestion = document.getElementById("signupSuggestion");
+
+    suggestion.classList.remove("hidden");
+
+    document.getElementById("goToSignupBtn").onclick = () => {
+
+        showTab("signup");
+
+        document.getElementById("suEmail").value = email;
+
+        document.getElementById("suName").focus();
+
+        suggestion.classList.add("hidden");
+    };
 }
 
 /*==========================================================
@@ -113,9 +135,13 @@ loginForm?.addEventListener("submit", async e => {
         await auth.signInWithEmailAndPassword(email, password);
         window.location.href = "marketplace.html";
     } catch (error) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Enter the vault";
-        showError("login", friendlyError(error));
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Enter the vault";
+
+    showError("login", friendlyError(error));
+
+    showSignupSuggestion(email);
+}
     }
 });
 
