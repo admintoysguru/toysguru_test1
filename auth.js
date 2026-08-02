@@ -2,29 +2,44 @@
 
 /*==========================================================
   TOYSGURU — REAL AUTH (Firebase)
-  Requires firebase-*-compat CDN scripts + firebaseClient.js
-  loaded first (see auth.html).
 ==========================================================*/
 
 const tabs = document.querySelectorAll(".gateTab");
 const forms = document.querySelectorAll(".gateForm");
 
-function showTab(name){
-    tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === name));
-    forms.forEach(f => f.classList.toggle("active", f.dataset.form === name));
+function showTab(name) {
+    tabs.forEach(tab =>
+        tab.classList.toggle("active", tab.dataset.tab === name)
+    );
+
+    forms.forEach(form =>
+        form.classList.toggle("active", form.dataset.form === name)
+    );
+
     clearErrors();
 }
 
-tabs.forEach(tab => tab.addEventListener("click", () => showTab(tab.dataset.tab)));
+tabs.forEach(tab =>
+    tab.addEventListener("click", () => showTab(tab.dataset.tab))
+);
 
 const params = new URLSearchParams(window.location.search);
-showTab(params.get("mode") === "signup" ? "signup" : "login");
 
-function clearErrors(){
+showTab(
+    params.get("mode") === "signup"
+        ? "signup"
+        : "login"
+);
 
-    document.querySelectorAll(".gateError").forEach(el=>{
+/*==========================================================
+CLEAR ERRORS
+==========================================================*/
+
+function clearErrors() {
+
+    document.querySelectorAll(".gateError").forEach(el => {
         el.classList.remove("show");
-        el.textContent="";
+        el.textContent = "";
     });
 
     document
@@ -32,9 +47,18 @@ function clearErrors(){
         ?.classList.add("hidden");
 }
 
-function showError(formName, message){
-    const el = document.querySelector(`.gateForm[data-form="${formName}"] .gateError`);
+/*==========================================================
+SHOW ERROR
+==========================================================*/
+
+function showError(formName, message) {
+
+    const el = document.querySelector(
+        `.gateForm[data-form="${formName}"] .gateError`
+    );
+
     if (!el) return;
+
     el.textContent = message;
     el.classList.add("show");
 }
@@ -50,11 +74,24 @@ function showAccountAssistant(errorCode, email = "") {
     const message = document.getElementById("assistantMessage");
     const button = document.getElementById("assistantButton");
 
-    // Default content (we'll make this dynamic later)
-    title.textContent = "Looks like you're new here.";
-    message.textContent =
-        "Create your ToysGuru account and start building your collection.";
-    button.textContent = "Create Account";
+    if (errorCode === "auth/user-not-found") {
+
+        title.textContent = "Looks like you're new here.";
+
+        message.textContent =
+            "Create your ToysGuru account and start building your collection.";
+
+        button.textContent = "Create Account";
+
+    } else {
+
+        title.textContent = "Need another way in?";
+
+        message.textContent =
+            "You can also continue using your Google account.";
+
+        button.textContent = "Go to Sign Up";
+    }
 
     assistant.classList.remove("hidden");
 
@@ -71,12 +108,43 @@ function showAccountAssistant(errorCode, email = "") {
 }
 
 /*==========================================================
+PROFILE HELPER
+==========================================================*/
+
+async function createProfileIfNeeded(user, displayName = "") {
+
+    const ref = db.collection("profiles").doc(user.uid);
+
+    const snap = await ref.get();
+
+    if (snap.exists) return;
+
+    await ref.set({
+
+        name: displayName || user.displayName || "",
+
+        email: user.email,
+
+        photoURL: user.photoURL || "",
+
+        isAdmin: false,
+
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
+}
+
+/*==========================================================
 SIGN UP
 ==========================================================*/
 
 const signupForm = document.getElementById("signupForm");
+
 signupForm?.addEventListener("submit", async e => {
+
     e.preventDefault();
+
     clearErrors();
 
     const name = document.getElementById("suName").value.trim();
@@ -105,18 +173,27 @@ signupForm?.addEventListener("submit", async e => {
     }
 
     const submitBtn = signupForm.querySelector(".gateSubmit");
+
     submitBtn.disabled = true;
     submitBtn.textContent = "Creating account…";
 
     try {
 
-        const cred = await auth.createUserWithEmailAndPassword(email, password);
+        const cred = await auth.createUserWithEmailAndPassword(
+            email,
+            password
+        );
 
-        await db.collection("profiles").doc(cred.user.uid).set({
-            name,
-            isAdmin: false,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        // Save the user's display name in Firebase Authentication
+        await cred.user.updateProfile({
+            displayName: name
         });
+
+        // Create Firestore profile (only if it doesn't already exist)
+        await createProfileIfNeeded(
+            cred.user,
+            name
+        );
 
         window.location.href = "marketplace.html";
 
@@ -126,10 +203,10 @@ signupForm?.addEventListener("submit", async e => {
         submitBtn.textContent = "Create account";
 
         showError("signup", friendlyError(error));
+
     }
 
 });
-
 /*==========================================================
 LOGIN
 ==========================================================*/
@@ -146,16 +223,13 @@ loginForm?.addEventListener("submit", async e => {
     const password = document.getElementById("liPassword").value;
 
     if (!email || !password) {
-
         showError("login", "Please fill in every field.");
-
         return;
     }
 
     const submitBtn = loginForm.querySelector(".gateSubmit");
 
     submitBtn.disabled = true;
-
     submitBtn.textContent = "Entering…";
 
     try {
@@ -167,15 +241,48 @@ loginForm?.addEventListener("submit", async e => {
     } catch (error) {
 
         submitBtn.disabled = false;
-
         submitBtn.textContent = "Enter the vault";
 
         showError("login", friendlyError(error));
 
         showAccountAssistant(error.code, email);
+
     }
 
 });
+
+
+/*==========================================================
+GOOGLE SIGN IN
+==========================================================*/
+
+const googleLoginBtn = document.getElementById("googleLoginBtn");
+
+googleLoginBtn?.addEventListener("click", async () => {
+
+    clearErrors();
+
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    try {
+
+        const result = await auth.signInWithPopup(provider);
+
+        await createProfileIfNeeded(
+            result.user,
+            result.user.displayName
+        );
+
+        window.location.href = "marketplace.html";
+
+    } catch (error) {
+
+        showError("login", error.message);
+
+    }
+
+});
+
 
 /*==========================================================
 ERROR MESSAGES
@@ -193,6 +300,9 @@ function friendlyError(error){
 
         case "auth/weak-password":
             return "Password needs at least 6 characters.";
+
+        case "auth/popup-closed-by-user":
+            return "Google sign in was cancelled.";
 
         case "auth/user-not-found":
         case "auth/wrong-password":
