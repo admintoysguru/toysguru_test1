@@ -158,7 +158,7 @@ button{cursor:pointer;font-family:inherit;}
 ACCOUNT ASSISTANT
 ==============================*/
 
-.signupSuggestion{
+.accountAssistant{
     margin-top:18px;
     padding:18px;
     border:1px solid rgba(201,160,91,.25);
@@ -167,20 +167,20 @@ ACCOUNT ASSISTANT
     border-radius:8px;
 }
 
-.signupSuggestion p{
+.accountAssistant h3{
     margin:0;
     color:#EFD8B1;
     font-size:16px;
 }
 
-.signupSuggestion span{
+.accountAssistant p{
     display:block;
     margin-top:8px;
     color:#9E9486;
     font-size:14px;
 }
 
-.suggestionBtn{
+.assistantButton{
     margin-top:16px;
     padding:12px 24px;
     background:#C9A05B;
@@ -192,7 +192,7 @@ ACCOUNT ASSISTANT
     transition:.2s;
 }
 
-.suggestionBtn:hover{
+.assistantButton:hover{
     background:#D9B06B;
 }
 

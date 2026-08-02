@@ -27,13 +27,18 @@
         <!-- LOGIN -->
         <form class="gateForm" data-form="login" id="loginForm">
             <div class="gateError"></div>
-            <div id="signupSuggestion" class="signupSuggestion hidden">
-    <p>New to <strong>ToysGuru</strong>?</p>
-    <span>Create your account and start your collection.</span>
+            <div id="accountAssistant" class="accountAssistant hidden">
 
-    <button type="button" id="goToSignupBtn" class="suggestionBtn">
-        Create Account
+    <h3 id="assistantTitle"></h3>
+
+    <p id="assistantMessage"></p>
+
+    <button
+        type="button"
+        id="assistantButton"
+        class="assistantButton">
     </button>
+
 </div>
             <div class="gRow">
                 <label>Email</label>

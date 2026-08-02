@@ -28,7 +28,7 @@ function clearErrors(){
     });
 
     document
-        .getElementById("signupSuggestion")
+        .getElementById("accountAssistant")
         ?.classList.add("hidden");
 }
 
@@ -38,13 +38,27 @@ function showError(formName, message){
     el.textContent = message;
     el.classList.add("show");
 }
-function showSignupSuggestion(email = ""){
 
-    const suggestion = document.getElementById("signupSuggestion");
+/*==========================================================
+ACCOUNT ASSISTANT
+==========================================================*/
 
-    suggestion.classList.remove("hidden");
+function showAccountAssistant(errorCode, email = "") {
 
-    document.getElementById("goToSignupBtn").onclick = () => {
+    const assistant = document.getElementById("accountAssistant");
+    const title = document.getElementById("assistantTitle");
+    const message = document.getElementById("assistantMessage");
+    const button = document.getElementById("assistantButton");
+
+    // Default content (we'll make this dynamic later)
+    title.textContent = "Looks like you're new here.";
+    message.textContent =
+        "Create your ToysGuru account and start building your collection.";
+    button.textContent = "Create Account";
+
+    assistant.classList.remove("hidden");
+
+    button.onclick = () => {
 
         showTab("signup");
 
@@ -52,7 +66,7 @@ function showSignupSuggestion(email = ""){
 
         document.getElementById("suName").focus();
 
-        suggestion.classList.add("hidden");
+        assistant.classList.add("hidden");
     };
 }
 
@@ -74,14 +88,17 @@ signupForm?.addEventListener("submit", async e => {
         showError("signup", "Please fill in every field.");
         return;
     }
+
     if (!/^\S+@\S+\.\S+$/.test(email)) {
         showError("signup", "Enter a valid email address.");
         return;
     }
+
     if (password.length < 6) {
         showError("signup", "Password needs at least 6 characters.");
         return;
     }
+
     if (password !== confirm) {
         showError("signup", "Passwords don't match.");
         return;
@@ -92,10 +109,9 @@ signupForm?.addEventListener("submit", async e => {
     submitBtn.textContent = "Creating account…";
 
     try {
+
         const cred = await auth.createUserWithEmailAndPassword(email, password);
 
-        // Firebase Auth only stores the login itself — we store the
-        // name and admin flag ourselves in a "profiles" document.
         await db.collection("profiles").doc(cred.user.uid).set({
             name,
             isAdmin: false,
@@ -103,11 +119,15 @@ signupForm?.addEventListener("submit", async e => {
         });
 
         window.location.href = "marketplace.html";
+
     } catch (error) {
+
         submitBtn.disabled = false;
         submitBtn.textContent = "Create account";
+
         showError("signup", friendlyError(error));
     }
+
 });
 
 /*==========================================================
@@ -115,53 +135,72 @@ LOGIN
 ==========================================================*/
 
 const loginForm = document.getElementById("loginForm");
+
 loginForm?.addEventListener("submit", async e => {
+
     e.preventDefault();
+
     clearErrors();
 
     const email = document.getElementById("liEmail").value.trim().toLowerCase();
     const password = document.getElementById("liPassword").value;
 
     if (!email || !password) {
+
         showError("login", "Please fill in every field.");
+
         return;
     }
 
     const submitBtn = loginForm.querySelector(".gateSubmit");
+
     submitBtn.disabled = true;
+
     submitBtn.textContent = "Entering…";
 
     try {
+
         await auth.signInWithEmailAndPassword(email, password);
+
         window.location.href = "marketplace.html";
+
     } catch (error) {
-    submitBtn.disabled = false;
-    submitBtn.textContent = "Enter the vault";
 
-    showError("login", friendlyError(error));
+        submitBtn.disabled = false;
 
-    showSignupSuggestion(email);
-}
+        submitBtn.textContent = "Enter the vault";
+
+        showError("login", friendlyError(error));
+
+        showAccountAssistant(error.code, email);
     }
-);
+
+});
 
 /*==========================================================
-ERROR MESSAGES — Firebase error codes translated to plain English
+ERROR MESSAGES
 ==========================================================*/
 
 function friendlyError(error){
+
     switch (error.code) {
+
         case "auth/email-already-in-use":
             return "An account with this email already exists — try logging in.";
+
         case "auth/invalid-email":
             return "That email address doesn't look right.";
+
         case "auth/weak-password":
             return "Password needs at least 6 characters.";
+
         case "auth/user-not-found":
         case "auth/wrong-password":
         case "auth/invalid-credential":
             return "Email or password is incorrect.";
+
         default:
             return error.message;
     }
+
 }
