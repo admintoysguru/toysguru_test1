@@ -1,46 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Owner Access | ToysGuru</title>
+<span class="gateLogo">ToysGuru</span>
+<span class="gateOwner">OWNER ACCESS</span>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<div class="gateCard">
 
-<link rel="stylesheet" href="admin-login.css">
-</head>
-<body>
+    <form class="gateForm" id="adminLoginForm">
+        <div class="gateError" id="adminError"></div>
 
-<div class="gateWrap">
+        <div class="gRow">
+            <label>Email</label>
+            <input
+                type="email"
+                id="adEmail"
+                placeholder="owner@toysguru.in"
+                autocomplete="email"
+            >
+        </div>
 
-    <span class="gateLogo">ToysGuru</span>
-    <span class="gateOwner">OWNER ACCESS</span>
+        <div class="gRow">
+            <label>Password</label>
+            <input
+                type="password"
+                id="adPassword"
+                placeholder="••••••••"
+                autocomplete="current-password"
+            >
+        </div>
 
-    <div class="gateCard">
-        <form class="gateForm" id="adminLoginForm">
-            <div class="gateError" id="adminError"></div>
-            <div class="gRow">
-                <label>Email</label>
-                <input type="email" id="adEmail" placeholder="owner@toysguru.in" autocomplete="email">
-            </div>
-            <div class="gRow">
-                <label>Password</label>
-                <input type="password" id="adPassword" placeholder="••••••••" autocomplete="current-password">
-            </div>
-            <button type="submit" class="gateSubmit">Enter dashboard</button>
-        </form>
+        <button type="submit" class="gateSubmit">
+            Enter dashboard
+        </button>
+    </form>
+
+    <div class="loginDivider">
+        <span>OR</span>
     </div>
 
-    <a class="gateBack" href="index.html">← Back to ToysGuru</a>
+    <button type="button" class="googleAdminBtn" id="googleAdminBtn">
+        Continue with Google
+    </button>
 
 </div>
+
+<a class="gateBack" href="index.html">← Back to ToysGuru</a>
 
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+
 <script src="firebaseClient.js"></script>
 <script src="admin-login.js"></script>
+
 </body>
 </html>
