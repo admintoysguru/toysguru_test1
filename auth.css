@@ -1,299 +1,768 @@
 /*==========================================================
-  TOYSGURU — VAULT ENTRANCE (Login / Sign Up)
+  TOYSGURU — VAULT ENTRANCE
+  Login / Sign Up / Complete Account
 ==========================================================*/
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-
-:root{
-    --bg:#070605;
-    --bg-card:#100e0b;
-    --text:#F2EBDD;
-    --text-soft:#9C948A;
-    --text-faint:#6B6459;
-    --brass:#B8925A;
-    --brass-light:#E8CB9C;
-    --brass-dim:#6E5837;
-    --oxblood-light:#B9573F;
-    --glass-border:rgba(232,201,156,.14);
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html,body{width:100%;min-height:100%;}
-
-body{
-    background:radial-gradient(circle at top,#0e0c09 0%,#0a0908 30%,#070605 65%,#050403 100%);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:32px;
-}
-
-a{color:inherit;text-decoration:none;}
-button{cursor:pointer;font-family:inherit;}
-
-.gateWrap{
-    width:100%;
-    max-width:420px;
-}
-
-.gateLogo{
-    display:block;
-    text-align:center;
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:17px;
-    letter-spacing:2px;
-    color:var(--text);
-    margin-bottom:32px;
-}
-.gateLogo em{
-    font-style:normal;
-    color:var(--brass-light);
-}
-
-.gateCard{
-    background:var(--bg-card);
-    border:1px solid var(--glass-border);
-    padding:36px;
-    position:relative;
-}
-
-.gateCard::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:2px;
-    background:linear-gradient(90deg,var(--brass),var(--brass-light));
-}
-
-.gateTabs{
-    display:flex;
-    margin-bottom:28px;
-    border-bottom:1px solid var(--glass-border);
-}
-
-.gateTab{
-    flex:1;
-    background:none;
-    border:none;
-    border-bottom:2px solid transparent;
-    padding:10px 0 14px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    transition:.25s;
-}
-
-.gateTab.active{
-    color:var(--brass-light);
-    border-color:var(--brass);
-}
-
-.gateForm{
-    display:none;
-    flex-direction:column;
-    gap:16px;
-}
-
-.gateForm.active{
-    display:flex;
-}
-
-.gRow label{
-    display:block;
-    font-size:10px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    margin-bottom:7px;
-}
-
-.gRow input{
-    width:100%;
-    background:rgba(255,255,255,.02);
-    border:1px solid var(--glass-border);
-    color:var(--text);
-    padding:11px 14px;
-    font-size:13.5px;
-    outline:none;
-    transition:border-color .3s;
-}
-
-.gRow input:focus{
-    border-color:var(--brass);
-}
-
-.gRow input::placeholder{
-    color:var(--text-faint);
-}
-
-.gateError{
-    font-size:12.5px;
-    color:var(--oxblood-light);
-    display:none;
-    padding:10px 12px;
-    background:rgba(185,87,63,.08);
-    border:1px solid rgba(185,87,63,.25);
-}
-
-.gateError.show{
-    display:block;
-}
-
-.gateSubmit{
-    background:var(--brass);
-    color:#100e0b;
-    border:none;
-    padding:14px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    transition:.3s;
-    margin-top:4px;
-}
-
-.gateSubmit:hover{
-    background:var(--brass-light);
-    box-shadow:0 14px 34px rgba(184,146,90,.25);
-}
-
-.gateFooter{
-    text-align:center;
-    margin-top:22px;
-    font-size:12.5px;
-    color:var(--text-faint);
-}
-
-.gateFooter a{
-    color:var(--brass-light);
-    border-bottom:1px solid transparent;
-}
-
-.gateFooter a:hover{
-    border-color:var(--brass-light);
-}
-
-.gateBack{
-    display:block;
-    text-align:center;
-    margin-top:24px;
-    font-size:11.5px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-}
-
-.gateBack:hover{
-    color:var(--brass-light);
-}
 
 /*==========================================================
-ACCOUNT ASSISTANT
+  ROOT
 ==========================================================*/
 
-.accountAssistant{
-    margin-top:18px;
-    padding:18px;
-    border:1px solid rgba(201,160,91,.25);
-    background:rgba(201,160,91,.06);
-    text-align:center;
-    border-radius:8px;
+:root {
+    --bg: #070605;
+    --bg-card: #100e0b;
+
+    --text: #F2EBDD;
+    --text-soft: #9C948A;
+    --text-faint: #6B6459;
+
+    --brass: #B8925A;
+    --brass-light: #E8CB9C;
+    --brass-dim: #6E5837;
+
+    --oxblood-light: #B9573F;
+
+    --glass-border: rgba(232, 201, 156, .14);
 }
 
-.accountAssistant h3{
-    color:#EFD8B1;
-    font-size:16px;
-    margin:0;
-}
-
-.accountAssistant p{
-    margin-top:8px;
-    color:#9E9486;
-    font-size:14px;
-}
-
-.assistantButton{
-    margin-top:16px;
-    padding:12px 24px;
-    background:#C9A05B;
-    color:#111;
-    border:none;
-    border-radius:6px;
-    font-weight:600;
-    transition:.25s;
-}
-
-.assistantButton:hover{
-    background:#D9B06B;
-}
 
 /*==========================================================
-GOOGLE LOGIN
+  PAGE
 ==========================================================*/
 
-.authDivider{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin:6px 0;
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at top,
+            #0e0c09 0%,
+            #0a0908 30%,
+            #070605 65%,
+            #050403 100%
+        );
+
+    color: var(--text);
+
+    font-family: 'Inter', sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 32px;
+}
+
+
+/*==========================================================
+  GENERAL
+==========================================================*/
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+
+/*==========================================================
+  LOGO
+==========================================================*/
+
+.gateLogo {
+    display: block;
+
+    text-align: center;
+
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 17px;
+
+    letter-spacing: 2px;
+
+    color: var(--text);
+
+    margin-bottom: 32px;
+}
+
+.gateLogo em {
+    font-style: normal;
+    color: var(--brass-light);
+}
+
+
+/*==========================================================
+  CARD
+==========================================================*/
+
+.gateCard {
+    width: 100%;
+    max-width: 420px;
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--glass-border);
+
+    padding: 36px;
+
+    position: relative;
+
+    flex: 0 0 auto;
+}
+
+
+/* TOP BRASS LINE */
+
+.gateCard::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--brass),
+            var(--brass-light)
+        );
+}
+
+
+/*==========================================================
+  TABS
+==========================================================*/
+
+.gateTabs {
+    display: flex;
+
+    margin-bottom: 28px;
+
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.gateTab {
+    flex: 1;
+
+    background: none;
+
+    border: none;
+
+    border-bottom: 2px solid transparent;
+
+    padding: 10px 0 14px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+
+    transition: .25s;
+}
+
+.gateTab:hover {
+    color: var(--brass-light);
+}
+
+.gateTab.active {
+    color: var(--brass-light);
+
+    border-color: var(--brass);
+}
+
+
+/*==========================================================
+  FORMS
+==========================================================*/
+
+.gateForm {
+    display: none;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    width: 100%;
+}
+
+.gateForm.active {
+    display: flex;
+}
+
+
+/*==========================================================
+  FORM ROW
+==========================================================*/
+
+.gRow {
+    width: 100%;
+}
+
+
+/*==========================================================
+  NORMAL FORM LABELS
+==========================================================*/
+
+.gRow > label:not(.passwordToggle) {
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+
+    margin-bottom: 7px;
+}
+
+
+/*==========================================================
+  NORMAL FORM INPUTS
+==========================================================*/
+
+.gRow > input:not([type="checkbox"]) {
+    display: block;
+
+    width: 100%;
+
+    background: rgba(255, 255, 255, .02);
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--text);
+
+    padding: 11px 14px;
+
+    font-size: 13.5px;
+
+    outline: none;
+
+    transition: border-color .3s;
+
+    border-radius: 0;
+}
+
+.gRow > input:not([type="checkbox"]):focus {
+    border-color: var(--brass);
+}
+
+.gRow > input:not([type="checkbox"])::placeholder {
+    color: var(--text-faint);
+}
+
+
+/*==========================================================
+  ERROR
+==========================================================*/
+
+.gateError {
+    font-size: 12.5px;
+
+    color: var(--oxblood-light);
+
+    display: none;
+
+    padding: 10px 12px;
+
+    background: rgba(185, 87, 63, .08);
+
+    border: 1px solid rgba(185, 87, 63, .25);
+}
+
+.gateError.show {
+    display: block;
+}
+
+
+/*==========================================================
+  SUBMIT BUTTON
+==========================================================*/
+
+.gateSubmit {
+    width: 100%;
+
+    background: var(--brass);
+
+    color: #100e0b;
+
+    border: none;
+
+    padding: 14px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    transition: .3s;
+
+    margin-top: 4px;
+}
+
+.gateSubmit:hover {
+    background: var(--brass-light);
+
+    box-shadow:
+        0 14px 34px
+        rgba(184, 146, 90, .25);
+}
+
+.gateSubmit:disabled {
+    opacity: .65;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/*==========================================================
+  FOOTER
+==========================================================*/
+
+.gateFooter {
+    text-align: center;
+
+    margin-top: 22px;
+
+    font-size: 12.5px;
+
+    color: var(--text-faint);
+}
+
+.gateFooter a {
+    color: var(--brass-light);
+
+    border-bottom: 1px solid transparent;
+}
+
+.gateFooter a:hover {
+    border-color: var(--brass-light);
+}
+
+
+/*==========================================================
+  BACK LINK
+==========================================================*/
+
+.gateBack {
+    display: block;
+
+    text-align: center;
+
+    margin-top: 24px;
+
+    font-size: 11.5px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+}
+
+.gateBack:hover {
+    color: var(--brass-light);
+}
+
+
+/*==========================================================
+  ACCOUNT ASSISTANT
+==========================================================*/
+
+.accountAssistant {
+    margin-top: 18px;
+
+    padding: 18px;
+
+    border: 1px solid rgba(201, 160, 91, .25);
+
+    background: rgba(201, 160, 91, .06);
+
+    text-align: center;
+
+    border-radius: 8px;
+}
+
+.accountAssistant h3 {
+    color: #EFD8B1;
+
+    font-size: 16px;
+
+    margin: 0;
+}
+
+.accountAssistant p {
+    margin-top: 8px;
+
+    color: #9E9486;
+
+    font-size: 14px;
+}
+
+.assistantButton {
+    margin-top: 16px;
+
+    padding: 12px 24px;
+
+    background: #C9A05B;
+
+    color: #111;
+
+    border: none;
+
+    border-radius: 6px;
+
+    font-weight: 600;
+
+    transition: .25s;
+}
+
+.assistantButton:hover {
+    background: #D9B06B;
+}
+
+
+/*==========================================================
+  GOOGLE LOGIN
+==========================================================*/
+
+.authDivider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin: 6px 0;
 }
 
 .authDivider::before,
-.authDivider::after{
-    content:"";
-    flex:1;
-    height:1px;
-    background:rgba(232,201,156,.15);
+.authDivider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: rgba(232, 201, 156, .15);
 }
 
-.authDivider span{
-    font-size:11px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--text-faint);
+.authDivider span {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
 }
 
-.googleLoginBtn{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
 
-    padding:14px;
+.googleLoginBtn {
+    width: 100%;
 
-    background:rgba(255,255,255,.02);
+    display: flex;
 
-    border:1px solid var(--glass-border);
+    align-items: center;
 
-    color:var(--text);
+    justify-content: center;
 
-    font-size:13px;
-    font-weight:500;
+    gap: 12px;
 
-    transition:all .25s ease;
+    padding: 14px;
+
+    background: rgba(255, 255, 255, .02);
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    transition: all .25s ease;
 }
 
-.googleLoginBtn img{
-    width:20px;
-    height:20px;
+.googleLoginBtn img {
+    width: 20px;
+
+    height: 20px;
+
+    object-fit: contain;
 }
 
-.googleLoginBtn:hover{
-    background:rgba(184,146,90,.08);
-    border-color:var(--brass);
-    transform:translateY(-1px);
-    box-shadow:0 12px 28px rgba(184,146,90,.18);
+.googleLoginBtn:hover {
+    background: rgba(184, 146, 90, .08);
+
+    border-color: var(--brass);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(184, 146, 90, .18);
 }
 
-.hidden{
-    display:none;
+
+/*==========================================================
+  SHOW PASSWORD
+==========================================================*/
+
+.gRow .passwordToggle {
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: flex-start !important;
+
+    width: fit-content !important;
+
+    gap: 10px;
+
+    margin-top: 10px !important;
+
+    margin-bottom: 2px !important;
+
+    padding: 2px 0 !important;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    letter-spacing: .3px;
+
+    line-height: 1.3;
+
+    text-transform: none !important;
+
+    color: #C9A15B;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+
+/*==========================================================
+  SHOW PASSWORD CHECKBOX
+==========================================================*/
+
+.gRow .passwordToggleCheck {
+    display: inline-block !important;
+
+    width: 18px !important;
+
+    min-width: 18px !important;
+
+    max-width: 18px !important;
+
+    height: 18px !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    appearance: auto;
+
+    cursor: pointer;
+
+    accent-color: #C9A15B;
+
+    flex: 0 0 18px;
+}
+
+
+/*==========================================================
+  SHOW PASSWORD TEXT
+==========================================================*/
+
+.gRow .passwordToggle span {
+    display: inline-block !important;
+
+    width: auto !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    letter-spacing: .3px;
+
+    line-height: 1.3;
+
+    text-transform: none !important;
+
+    color: #C9A15B;
+
+    cursor: pointer;
+}
+
+
+/*==========================================================
+  HOVER
+==========================================================*/
+
+.gRow .passwordToggle:hover,
+.gRow .passwordToggle:hover span {
+    color: #E8CB9C;
+}
+
+
+/*==========================================================
+  COMPLETE ACCOUNT ROWS
+==========================================================*/
+
+.accountCompletion .gRow {
+    margin-bottom: 16px;
+}
+
+
+/*==========================================================
+  COMPLETE ACCOUNT BUTTON
+==========================================================*/
+
+.accountCompletion .gateSubmit {
+    width: 100%;
+
+    margin-top: 4px;
+}
+
+
+/*==========================================================
+  COMPLETE ACCOUNT ERROR
+==========================================================*/
+
+#accountCompletionError {
+    margin-bottom: 16px;
+}
+
+
+/*==========================================================
+  ACCOUNT COMPLETION MODE
+==========================================================*/
+
+/*
+ * The JavaScript adds:
+ *
+ *     .account-completing
+ *
+ * to .gateCard.
+ *
+ * These rules ensure that the normal authentication
+ * interface cannot remain visible underneath the
+ * Complete Your Account screen.
+ */
+
+.gateCard.account-completing .gateTabs {
+    display: none !important;
+}
+
+
+.gateCard.account-completing #loginForm,
+.gateCard.account-completing #signupForm {
+    display: none !important;
+}
+
+
+.gateCard.account-completing #accountAssistant {
+    display: none !important;
+}
+
+
+.gateCard.account-completing #accountCompletion {
+    display: block !important;
+}
+
+
+/*==========================================================
+  HIDDEN
+==========================================================*/
+
+.hidden {
+    display: none !important;
+}
+
+
+/*
+ * Account completion uses both .hidden and inline
+ * JavaScript display changes. Keep hidden authoritative.
+ */
+
+#accountCompletion.hidden {
+    display: none !important;
+}
+
+
+/*==========================================================
+  MOBILE
+==========================================================*/
+
+@media (max-width: 520px) {
+
+    body {
+        padding: 20px;
+    }
+
+
+    .gateLogo {
+        margin-bottom: 24px;
+    }
+
+
+    .gateCard {
+        padding: 26px 22px;
+    }
+
+
+    .accountCompletionInner h2 {
+        font-size: 21px;
+    }
+
+
+    .accountCompletionInner p {
+        font-size: 13px;
+    }
+
 }

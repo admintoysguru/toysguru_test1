@@ -2,44 +2,111 @@
 
 /*==========================================================*
  * TOYSGURU — REAL AUTH (Firebase)
- *==========================================================*/
-
-
-/*==========================================================*
- * TABS
+ * Email/Password + Google
  *==========================================================*/
 
 const tabs = document.querySelectorAll(".gateTab");
 const forms = document.querySelectorAll(".gateForm");
 
+let pendingGoogleCredential = null;
+
+
+/*==========================================================*
+ * TAB HANDLING
+ *==========================================================*/
+
 function showTab(name) {
 
+    const completion =
+        document.getElementById("accountCompletion");
+
+    const gateCard =
+        document.querySelector(".gateCard");
+
+    /*
+     * If account completion is currently visible,
+     * don't allow the normal Login / Sign Up tabs
+     * to take over the screen.
+     */
+    if (
+        completion &&
+        !completion.classList.contains("hidden")
+    ) {
+        return;
+    }
+
+
+    gateCard?.classList.remove(
+        "account-completing"
+    );
+
+
     tabs.forEach(tab => {
+
         tab.classList.toggle(
             "active",
             tab.dataset.tab === name
         );
+
     });
 
+
     forms.forEach(form => {
+
         form.classList.toggle(
             "active",
             form.dataset.form === name
         );
+
+        /*
+         * Explicitly restore normal form visibility.
+         */
+        form.style.display =
+            form.dataset.form === name
+                ? "flex"
+                : "none";
+
     });
+
+
+    /*
+     * Make sure completion is hidden.
+     */
+
+    if (completion) {
+
+        completion.classList.add("hidden");
+        completion.style.display = "none";
+
+    }
+
 
     clearErrors();
 }
 
 
+/*==========================================================*
+ * TAB CLICK EVENTS
+ *==========================================================*/
+
 tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-        showTab(tab.dataset.tab);
-    });
+
+    tab.addEventListener(
+        "click",
+        () => showTab(tab.dataset.tab)
+    );
+
 });
 
 
-const params = new URLSearchParams(window.location.search);
+/*==========================================================*
+ * INITIAL TAB
+ *==========================================================*/
+
+const params = new URLSearchParams(
+    window.location.search
+);
+
 
 showTab(
     params.get("mode") === "signup"
@@ -54,10 +121,15 @@ showTab(
 
 function clearErrors() {
 
-    document.querySelectorAll(".gateError").forEach(el => {
-        el.classList.remove("show");
-        el.textContent = "";
-    });
+    document
+        .querySelectorAll(".gateError")
+        .forEach(el => {
+
+            el.classList.remove("show");
+            el.textContent = "";
+
+        });
+
 
     document
         .getElementById("accountAssistant")
@@ -66,7 +138,7 @@ function clearErrors() {
 
 
 /*==========================================================*
- * SHOW ERROR
+ * SHOW NORMAL AUTH ERROR
  *==========================================================*/
 
 function showError(formName, message) {
@@ -75,13 +147,11 @@ function showError(formName, message) {
         `.gateForm[data-form="${formName}"] .gateError`
     );
 
+
     if (!el) {
-        console.error(
-            "Could not find error element for form:",
-            formName
-        );
         return;
     }
+
 
     el.textContent = message;
     el.classList.add("show");
@@ -92,26 +162,46 @@ function showError(formName, message) {
  * ACCOUNT ASSISTANT
  *==========================================================*/
 
-function showAccountAssistant(errorCode, email = "") {
+function showAccountAssistant(
+    errorCode,
+    email = ""
+) {
 
     const assistant =
-        document.getElementById("accountAssistant");
+        document.getElementById(
+            "accountAssistant"
+        );
 
     const title =
-        document.getElementById("assistantTitle");
+        document.getElementById(
+            "assistantTitle"
+        );
 
     const message =
-        document.getElementById("assistantMessage");
+        document.getElementById(
+            "assistantMessage"
+        );
 
     const button =
-        document.getElementById("assistantButton");
+        document.getElementById(
+            "assistantButton"
+        );
 
-    if (!assistant || !title || !message || !button) {
+
+    if (
+        !assistant ||
+        !title ||
+        !message ||
+        !button
+    ) {
         return;
     }
 
 
-    if (errorCode === "auth/user-not-found") {
+    if (
+        errorCode ===
+        "auth/user-not-found"
+    ) {
 
         title.textContent =
             "Looks like you're new here.";
@@ -135,28 +225,40 @@ function showAccountAssistant(errorCode, email = "") {
     }
 
 
-    assistant.classList.remove("hidden");
+    assistant.classList.remove(
+        "hidden"
+    );
 
 
     button.onclick = () => {
 
         showTab("signup");
 
-        const signupEmail =
-            document.getElementById("suEmail");
 
-        const signupName =
-            document.getElementById("suName");
+        const emailInput =
+            document.getElementById(
+                "suEmail"
+            );
 
-        if (signupEmail) {
-            signupEmail.value = email;
+        const nameInput =
+            document.getElementById(
+                "suName"
+            );
+
+
+        if (emailInput) {
+
+            emailInput.value =
+                email;
         }
 
-        if (signupName) {
-            signupName.focus();
-        }
 
-        assistant.classList.add("hidden");
+        nameInput?.focus();
+
+
+        assistant.classList.add(
+            "hidden"
+        );
     };
 }
 
@@ -170,33 +272,19 @@ async function createProfileIfNeeded(
     displayName = ""
 ) {
 
-    console.log(
-        "Checking Firestore profile for UID:",
-        user.uid
-    );
-
     const ref =
-        db.collection("profiles").doc(user.uid);
+        db.collection("profiles").doc(
+            user.uid
+        );
+
 
     const snap =
         await ref.get();
 
 
     if (snap.exists) {
-
-        console.log(
-            "Profile already exists for:",
-            user.email
-        );
-
         return;
     }
-
-
-    console.log(
-        "Creating Firestore profile for:",
-        user.email
-    );
 
 
     await ref.set({
@@ -207,10 +295,11 @@ async function createProfileIfNeeded(
             "",
 
         email:
-            user.email || "",
+            user.email,
 
         photoURL:
-            user.photoURL || "",
+            user.photoURL ||
+            "",
 
         isAdmin:
             false,
@@ -219,12 +308,602 @@ async function createProfileIfNeeded(
             firebase.firestore.FieldValue.serverTimestamp()
 
     });
+}
 
 
-    console.log(
-        "Firestore profile created successfully."
+/*==========================================================*
+ * LINK GOOGLE TO CURRENT USER
+ *==========================================================*/
+
+async function linkGoogleToCurrentUser() {
+
+    const currentUser =
+        auth.currentUser;
+
+
+    if (!currentUser) {
+
+        throw new Error(
+            "You must be signed in before linking Google."
+        );
+    }
+
+
+    const provider =
+        new firebase.auth.GoogleAuthProvider();
+
+
+    const result =
+        await currentUser.linkWithPopup(
+            provider
+        );
+
+
+    await createProfileIfNeeded(
+        result.user,
+        result.user.displayName
+    );
+
+
+    return result.user;
+}
+
+
+/*==========================================================*
+ * LINK EMAIL/PASSWORD TO CURRENT USER
+ *==========================================================*/
+
+async function linkEmailPasswordToCurrentUser(
+    email,
+    password
+) {
+
+    const currentUser =
+        auth.currentUser;
+
+
+    if (!currentUser) {
+
+        throw new Error(
+            "You must be signed in before adding a password."
+        );
+    }
+
+
+    const credential =
+        firebase.auth.EmailAuthProvider.credential(
+            email,
+            password
+        );
+
+
+    const result =
+        await currentUser.linkWithCredential(
+            credential
+        );
+
+
+    return result.user;
+}
+
+
+/*==========================================================*
+ * SHOW GOOGLE ACCOUNT COMPLETION SCREEN
+ *==========================================================*/
+
+function showAccountCompletion(user) {
+
+    const gateCard =
+        document.querySelector(".gateCard");
+
+    const gateTabs =
+        document.querySelector(".gateTabs");
+
+    const loginForm =
+        document.getElementById(
+            "loginForm"
+        );
+
+    const signupForm =
+        document.getElementById(
+            "signupForm"
+        );
+
+    const accountAssistant =
+        document.getElementById(
+            "accountAssistant"
+        );
+
+    const completion =
+        document.getElementById(
+            "accountCompletion"
+        );
+
+
+    if (!completion) {
+
+        console.error(
+            "accountCompletion section not found in auth.html"
+        );
+
+        return;
+    }
+
+
+    /*
+     * Put the entire card into completion mode.
+     */
+
+    gateCard?.classList.add(
+        "account-completing"
+    );
+
+
+    /*
+     * Hide tabs.
+     */
+
+    if (gateTabs) {
+
+        gateTabs.classList.add("hidden");
+        gateTabs.style.display = "none";
+
+    }
+
+
+    /*
+     * Hide login form.
+     */
+
+    if (loginForm) {
+
+        loginForm.classList.remove(
+            "active"
+        );
+
+        loginForm.style.display =
+            "none";
+    }
+
+
+    /*
+     * Hide signup form.
+     */
+
+    if (signupForm) {
+
+        signupForm.classList.remove(
+            "active"
+        );
+
+        signupForm.style.display =
+            "none";
+    }
+
+
+    /*
+     * Hide old account assistant.
+     */
+
+    if (accountAssistant) {
+
+        accountAssistant.classList.add(
+            "hidden"
+        );
+
+        accountAssistant.style.display =
+            "none";
+    }
+
+
+    /*
+     * Show completion section.
+     */
+
+    completion.classList.remove(
+        "hidden"
+    );
+
+    completion.style.display =
+        "block";
+
+
+    /*
+     * Clear completion error.
+     */
+
+    const error =
+        document.getElementById(
+            "accountCompletionError"
+        );
+
+
+    if (error) {
+
+        error.textContent = "";
+        error.classList.remove("show");
+
+    }
+
+
+    /*
+     * Reset password fields.
+     */
+
+    const password =
+        document.getElementById(
+            "linkPassword"
+        );
+
+    const confirmPassword =
+        document.getElementById(
+            "linkConfirmPassword"
+        );
+
+
+    if (password) {
+
+        password.value = "";
+        password.type = "password";
+
+    }
+
+
+    if (confirmPassword) {
+
+        confirmPassword.value = "";
+        confirmPassword.type =
+            "password";
+
+    }
+
+
+    /*
+     * Reset Show Password checkboxes.
+     */
+
+    const showPassword =
+        document.getElementById(
+            "linkShowPassword"
+        );
+
+    const showConfirmPassword =
+        document.getElementById(
+            "linkShowConfirmPassword"
+        );
+
+
+    if (showPassword) {
+        showPassword.checked = false;
+    }
+
+
+    if (showConfirmPassword) {
+        showConfirmPassword.checked = false;
+    }
+
+
+    /*
+     * Remember setup state.
+     */
+
+    sessionStorage.setItem(
+        "toysguruGooglePasswordSetup",
+        "true"
+    );
+
+
+    sessionStorage.setItem(
+        "toysguruGoogleEmail",
+        user.email || ""
+    );
+
+
+    /*
+     * Focus first password field.
+     */
+
+    setTimeout(() => {
+
+        password?.focus();
+
+    }, 0);
+}
+
+
+/*==========================================================*
+ * ACCOUNT COMPLETION ERROR
+ *==========================================================*/
+
+function showAccountCompletionError(
+    message
+) {
+
+    const error =
+        document.getElementById(
+            "accountCompletionError"
+        );
+
+
+    if (!error) {
+        return;
+    }
+
+
+    error.textContent =
+        message;
+
+    error.classList.add(
+        "show"
     );
 }
+
+
+/*==========================================================*
+ * CREATE PASSWORD AFTER GOOGLE LOGIN
+ *==========================================================*/
+
+const createLinkedPasswordBtn =
+    document.getElementById(
+        "createLinkedPasswordBtn"
+    );
+
+
+createLinkedPasswordBtn?.addEventListener(
+    "click",
+    async () => {
+
+        const currentUser =
+            auth.currentUser;
+
+
+        if (!currentUser) {
+
+            showAccountCompletionError(
+                "Your Google sign-in session has expired. Please sign in with Google again."
+            );
+
+            return;
+        }
+
+
+        const passwordInput =
+            document.getElementById(
+                "linkPassword"
+            );
+
+        const confirmInput =
+            document.getElementById(
+                "linkConfirmPassword"
+            );
+
+
+        if (
+            !passwordInput ||
+            !confirmInput
+        ) {
+
+            showAccountCompletionError(
+                "Password fields could not be found. Please refresh the page and try again."
+            );
+
+            return;
+        }
+
+
+        const password =
+            passwordInput.value;
+
+        const confirmPassword =
+            confirmInput.value;
+
+
+        /*
+         * Validate empty fields.
+         */
+
+        if (
+            !password ||
+            !confirmPassword
+        ) {
+
+            showAccountCompletionError(
+                "Please enter and confirm your password."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Validate minimum password length.
+         */
+
+        if (
+            password.length < 6
+        ) {
+
+            showAccountCompletionError(
+                "Password needs at least 6 characters."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Validate confirmation.
+         */
+
+        if (
+            password !==
+            confirmPassword
+        ) {
+
+            showAccountCompletionError(
+                "Passwords don't match."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Disable button.
+         */
+
+        createLinkedPasswordBtn.disabled =
+            true;
+
+        createLinkedPasswordBtn.textContent =
+            "Creating Password…";
+
+
+        try {
+
+            /*
+             * IMPORTANT:
+             *
+             * This attaches Email/Password
+             * to the currently authenticated
+             * Google user.
+             *
+             * No second Firebase account is created.
+             */
+
+            const linkedUser =
+                await linkEmailPasswordToCurrentUser(
+                    currentUser.email,
+                    password
+                );
+
+
+            console.log(
+                "Email/password linked successfully."
+            );
+
+
+            console.log(
+                "Firebase UID:",
+                linkedUser.uid
+            );
+
+
+            /*
+             * Ensure Firestore profile exists.
+             */
+
+            await createProfileIfNeeded(
+                linkedUser,
+                linkedUser.displayName
+            );
+
+
+            /*
+             * Clean temporary state.
+             */
+
+            sessionStorage.removeItem(
+                "toysguruGooglePasswordSetup"
+            );
+
+            sessionStorage.removeItem(
+                "toysguruGoogleEmail"
+            );
+
+
+            /*
+             * Redirect only after the
+             * linking operation succeeds.
+             */
+
+            window.location.href =
+                "marketplace.html";
+
+
+        } catch (error) {
+
+            console.error(
+                "Create linked password error:",
+                error
+            );
+
+
+            createLinkedPasswordBtn.disabled =
+                false;
+
+            createLinkedPasswordBtn.textContent =
+                "Create Password";
+
+
+            switch (error.code) {
+
+                case "auth/provider-already-linked":
+
+                    sessionStorage.removeItem(
+                        "toysguruGooglePasswordSetup"
+                    );
+
+                    sessionStorage.removeItem(
+                        "toysguruGoogleEmail"
+                    );
+
+
+                    window.location.href =
+                        "marketplace.html";
+
+                    break;
+
+
+                case "auth/email-already-in-use":
+
+                    showAccountCompletionError(
+                        "This email is already attached to another ToysGuru account. Please sign in to that account instead."
+                    );
+
+                    break;
+
+
+                case "auth/credential-already-in-use":
+
+                    showAccountCompletionError(
+                        "This email/password credential is already being used by another ToysGuru account."
+                    );
+
+                    break;
+
+
+                case "auth/requires-recent-login":
+
+                    showAccountCompletionError(
+                        "For security, please sign in with Google again and then create your password."
+                    );
+
+                    break;
+
+
+                case "auth/weak-password":
+
+                    showAccountCompletionError(
+                        "Password needs at least 6 characters."
+                    );
+
+                    break;
+
+
+                default:
+
+                    showAccountCompletionError(
+                        error.message ||
+                        "Unable to create the password. Please try again."
+                    );
+
+                    break;
+            }
+        }
+
+    }
+);
 
 
 /*==========================================================*
@@ -232,7 +911,9 @@ async function createProfileIfNeeded(
  *==========================================================*/
 
 const signupForm =
-    document.getElementById("signupForm");
+    document.getElementById(
+        "signupForm"
+    );
 
 
 signupForm?.addEventListener(
@@ -246,14 +927,18 @@ signupForm?.addEventListener(
 
         const name =
             document
-                .getElementById("suName")
+                .getElementById(
+                    "suName"
+                )
                 .value
                 .trim();
 
 
         const email =
             document
-                .getElementById("suEmail")
+                .getElementById(
+                    "suEmail"
+                )
                 .value
                 .trim()
                 .toLowerCase();
@@ -261,17 +946,25 @@ signupForm?.addEventListener(
 
         const password =
             document
-                .getElementById("suPassword")
+                .getElementById(
+                    "suPassword"
+                )
                 .value;
 
 
         const confirm =
             document
-                .getElementById("suConfirm")
+                .getElementById(
+                    "suConfirm"
+                )
                 .value;
 
 
-        if (!name || !email || !password) {
+        if (
+            !name ||
+            !email ||
+            !password
+        ) {
 
             showError(
                 "signup",
@@ -282,7 +975,11 @@ signupForm?.addEventListener(
         }
 
 
-        if (!/^\S+@\S+\.\S+$/.test(email)) {
+        if (
+            !/^\S+@\S+\.\S+$/.test(
+                email
+            )
+        ) {
 
             showError(
                 "signup",
@@ -293,7 +990,9 @@ signupForm?.addEventListener(
         }
 
 
-        if (password.length < 6) {
+        if (
+            password.length < 6
+        ) {
 
             showError(
                 "signup",
@@ -304,7 +1003,10 @@ signupForm?.addEventListener(
         }
 
 
-        if (password !== confirm) {
+        if (
+            password !==
+            confirm
+        ) {
 
             showError(
                 "signup",
@@ -316,7 +1018,9 @@ signupForm?.addEventListener(
 
 
         const submitBtn =
-            signupForm.querySelector(".gateSubmit");
+            signupForm.querySelector(
+                ".gateSubmit"
+            );
 
 
         submitBtn.disabled = true;
@@ -327,12 +1031,6 @@ signupForm?.addEventListener(
 
         try {
 
-            console.log(
-                "Creating Email/Password account:",
-                email
-            );
-
-
             const cred =
                 await auth.createUserWithEmailAndPassword(
                     email,
@@ -340,44 +1038,14 @@ signupForm?.addEventListener(
                 );
 
 
-            console.log(
-                "Firebase account created successfully."
-            );
-
-            console.log(
-                "Firebase UID:",
-                cred.user.uid
-            );
-
-
-            /*
-             * Save display name in Firebase Authentication
-             */
-
             await cred.user.updateProfile({
-
                 displayName: name
-
             });
 
-
-            console.log(
-                "Firebase display name updated."
-            );
-
-
-            /*
-             * Create Firestore profile
-             */
 
             await createProfileIfNeeded(
                 cred.user,
                 name
-            );
-
-
-            console.log(
-                "Signup completed successfully."
             );
 
 
@@ -388,30 +1056,8 @@ signupForm?.addEventListener(
         } catch (error) {
 
             console.error(
-                "================================="
-            );
-
-            console.error(
-                "SIGNUP FAILED"
-            );
-
-            console.error(
-                "Error code:",
-                error.code
-            );
-
-            console.error(
-                "Error message:",
-                error.message
-            );
-
-            console.error(
-                "Full error:",
+                "Signup error:",
                 error
-            );
-
-            console.error(
-                "================================="
             );
 
 
@@ -421,10 +1067,25 @@ signupForm?.addEventListener(
                 "Create account";
 
 
+            if (
+                error.code ===
+                "auth/email-already-in-use"
+            ) {
+
+                showError(
+                    "signup",
+                    "This email already has a ToysGuru account. Please sign in instead."
+                );
+
+                return;
+            }
+
+
             showError(
                 "signup",
                 friendlyError(error)
             );
+
         }
 
     }
@@ -432,11 +1093,13 @@ signupForm?.addEventListener(
 
 
 /*==========================================================*
- * EMAIL + PASSWORD LOGIN
+ * EMAIL/PASSWORD LOGIN
  *==========================================================*/
 
 const loginForm =
-    document.getElementById("loginForm");
+    document.getElementById(
+        "loginForm"
+    );
 
 
 loginForm?.addEventListener(
@@ -450,7 +1113,9 @@ loginForm?.addEventListener(
 
         const email =
             document
-                .getElementById("liEmail")
+                .getElementById(
+                    "liEmail"
+                )
                 .value
                 .trim()
                 .toLowerCase();
@@ -458,11 +1123,16 @@ loginForm?.addEventListener(
 
         const password =
             document
-                .getElementById("liPassword")
+                .getElementById(
+                    "liPassword"
+                )
                 .value;
 
 
-        if (!email || !password) {
+        if (
+            !email ||
+            !password
+        ) {
 
             showError(
                 "login",
@@ -474,102 +1144,131 @@ loginForm?.addEventListener(
 
 
         const submitBtn =
-            loginForm.querySelector(".gateSubmit");
+            loginForm.querySelector(
+                ".gateSubmit"
+            );
 
 
-        submitBtn.disabled = true;
+        submitBtn.disabled =
+            true;
 
         submitBtn.textContent =
             "Entering…";
 
 
-        /*--------------------------------------------------
-         * STEP 1 — FIREBASE EMAIL/PASSWORD LOGIN
-         *--------------------------------------------------*/
-
-        let user;
-
-
         try {
 
-            console.log(
-                "================================="
-            );
-
-            console.log(
-                "EMAIL/PASSWORD LOGIN STARTED"
-            );
-
-            console.log(
-                "Email:",
-                email
-            );
-
-
-            const cred =
+            const result =
                 await auth.signInWithEmailAndPassword(
                     email,
                     password
                 );
 
 
-            user =
-                cred.user;
+            /*
+             * If the user previously attempted
+             * Google sign-in and Firebase returned
+             * account-exists-with-different-credential,
+             * finish the Google linking now.
+             */
+
+            if (
+                pendingGoogleCredential
+            ) {
+
+                try {
+
+                    await result.user.linkWithCredential(
+                        pendingGoogleCredential
+                    );
 
 
-            console.log(
-                "EMAIL/PASSWORD LOGIN SUCCESSFUL"
+                    pendingGoogleCredential =
+                        null;
+
+
+                    console.log(
+                        "Google account linked successfully."
+                    );
+
+
+                } catch (linkError) {
+
+                    console.error(
+                        "Google linking error:",
+                        linkError
+                    );
+
+
+                    if (
+                        linkError.code ===
+                        "auth/provider-already-linked"
+                    ) {
+
+                        pendingGoogleCredential =
+                            null;
+
+                    } else {
+
+                        showError(
+                            "login",
+                            "Your email/password login worked, but Google could not be linked. Please try again."
+                        );
+
+
+                        submitBtn.disabled =
+                            false;
+
+                        submitBtn.textContent =
+                            "Enter the vault";
+
+
+                        return;
+                    }
+                }
+            }
+
+
+            await createProfileIfNeeded(
+                result.user,
+                result.user.displayName
             );
 
-            console.log(
-                "Firebase UID:",
-                user.uid
-            );
 
-            console.log(
-                "Firebase email:",
-                user.email
-            );
-
-            console.log(
-                "================================="
-            );
+            window.location.href =
+                "marketplace.html";
 
 
         } catch (error) {
 
             console.error(
-                "================================="
-            );
-
-            console.error(
-                "EMAIL/PASSWORD LOGIN FAILED"
-            );
-
-            console.error(
-                "Error code:",
-                error.code
-            );
-
-            console.error(
-                "Error message:",
-                error.message
-            );
-
-            console.error(
-                "Full Firebase error:",
+                "Email/password login error:",
                 error
             );
 
-            console.error(
-                "================================="
-            );
 
-
-            submitBtn.disabled = false;
+            submitBtn.disabled =
+                false;
 
             submitBtn.textContent =
                 "Enter the vault";
+
+
+            if (
+                error.code ===
+                    "auth/wrong-password" ||
+
+                error.code ===
+                    "auth/invalid-credential"
+            ) {
+
+                showError(
+                    "login",
+                    "Email/password login failed. If this account was created with Google, sign in with Google first, then create a password for the same account."
+                );
+
+                return;
+            }
 
 
             showError(
@@ -583,100 +1282,7 @@ loginForm?.addEventListener(
                 email
             );
 
-
-            return;
         }
-
-
-        /*--------------------------------------------------
-         * STEP 2 — MAKE SURE USER HAS A PROFILE
-         *--------------------------------------------------*/
-
-        try {
-
-            console.log(
-                "Checking user Firestore profile..."
-            );
-
-
-            await createProfileIfNeeded(
-                user,
-                user.displayName || ""
-            );
-
-
-            console.log(
-                "User profile check completed."
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "================================="
-            );
-
-            console.error(
-                "PROFILE CHECK FAILED"
-            );
-
-            console.error(
-                "Error code:",
-                error.code
-            );
-
-            console.error(
-                "Error message:",
-                error.message
-            );
-
-            console.error(
-                "Full error:",
-                error
-            );
-
-            console.error(
-                "================================="
-            );
-
-
-            /*
-             * The Firebase authentication itself
-             * succeeded, so don't report this as
-             * a wrong password.
-             */
-
-            submitBtn.disabled = false;
-
-            submitBtn.textContent =
-                "Enter the vault";
-
-
-            showError(
-                "login",
-                "You are authenticated, but we couldn't load your ToysGuru profile. Please try again."
-            );
-
-
-            return;
-        }
-
-
-        /*--------------------------------------------------
-         * STEP 3 — ENTER MARKETPLACE
-         *--------------------------------------------------*/
-
-        console.log(
-            "Authentication successful."
-        );
-
-        console.log(
-            "Redirecting to marketplace..."
-        );
-
-
-        window.location.href =
-            "marketplace.html";
 
     }
 );
@@ -687,7 +1293,9 @@ loginForm?.addEventListener(
  *==========================================================*/
 
 const googleLoginBtn =
-    document.getElementById("googleLoginBtn");
+    document.getElementById(
+        "googleLoginBtn"
+    );
 
 
 googleLoginBtn?.addEventListener(
@@ -697,22 +1305,14 @@ googleLoginBtn?.addEventListener(
         clearErrors();
 
 
-        googleLoginBtn.disabled = true;
+        googleLoginBtn.disabled =
+            true;
 
         googleLoginBtn.textContent =
-            "Connecting…";
+            "Checking…";
 
 
         try {
-
-            console.log(
-                "================================="
-            );
-
-            console.log(
-                "GOOGLE LOGIN STARTED"
-            );
-
 
             const provider =
                 new firebase.auth.GoogleAuthProvider();
@@ -729,13 +1329,10 @@ googleLoginBtn?.addEventListener(
 
 
             console.log(
-                "GOOGLE LOGIN SUCCESSFUL"
-            );
-
-            console.log(
-                "Google email:",
+                "Google login:",
                 user.email
             );
+
 
             console.log(
                 "Firebase UID:",
@@ -749,50 +1346,128 @@ googleLoginBtn?.addEventListener(
             );
 
 
-            console.log(
-                "Google user profile verified."
-            );
+            /*
+             * Check linked providers.
+             */
+
+            const hasPassword =
+                user.providerData.some(
+                    providerData =>
+                        providerData.providerId ===
+                        "password"
+                );
+
+
+            /*
+             * Already has both Google
+             * and Email/Password.
+             */
+
+            if (hasPassword) {
+
+                window.location.href =
+                    "marketplace.html";
+
+                return;
+            }
+
+
+            /*
+             * Google-only user.
+             *
+             * Stay on the auth page and ask
+             * them to create the password.
+             */
 
             console.log(
-                "Redirecting to marketplace..."
+                "Google-only account detected."
             );
 
 
-            window.location.href =
-                "marketplace.html";
+            sessionStorage.setItem(
+                "toysguruGooglePasswordSetup",
+                "true"
+            );
+
+
+            sessionStorage.setItem(
+                "toysguruGoogleEmail",
+                user.email || ""
+            );
+
+
+            googleLoginBtn.disabled =
+                false;
+
+            googleLoginBtn.textContent =
+                "Continue with Google";
+
+
+            showAccountCompletion(
+                user
+            );
 
 
         } catch (error) {
 
             console.error(
-                "================================="
-            );
-
-            console.error(
-                "GOOGLE LOGIN FAILED"
-            );
-
-            console.error(
-                "Error code:",
-                error.code
-            );
-
-            console.error(
-                "Error message:",
-                error.message
-            );
-
-            console.error(
-                "Full Firebase error:",
+                "Google login error:",
                 error
             );
 
-            console.error(
-                "================================="
-            );
+
+            /*
+             * This happens when the same email
+             * already has Email/Password.
+             */
+
+            if (
+                error.code ===
+                "auth/account-exists-with-different-credential"
+            ) {
+
+                pendingGoogleCredential =
+                    error.credential;
 
 
-            googleLoginBtn.disabled = false;
+                const email =
+                    error.email ||
+                    error.customData?.email ||
+                    "";
+
+
+                const emailInput =
+                    document.getElementById(
+                        "liEmail"
+                    );
+
+
+                if (emailInput) {
+
+                    emailInput.value =
+                        email;
+                }
+
+
+                showError(
+                    "login",
+                    "This email already has a password account. Enter your password above and click Enter the Vault to link Google to the same account."
+                );
+
+
+                googleLoginBtn.disabled =
+                    false;
+
+                googleLoginBtn.textContent =
+                    "Continue with Google";
+
+
+                return;
+            }
+
+
+            googleLoginBtn.disabled =
+                false;
 
             googleLoginBtn.textContent =
                 "Continue with Google";
@@ -802,6 +1477,7 @@ googleLoginBtn?.addEventListener(
                 "login",
                 friendlyError(error)
             );
+
         }
 
     }
@@ -809,7 +1485,7 @@ googleLoginBtn?.addEventListener(
 
 
 /*==========================================================*
- * FRIENDLY FIREBASE ERROR MESSAGES
+ * FRIENDLY ERROR MESSAGES
  *==========================================================*/
 
 function friendlyError(error) {
@@ -837,55 +1513,6 @@ function friendlyError(error) {
             );
 
 
-        case "auth/user-disabled":
-
-            return (
-                "This account has been disabled. Please contact us."
-            );
-
-
-        case "auth/user-not-found":
-
-            return (
-                "No account was found with this email."
-            );
-
-
-        case "auth/wrong-password":
-
-            return (
-                "Email or password is incorrect."
-            );
-
-
-        case "auth/invalid-credential":
-
-            return (
-                "Email or password is incorrect."
-            );
-
-
-        case "auth/too-many-requests":
-
-            return (
-                "Too many login attempts. Please try again later."
-            );
-
-
-        case "auth/network-request-failed":
-
-            return (
-                "Network error. Please check your internet connection and try again."
-            );
-
-
-        case "auth/operation-not-allowed":
-
-            return (
-                "Email/password sign-in is currently disabled."
-            );
-
-
         case "auth/popup-closed-by-user":
 
             return (
@@ -896,28 +1523,195 @@ function friendlyError(error) {
         case "auth/popup-blocked":
 
             return (
-                "Your browser blocked the Google sign-in window."
-            );
-
-
-        case "auth/unauthorized-domain":
-
-            return (
-                "This website is not authorized for Google sign-in."
+                "Your browser blocked the Google sign-in popup. Please allow popups for ToysGuru and try again."
             );
 
 
         case "auth/account-exists-with-different-credential":
 
             return (
-                "An account already exists with this email using a different sign-in method."
+                "This email already has another sign-in method. Sign in with that method to link your accounts."
+            );
+
+
+        case "auth/provider-already-linked":
+
+            return (
+                "This sign-in method is already linked to your account."
+            );
+
+
+        case "auth/credential-already-in-use":
+
+            return (
+                "That Google account is already linked to another ToysGuru account."
+            );
+
+
+        case "auth/user-disabled":
+
+            return (
+                "This account has been disabled. Please contact ToysGuru support."
+            );
+
+
+        case "auth/operation-not-allowed":
+
+            return (
+                "This sign-in method is not enabled in Firebase."
+            );
+
+
+        case "auth/user-not-found":
+
+        case "auth/wrong-password":
+
+        case "auth/invalid-credential":
+
+            return (
+                "Email or password is incorrect."
             );
 
 
         default:
 
             return (
-                "Unable to sign in right now. Please try again."
+                error.message ||
+                "Something went wrong. Please try again."
             );
     }
+}
+
+
+/*==========================================================*
+ * SHOW / HIDE PASSWORD
+ *==========================================================*/
+
+function setupPasswordToggle(
+    inputId,
+    checkboxId
+) {
+
+    const input =
+        document.getElementById(
+            inputId
+        );
+
+    const checkbox =
+        document.getElementById(
+            checkboxId
+        );
+
+
+    if (
+        !input ||
+        !checkbox
+    ) {
+
+        console.warn(
+            "Password toggle could not be initialized:",
+            inputId,
+            checkboxId
+        );
+
+        return;
+    }
+
+
+    /*
+     * Start hidden.
+     */
+
+    checkbox.checked =
+        false;
+
+    input.type =
+        "password";
+
+
+    /*
+     * Toggle visibility.
+     */
+
+    checkbox.addEventListener(
+        "change",
+        () => {
+
+            input.type =
+                checkbox.checked
+                    ? "text"
+                    : "password";
+
+        }
+    );
+}
+
+
+/*==========================================================*
+ * INITIALIZE PASSWORD TOGGLES
+ *==========================================================*/
+
+function initializePasswordToggles() {
+
+    /*
+     * Login
+     */
+
+    setupPasswordToggle(
+        "liPassword",
+        "liShowPassword"
+    );
+
+
+    /*
+     * Sign Up
+     */
+
+    setupPasswordToggle(
+        "suPassword",
+        "suShowPassword"
+    );
+
+
+    setupPasswordToggle(
+        "suConfirm",
+        "suShowConfirmPassword"
+    );
+
+
+    /*
+     * Google account completion
+     */
+
+    setupPasswordToggle(
+        "linkPassword",
+        "linkShowPassword"
+    );
+
+
+    setupPasswordToggle(
+        "linkConfirmPassword",
+        "linkShowConfirmPassword"
+    );
+}
+
+
+/*==========================================================*
+ * INITIALIZE SCRIPT
+ *==========================================================*/
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializePasswordToggles
+    );
+
+} else {
+
+    initializePasswordToggles();
+
 }

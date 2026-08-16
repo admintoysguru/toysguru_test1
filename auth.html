@@ -1,35 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enter the Vault | ToysGuru</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="auth.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>ToysGuru — Login</title>
+
+    <link
+        rel="stylesheet"
+        href="auth.css">
+
 </head>
+
+
 <body>
 
-<div class="gateWrap">
+    <!-- =====================================================
+         TOYSGURU LOGO
+    ====================================================== -->
 
-    <a class="gateLogo" href="index.html">Toys<em>Guru</em></a>
+    <a
+        class="gateLogo"
+        href="index.html">
+
+        Toys<em>Guru</em>
+
+    </a>
+
+
+    <!-- =====================================================
+         MAIN AUTH CARD
+    ====================================================== -->
 
     <div class="gateCard">
 
+
+        <!-- =================================================
+             LOGIN / SIGN UP TABS
+        ================================================== -->
+
         <div class="gateTabs">
-            <button class="gateTab" data-tab="login">Login</button>
-            <button class="gateTab" data-tab="signup">Sign Up</button>
+
+            <button
+                type="button"
+                class="gateTab"
+                data-tab="login">
+
+                Login
+
+            </button>
+
+
+            <button
+                type="button"
+                class="gateTab"
+                data-tab="signup">
+
+                Sign Up
+
+            </button>
+
         </div>
 
-        <!-- LOGIN -->
-        <form class="gateForm" data-form="login" id="loginForm">
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================== -->
+
+        <form
+            class="gateForm"
+            data-form="login"
+            id="loginForm">
 
             <div class="gateError"></div>
 
-            <div id="accountAssistant" class="accountAssistant hidden">
+
+            <!-- ACCOUNT ASSISTANT -->
+
+            <div
+                id="accountAssistant"
+                class="accountAssistant hidden">
 
                 <h3 id="assistantTitle"></h3>
 
@@ -43,31 +98,84 @@
 
             </div>
 
+
+            <!-- EMAIL -->
+
             <div class="gRow">
-                <label>Email</label>
+
+                <label for="liEmail">
+                    Email
+                </label>
+
                 <input
                     type="email"
                     id="liEmail"
                     placeholder="you@email.com"
-                    autocomplete="email">
+                    autocomplete="email"
+                    required>
+
             </div>
 
+
+            <!-- PASSWORD -->
+
             <div class="gRow">
-                <label>Password</label>
+
+                <label for="liPassword">
+                    Password
+                </label>
+
                 <input
                     type="password"
                     id="liPassword"
                     placeholder="••••••••"
-                    autocomplete="current-password">
+                    autocomplete="current-password"
+                    required>
+
+
+                <!-- SHOW PASSWORD -->
+
+                <label
+                    class="passwordToggle"
+                    for="liShowPassword">
+
+                    <input
+                        type="checkbox"
+                        id="liShowPassword"
+                        class="passwordToggleCheck">
+
+                    <span>
+                        Show password
+                    </span>
+
+                </label>
+
             </div>
 
-            <button type="submit" class="gateSubmit">
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="gateSubmit">
+
                 Enter the vault
+
             </button>
 
+
+            <!-- DIVIDER -->
+
             <div class="authDivider">
-                <span>OR</span>
+
+                <span>
+                    OR
+                </span>
+
             </div>
+
+
+            <!-- GOOGLE LOGIN -->
 
             <button
                 type="button"
@@ -78,70 +186,297 @@
                     src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                     alt="Google">
 
-                <span>Continue with Google</span>
+                <span>
+                    Continue with Google
+                </span>
 
             </button>
 
         </form>
 
-        <!-- SIGN UP -->
-        <form class="gateForm" data-form="signup" id="signupForm">
+
+        <!-- =================================================
+             SIGN UP FORM
+        ================================================== -->
+
+        <form
+            class="gateForm"
+            data-form="signup"
+            id="signupForm">
+
             <div class="gateError"></div>
 
+
+            <!-- FULL NAME -->
+
             <div class="gRow">
-                <label>Full name</label>
+
+                <label for="suName">
+                    Full name
+                </label>
+
                 <input
                     type="text"
                     id="suName"
                     placeholder="Your name"
-                    autocomplete="name">
+                    autocomplete="name"
+                    required>
+
             </div>
 
+
+            <!-- EMAIL -->
+
             <div class="gRow">
-                <label>Email</label>
+
+                <label for="suEmail">
+                    Email
+                </label>
+
                 <input
                     type="email"
                     id="suEmail"
                     placeholder="you@email.com"
-                    autocomplete="email">
+                    autocomplete="email"
+                    required>
+
             </div>
 
+
+            <!-- PASSWORD -->
+
             <div class="gRow">
-                <label>Password</label>
+
+                <label for="suPassword">
+                    Password
+                </label>
+
                 <input
                     type="password"
                     id="suPassword"
                     placeholder="At least 6 characters"
-                    autocomplete="new-password">
+                    autocomplete="new-password"
+                    required>
+
+
+                <!-- SHOW PASSWORD -->
+
+                <label
+                    class="passwordToggle"
+                    for="suShowPassword">
+
+                    <input
+                        type="checkbox"
+                        id="suShowPassword"
+                        class="passwordToggleCheck">
+
+                    <span>
+                        Show password
+                    </span>
+
+                </label>
+
             </div>
 
+
+            <!-- CONFIRM PASSWORD -->
+
             <div class="gRow">
-                <label>Confirm password</label>
+
+                <label for="suConfirm">
+                    Confirm password
+                </label>
+
                 <input
                     type="password"
                     id="suConfirm"
                     placeholder="••••••••"
-                    autocomplete="new-password">
+                    autocomplete="new-password"
+                    required>
+
+
+                <!-- SHOW CONFIRM PASSWORD -->
+
+                <label
+                    class="passwordToggle"
+                    for="suShowConfirmPassword">
+
+                    <input
+                        type="checkbox"
+                        id="suShowConfirmPassword"
+                        class="passwordToggleCheck">
+
+                    <span>
+                        Show password
+                    </span>
+
+                </label>
+
             </div>
 
-            <button type="submit" class="gateSubmit">
+
+            <!-- SIGN UP BUTTON -->
+
+            <button
+                type="submit"
+                class="gateSubmit">
+
                 Create account
+
             </button>
 
         </form>
 
+
+        <!-- =================================================
+             COMPLETE GOOGLE ACCOUNT
+             
+             This is hidden initially.
+             auth.js will show it only after a Google-only
+             user successfully signs in.
+        ================================================== -->
+
+        <section
+            id="accountCompletion"
+            class="accountCompletion hidden">
+
+
+            <div class="accountCompletionInner">
+
+
+                <h2>
+                    Complete Your Account
+                </h2>
+
+
+                <p>
+                    You signed in with Google. Create a password
+                    so you can also sign in using your email and
+                    password.
+                </p>
+
+
+                <!-- PASSWORD -->
+
+                <div class="gRow">
+
+                    <label for="linkPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="linkPassword"
+                        placeholder="At least 6 characters"
+                        autocomplete="new-password">
+
+
+                    <label
+                        class="passwordToggle"
+                        for="linkShowPassword">
+
+                        <input
+                            type="checkbox"
+                            id="linkShowPassword"
+                            class="passwordToggleCheck">
+
+                        <span>
+                            Show password
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="gRow">
+
+                    <label for="linkConfirmPassword">
+                        Confirm password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="linkConfirmPassword"
+                        placeholder="••••••••"
+                        autocomplete="new-password">
+
+
+                    <label
+                        class="passwordToggle"
+                        for="linkShowConfirmPassword">
+
+                        <input
+                            type="checkbox"
+                            id="linkShowConfirmPassword"
+                            class="passwordToggleCheck">
+
+                        <span>
+                            Show password
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <!-- ACCOUNT COMPLETION ERROR -->
+
+                <div
+                    id="accountCompletionError"
+                    class="gateError">
+                </div>
+
+
+                <!-- CREATE PASSWORD -->
+
+                <button
+                    type="button"
+                    id="createLinkedPasswordBtn"
+                    class="gateSubmit">
+
+                    Create Password
+
+                </button>
+
+            </div>
+
+        </section>
+
+
     </div>
 
-    <a class="gateBack" href="index.html">← Back to ToysGuru</a>
 
-</div>
+    <!-- =====================================================
+         BACK TO TOYSGURU
+    ====================================================== -->
 
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+    <a
+        class="gateBack"
+        href="index.html">
 
-<script src="firebaseClient.js"></script>
-<script src="auth.js"></script>
+        ← Back to ToysGuru
+
+    </a>
+
+
+    <!-- =====================================================
+         FIREBASE
+    ====================================================== -->
+
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+
+    <script src="firebaseClient.js"></script>
+
+    <script src="auth.js"></script>
+
 
 </body>
+
 </html>
