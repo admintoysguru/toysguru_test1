@@ -68,26 +68,43 @@ DATA — real queries against the "listings" collection
 ==========================================================*/
 
 async function fetchApprovedListings() {
-
     try {
+        const snap = await db
+            .collection("listings")
+            .where("status", "==", "approved")
+            .get();
 
-        const response = await fetch("https://toysguru-backend.tenurly.workers.dev/api/listings");
+        const listings = snap.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
 
-        const data = await response.json();
+        listings.sort((a, b) => {
 
-        if (!data.success) {
-            return [];
-        }
+            const aTime =
+                a.createdAt?.toMillis
+                    ? a.createdAt.toMillis()
+                    : 0;
 
-        return data.listings;
+            const bTime =
+                b.createdAt?.toMillis
+                    ? b.createdAt.toMillis()
+                    : 0;
+
+            return bTime - aTime;
+        });
+
+        return listings;
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Failed to load approved listings:",
+            error
+        );
+
         return [];
-
     }
-
 }
 
 /*==========================================================
