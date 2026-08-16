@@ -67,17 +67,27 @@ function carIcon(){
 DATA — real queries against the "listings" collection
 ==========================================================*/
 
-async function fetchApprovedListings(){
+async function fetchApprovedListings() {
+
     try {
-        const snap = await db.collection("listings")
-            .where("status", "==", "approved")
-            .orderBy("createdAt", "desc")
-            .get();
-        return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        const response = await fetch("https://toysguru-backend.tenurly.workers.dev/api/listings");
+
+        const data = await response.json();
+
+        if (!data.success) {
+            return [];
+        }
+
+        return data.listings;
+
     } catch (error) {
+
         console.error(error);
         return [];
+
     }
+
 }
 
 /*==========================================================

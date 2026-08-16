@@ -1,0 +1,13 @@
+node_modules/
+
+.env
+.env.local
+
+# Firebase Admin Credentials
+serviceAccountKey.json
+firebase-admin.json
+firebase-adminsdk*.json
+*.pem
+*.key
+# Cloudflare Wrangler local files
+.wrangler/
