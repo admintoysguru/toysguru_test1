@@ -1,164 +1,997 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marketplace | ToysGuru</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="marketplace.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Marketplace | ToysGuru</title>
+
+
+    <!-- =====================================================
+         FONTS
+    ====================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+         MARKETPLACE CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="marketplace.css">
+
 </head>
+
+
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-    <a class="navLogo" href="index.html">Toys<em>Guru</em></a>
 
-    <div class="navSearch">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="marketSearch" type="text" placeholder="Search the vault — model, series, brand...">
-    </div>
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
 
-    <ul class="navLinks">
-        <li><a href="#catalog" class="active">Explore</a></li>
-        <li><a href="#rostrum">Auctions</a></li>
-        <li><a href="#appraisal">Sell</a></li>
-    </ul>
+    <nav class="nav">
 
-    <div class="navAccount">
-        <span>Welcome back, <strong id="navUserName">Collector</strong></span>
-        <button id="logoutBtn" class="logoutBtn">Logout</button>
-    </div>
-</nav>
+        <a
+            class="navLogo"
+            href="index.html">
 
-<!-- VAULT ENTRANCE -->
-<section class="entrance">
-    <div class="entranceEyebrow">THE VAULT · OPEN</div>
-    <h1>Welcome back to the <em>vault</em></h1>
-    <p>Every piece here has been verified before it was allowed inside. Browse by wing, or search for something specific.</p>
+            Toys<em>Guru</em>
 
-    <div class="rooms">
-        <button class="roomTab active" data-room="All">All Wings</button>
-        <button class="roomTab" data-room="Hot Wheels">Hot Wheels Wing</button>
-        <button class="roomTab" data-room="Mini GT">Mini GT Wing</button>
-        <button class="roomTab" data-room="Vintage">Vintage Wing</button>
-    </div>
-</section>
+        </a>
 
-<!-- CURRENTLY IN THE VAULT -->
-<section class="section" id="catalog">
-    <div class="sectionHead">
-        <div>
-            <h2>Currently in the vault</h2>
-            <p>Newest arrivals, chosen for condition.</p>
+
+        <!-- SEARCH -->
+
+        <div class="navSearch">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke-width="2"
+                aria-hidden="true">
+
+                <circle
+                    cx="11"
+                    cy="11"
+                    r="7">
+                </circle>
+
+                <path
+                    d="M21 21l-4.3-4.3">
+                </path>
+
+            </svg>
+
+
+            <input
+                id="marketSearch"
+                type="text"
+                placeholder="Search the vault — model, series, brand..."
+                autocomplete="off">
+
         </div>
-        <a href="#catalog" class="sectionLink">View full catalog →</a>
-    </div>
 
-    <div class="featuredGrid" id="featuredGrid"></div>
-    <br>
-    <div class="lotGrid" id="catalogGrid"></div>
-</section>
 
-<!-- THE ROSTRUM -->
-<section class="section rostrumSection" id="rostrum">
-    <div class="sectionHead">
-        <div>
-            <h2>The Rostrum</h2>
-            <p>Live bidding on rare and exclusive pieces.</p>
+        <!-- NAV LINKS -->
+
+        <ul class="navLinks">
+
+            <li>
+                <a
+                    href="#catalog"
+                    class="active">
+
+                    Explore
+
+                </a>
+            </li>
+
+
+            <li>
+                <a href="#appraisal">
+
+                    Sell
+
+                </a>
+            </li>
+
+
+            <li>
+                <button
+                    id="myListingsBtn"
+                    class="navTextBtn"
+                    type="button">
+
+                    My Listings
+
+                </button>
+            </li>
+
+        </ul>
+
+
+        <!-- CART + ACCOUNT -->
+
+        <div class="navAccount">
+
+            <button
+                id="cartBtn"
+                class="cartBtn"
+                type="button"
+                aria-label="Open cart">
+
+                <span class="cartIcon">🛒</span>
+
+                <span class="cartLabel">
+                    Cart
+                </span>
+
+                <span
+                    id="cartCount"
+                    class="cartCount">
+
+                    0
+
+                </span>
+
+            </button>
+
+
+            <span class="accountWelcome">
+                Welcome back,
+                <strong id="navUserName">
+                    Collector
+                </strong>
+            </span>
+
+
+            <button
+                id="logoutBtn"
+                class="logoutBtn"
+                type="button">
+
+                Logout
+
+            </button>
+
         </div>
-        <a href="#rostrum" class="sectionLink">All auctions →</a>
-    </div>
-    <div class="rostrumGrid" id="rostrumGrid"></div>
-</section>
 
-<!-- SUBMIT FOR APPRAISAL -->
-<section class="appraisalSection" id="appraisal">
-    <div class="appraisalIntro">
-        <div class="entranceEyebrow">FOR SELLERS</div>
-        <h2>Submit a piece for appraisal</h2>
-        <p>We review every submission before it enters the vault — that's what keeps buyers confident and prices fair. Tell us about the piece and we'll get back to you within 48 hours.</p>
+    </nav>
 
-        <div class="appraisalFeats">
-            <div class="aFeat">
-                <div class="aFeatIcon">✓</div>
-                <div><strong>Verified before listing</strong><span>Every submission is checked for authenticity and condition before it goes live.</span></div>
-            </div>
-            <div class="aFeat">
-                <div class="aFeatIcon">₹</div>
-                <div><strong>Paid within 24 hours</strong><span>Once a sale is confirmed, payout reaches you the next day — no delays.</span></div>
-            </div>
-            <div class="aFeat">
-                <div class="aFeatIcon">◇</div>
-                <div><strong>Specialist packaging</strong><span>Every shipment is packed the way a collector would want their own piece handled.</span></div>
-            </div>
+
+    <!-- =====================================================
+         VAULT ENTRANCE
+    ====================================================== -->
+
+    <section class="entrance">
+
+        <div class="entranceEyebrow">
+            THE VAULT · OPEN
         </div>
-    </div>
 
-    <form class="appraisalForm reveal" id="appraisalForm">
-        <div class="formTitle">Piece details</div>
-        <div class="gateError" id="appraisalStatus"></div>
-        <div class="frow">
-            <label>Model name</label>
-            <input type="text" id="aName" placeholder="e.g. Hot Wheels Treasure Hunt Camaro">
+
+        <h1>
+            Welcome back to the
+            <em>vault</em>
+        </h1>
+
+
+        <p>
+            Every piece here has been verified before it was
+            allowed inside. Browse approved collector listings
+            or submit your own piece for review.
+        </p>
+
+
+        <!-- COLLECTION FILTERS -->
+
+        <div class="rooms">
+
+            <button
+                class="roomTab active"
+                data-room="All"
+                type="button">
+
+                All Listings
+
+            </button>
+
+
+            <button
+                class="roomTab"
+                data-room="Hot Wheels"
+                type="button">
+
+                Hot Wheels
+
+            </button>
+
+
+            <button
+                class="roomTab"
+                data-room="Mini GT"
+                type="button">
+
+                Mini GT
+
+            </button>
+
+
+            <button
+                class="roomTab"
+                data-room="Vintage"
+                type="button">
+
+                Vintage
+
+            </button>
+
         </div>
-        <div class="frow f2col">
+
+    </section>
+
+
+    <!-- =====================================================
+         MARKETPLACE
+
+         ONLY REAL APPROVED LISTINGS ARE SHOWN HERE.
+         If Firestore has zero approved listings,
+         this section remains empty except for the
+         empty-state message inserted by marketplace.js.
+    ====================================================== -->
+
+    <section
+        class="section"
+        id="catalog">
+
+
+        <div class="sectionHead">
+
             <div>
-                <label>Brand</label>
-                <select id="aBrand">
-                    <option value="">Select brand</option>
-                    <option>Hot Wheels</option>
-                    <option>Mini GT</option>
-                    <option>Kaido House</option>
-                    <option>Tarmac Works</option>
-                    <option>Matchbox</option>
-                    <option>Other</option>
-                </select>
-            </div>
-            <div>
-                <label>Scale</label>
-                <select id="aScale">
-                    <option>1:64</option>
-                    <option>1:43</option>
-                    <option>1:32</option>
-                    <option>1:18</option>
-                </select>
-            </div>
-        </div>
-        <div class="frow f2col">
-            <div>
-                <label>Asking price (₹)</label>
-                <input type="number" id="aPrice" placeholder="e.g. 899">
-            </div>
-            <div>
-                <label>Condition</label>
-                <select id="aCondition">
-                    <option>Mint on Card</option>
-                    <option value="Near Mint">Near Mint</option>
-                    <option>Loose</option>
-                </select>
-            </div>
-        </div>
-        <button type="submit" class="submitBtn">Submit for appraisal →</button>
-    </form>
-</section>
 
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footerTop">
-        <span class="footerBrand">Toys<em>Guru</em></span>
-        <span class="footerMeta">India's dedicated marketplace for die-cast and premium collectibles.</span>
+                <h2>
+                    Currently in the vault
+                </h2>
+
+                <p>
+                    Real collector listings approved by ToysGuru.
+                </p>
+
+            </div>
+
+
+            <a
+                href="#catalog"
+                class="sectionLink">
+
+                View full catalog →
+
+            </a>
+
+        </div>
+
+
+        <!-- APPROVED LISTINGS -->
+
+        <div
+            class="lotGrid"
+            id="catalogGrid">
+        </div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            id="marketplaceEmpty"
+            class="marketplaceEmpty hidden">
+
+            <div class="emptyVaultMark">
+                TG
+            </div>
+
+            <h3>
+                The vault is waiting.
+            </h3>
+
+            <p>
+                No approved collector listings are available yet.
+                Submit a piece and, once approved, it will appear here.
+            </p>
+
+            <a
+                href="#appraisal"
+                class="emptyVaultLink">
+
+                Submit a piece →
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         MY LISTINGS — SEPARATE ACTIVITY PANEL
+    ====================================================== -->
+
+    <div
+        class="overlayPanel hidden"
+        id="myListingsPanel"
+        aria-hidden="true">
+
+        <div
+            class="overlayBackdrop"
+            data-close-panel="myListings">
+        </div>
+
+        <section
+            class="activityPanel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="myListingsTitle">
+
+            <button
+                class="panelCloseBtn"
+                id="myListingsClose"
+                type="button"
+                aria-label="Close My Listings">
+
+                ×
+
+            </button>
+
+
+            <div class="panelEyebrow">
+                YOUR COLLECTION ACTIVITY
+            </div>
+
+
+            <h2 id="myListingsTitle">
+                My Listings
+            </h2>
+
+
+            <p class="panelSubtitle">
+                Track every piece you've submitted to ToysGuru.
+            </p>
+
+
+            <!-- SELLER STATS -->
+
+            <div
+                class="sellerStats"
+                id="sellerStats">
+
+                <div class="sellerStatCard">
+
+                    <span class="sellerStatLabel">
+                        Total
+                    </span>
+
+                    <strong id="sellerTotalCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="sellerStatCard">
+
+                    <span class="sellerStatLabel">
+                        Pending
+                    </span>
+
+                    <strong id="sellerPendingCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="sellerStatCard">
+
+                    <span class="sellerStatLabel">
+                        Approved
+                    </span>
+
+                    <strong id="sellerApprovedCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="sellerStatCard">
+
+                    <span class="sellerStatLabel">
+                        Rejected
+                    </span>
+
+                    <strong id="sellerRejectedCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- SELLER LIST -->
+
+            <div
+                class="sellerListings"
+                id="sellerListings">
+
+                <div
+                    class="sellerEmptyState"
+                    id="sellerEmptyState">
+
+                    <h3>
+                        No submissions yet.
+                    </h3>
+
+                    <p>
+                        Your submitted cars will appear here with their
+                        approval status.
+                    </p>
+
+                    <a
+                        href="#appraisal"
+                        class="emptyVaultLink"
+                        data-close-after-action="myListings">
+
+                        Submit your first car →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </div>
-    <span class="footerMeta">© 2026 ToysGuru — Bengaluru</span>
-</footer>
 
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
-<script src="firebaseClient.js"></script>
-<script src="marketplace.js"></script>
+
+    <!-- =====================================================
+         CART — SEPARATE SHOPPING PANEL
+    ====================================================== -->
+
+    <div
+        class="overlayPanel hidden"
+        id="cartPanel"
+        aria-hidden="true">
+
+        <div
+            class="overlayBackdrop"
+            data-close-panel="cart">
+        </div>
+
+        <aside
+            class="cartPanel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cartTitle">
+
+            <button
+                class="panelCloseBtn"
+                id="cartClose"
+                type="button"
+                aria-label="Close cart">
+
+                ×
+
+            </button>
+
+
+            <div class="panelEyebrow">
+                YOUR CART
+            </div>
+
+
+            <h2 id="cartTitle">
+                Shopping Cart
+            </h2>
+
+
+            <div
+                class="cartItems"
+                id="cartItems">
+
+                <div class="cartEmptyState">
+                    Your cart is empty.
+                </div>
+
+            </div>
+
+
+            <div class="cartSummary">
+
+                <div class="cartSummaryRow">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="cartSubtotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <button
+                    class="cartCheckoutBtn"
+                    id="cartCheckoutBtn"
+                    type="button"
+                    disabled>
+
+                    Checkout coming soon →
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+
+    <!-- =====================================================
+         SUBMIT A CAR
+    ====================================================== -->
+
+    <section
+        class="appraisalSection"
+        id="appraisal">
+
+
+        <!-- SELLER INTRO -->
+
+        <div class="appraisalIntro">
+
+            <div class="entranceEyebrow">
+                FOR SELLERS
+            </div>
+
+
+            <h2>
+                List your collector car
+            </h2>
+
+
+            <p>
+                Submit one real front photo and the details of your
+                piece. Every listing is reviewed by ToysGuru before
+                it appears in the marketplace.
+            </p>
+
+
+            <div class="appraisalFeats">
+
+
+                <div class="aFeat">
+
+                    <div class="aFeatIcon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Verified before listing
+                        </strong>
+
+                        <span>
+                            Every submission is reviewed before it
+                            becomes visible in the marketplace.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="aFeat">
+
+                    <div class="aFeatIcon">
+                        ◇
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            One real photo
+                        </strong>
+
+                        <span>
+                            Upload one clear front photo of the actual
+                            car or package you're submitting.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="aFeat">
+
+                    <div class="aFeatIcon">
+                        →
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Track your submission
+                        </strong>
+
+                        <span>
+                            Follow your listing from pending review
+                            through approval.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SELLER SUBMISSION FORM
+        ================================================== -->
+
+        <form
+            class="appraisalForm reveal"
+            id="appraisalForm">
+
+
+            <div class="formTitle">
+                Submit your piece
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div
+                class="gateError"
+                id="appraisalStatus">
+            </div>
+
+
+            <!-- MODEL -->
+
+            <div class="frow">
+
+                <label for="aName">
+                    Model name
+                </label>
+
+                <input
+                    type="text"
+                    id="aName"
+                    placeholder="e.g. Porsche 911 GT3"
+                    autocomplete="off">
+
+            </div>
+
+
+            <!-- BRAND + SCALE -->
+
+            <div class="frow f2col">
+
+
+                <div>
+
+                    <label for="aBrand">
+                        Brand
+                    </label>
+
+
+                    <select id="aBrand">
+
+                        <option value="">
+                            Select brand
+                        </option>
+
+                        <option>
+                            Hot Wheels
+                        </option>
+
+                        <option>
+                            Mini GT
+                        </option>
+
+                        <option>
+                            Kaido House
+                        </option>
+
+                        <option>
+                            Tarmac Works
+                        </option>
+
+                        <option>
+                            Matchbox
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="aScale">
+                        Scale
+                    </label>
+
+
+                    <select id="aScale">
+
+                        <option>
+                            1:64
+                        </option>
+
+                        <option>
+                            1:43
+                        </option>
+
+                        <option>
+                            1:32
+                        </option>
+
+                        <option>
+                            1:18
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRICE + CONDITION -->
+
+            <div class="frow f2col">
+
+
+                <div>
+
+                    <label for="aPrice">
+                        Asking price (₹)
+                    </label>
+
+
+                    <input
+                        type="number"
+                        id="aPrice"
+                        min="1"
+                        step="1"
+                        placeholder="e.g. 899"
+                        inputmode="numeric">
+
+                </div>
+
+
+                <div>
+
+                    <label for="aCondition">
+                        Condition
+                    </label>
+
+
+                    <select id="aCondition">
+
+                        <option>
+                            MOC
+                        </option>
+
+                        <option value="Near Mint">
+                            Near Mint
+                        </option>
+
+                        <option value="Loose">
+                            Loose
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="frow">
+
+                <label for="aDescription">
+                    Description
+                </label>
+
+
+                <textarea
+                    id="aDescription"
+                    rows="5"
+                    placeholder="Tell buyers about the car, packaging, rarity, or anything important about its condition."
+                    autocomplete="off">
+                </textarea>
+
+            </div>
+
+
+            <!-- =================================================
+                 REAL FRONT PHOTO
+            ================================================== -->
+
+            <div class="frow imageUploadRow">
+
+
+                <label for="aImage">
+                    Front photo
+                </label>
+
+
+                <p class="fieldHint">
+                    Upload one clear photo of the actual car
+                    or package. Maximum 1 image.
+                </p>
+
+
+                <label
+                    class="imageUploadBox"
+                    for="aImage">
+
+
+                    <input
+                        type="file"
+                        id="aImage"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden>
+
+
+                    <div
+                        class="imageUploadContent"
+                        id="imageUploadContent">
+
+                        <div class="uploadIcon">
+                            +
+                        </div>
+
+                        <strong>
+                            Add front photo
+                        </strong>
+
+                        <span>
+                            JPG, PNG or WebP
+                        </span>
+
+                    </div>
+
+
+                    <!-- IMAGE PREVIEW -->
+
+                    <div
+                        class="imagePreviewWrap hidden"
+                        id="imagePreviewWrap">
+
+                        <img
+                            id="imagePreview"
+                            src=""
+                            alt="Car preview">
+
+                        <span class="imagePreviewHint">
+                            Click to replace
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <div
+                    class="imageUploadError"
+                    id="imageUploadError">
+                </div>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submitBtn">
+
+                Submit for approval →
+
+            </button>
+
+
+            <!-- NOTICE -->
+
+            <p class="submissionNotice">
+                Your listing will remain private until ToysGuru
+                approves it.
+            </p>
+
+        </form>
+
+    </section>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footerTop">
+
+            <span class="footerBrand">
+                Toys<em>Guru</em>
+            </span>
+
+
+            <span class="footerMeta">
+                India's dedicated marketplace for die-cast
+                and premium collectibles.
+            </span>
+
+        </div>
+
+
+        <span class="footerMeta">
+            © 2026 ToysGuru — Bengaluru
+        </span>
+
+    </footer>
+
+
+    <!-- =====================================================
+         FIREBASE
+    ====================================================== -->
+
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-app-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-auth-compat.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore-compat.js"></script>
+
+    <script src="firebaseClient.js"></script>
+
+    <script src="marketplace.js"></script>
+
+
 </body>
+
 </html>

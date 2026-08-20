@@ -1,736 +1,2551 @@
 /*==========================================================
   TOYSGURU — THE MARKETPLACE
-  Same vault DNA as the landing page. Signature: every listing
-  is treated as a museum/auction lot — lot number, condition
-  grading scale, brass vitrine corners on hover — not a generic
-  product card with a paint job.
+  Collector Marketplace + Seller Experience
 ==========================================================*/
 
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-
-:root{
-    --bg:#070605;
-    --bg-soft:#0b0a08;
-    --bg-card:#100e0b;
-    --bg-raised:#141210;
-
-    --text:#F2EBDD;
-    --text-soft:#9C948A;
-    --text-faint:#6B6459;
-
-    --brass:#B8925A;
-    --brass-light:#E8CB9C;
-    --brass-dim:#6E5837;
-
-    --oxblood:#7A3226;
-    --oxblood-light:#B9573F;
-
-    --glass-border:rgba(232,201,156,.14);
-    --ease:.4s cubic-bezier(.22,.61,.36,1);
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html{scroll-behavior:smooth;}
-html,body{width:100%;min-height:100%;overflow-x:hidden;}
-
-body{
-    background:radial-gradient(circle at top,#0e0c09 0%,#0a0908 30%,#070605 65%,#050403 100%);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    -webkit-font-smoothing:antialiased;
-}
-
-a{color:inherit;text-decoration:none;}
-button{cursor:pointer;font-family:inherit;}
-::selection{background:var(--brass);color:#0a0908;}
-
-::-webkit-scrollbar{width:9px;}
-::-webkit-scrollbar-track{background:var(--bg);}
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(180deg,var(--brass-dim),var(--brass),var(--brass-dim));
-    border-radius:100px;border:2px solid var(--bg);
-}
 
 /*==========================================================
-NAV
+  ROOT
 ==========================================================*/
 
-.nav{
-    position:sticky;
-    top:0;
-    z-index:200;
-    display:flex;
-    align-items:center;
-    gap:32px;
-    height:72px;
-    padding:0 48px;
-    background:rgba(7,6,5,.92);
-    border-bottom:1px solid var(--glass-border);
-    backdrop-filter:blur(16px);
+:root {
+    --bg: #070605;
+    --bg-soft: #0b0a08;
+    --bg-card: #100e0b;
+    --bg-raised: #141210;
+
+    --text: #F2EBDD;
+    --text-soft: #9C948A;
+    --text-faint: #6B6459;
+
+    --brass: #B8925A;
+    --brass-light: #E8CB9C;
+    --brass-dim: #6E5837;
+
+    --oxblood: #7A3226;
+    --oxblood-light: #B9573F;
+
+    --green: #75B798;
+    --green-bright: #93D4B0;
+
+    --glass-border: rgba(232, 201, 156, .14);
+
+    --ease: .4s cubic-bezier(.22, .61, .36, 1);
 }
 
-.navLogo{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:16px;
-    letter-spacing:2px;
-    color:var(--text);
-    white-space:nowrap;
-}
-.navLogo em{
-    font-style:normal;
-    color:var(--brass-light);
+
+/*==========================================================
+  BASE
+==========================================================*/
+
+html {
+    scroll-behavior: smooth;
 }
 
-.navSearch{
-    flex:1;
-    max-width:420px;
-    position:relative;
-}
-.navSearch input{
-    width:100%;
-    background:rgba(255,255,255,.03);
-    border:1px solid var(--glass-border);
-    color:var(--text);
-    padding:10px 16px 10px 38px;
-    font-size:13px;
-    letter-spacing:.3px;
-    border-radius:2px;
-    outline:none;
-    transition:border-color .3s ease;
-}
-.navSearch input::placeholder{color:var(--text-faint);}
-.navSearch input:focus{border-color:var(--brass);}
-.navSearch svg{
-    position:absolute;
-    left:12px;top:50%;
-    transform:translateY(-50%);
-    width:14px;height:14px;
-    stroke:var(--text-faint);
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
 }
 
-.navLinks{
-    display:flex;
-    gap:28px;
-    list-style:none;
-    margin-left:auto;
+body {
+    background:
+        radial-gradient(
+            circle at top,
+            #0e0c09 0%,
+            #0a0908 30%,
+            #070605 65%,
+            #050403 100%
+        );
+
+    color: var(--text);
+
+    font-family: 'Inter', sans-serif;
+
+    -webkit-font-smoothing: antialiased;
 }
-.navLinks a{
-    font-size:12px;
-    font-weight:500;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--text-soft);
-    transition:color .25s ease;
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+::selection {
+    background: var(--brass);
+    color: #0a0908;
+}
+
+
+/*==========================================================
+  SCROLLBAR
+==========================================================*/
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(
+            180deg,
+            var(--brass-dim),
+            var(--brass),
+            var(--brass-dim)
+        );
+
+    border-radius: 100px;
+
+    border: 2px solid var(--bg);
+}
+
+
+/*==========================================================
+  NAVIGATION
+==========================================================*/
+
+.nav {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 200;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 32px;
+
+    height: 72px;
+
+    padding: 0 48px;
+
+    background: rgba(7, 6, 5, .92);
+
+    border-bottom: 1px solid var(--glass-border);
+
+    backdrop-filter: blur(16px);
+}
+
+.navLogo {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 16px;
+
+    letter-spacing: 2px;
+
+    color: var(--text);
+
+    white-space: nowrap;
+}
+
+.navLogo em {
+    font-style: normal;
+
+    color: var(--brass-light);
+}
+
+
+/*==========================================================
+  NAV SEARCH
+==========================================================*/
+
+.navSearch {
+    flex: 1;
+
+    max-width: 420px;
+
+    position: relative;
+}
+
+.navSearch input {
+    width: 100%;
+
+    background: rgba(255, 255, 255, .03);
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--text);
+
+    padding: 10px 16px 10px 38px;
+
+    font-size: 13px;
+
+    letter-spacing: .3px;
+
+    border-radius: 2px;
+
+    outline: none;
+
+    transition: border-color .3s ease;
+}
+
+.navSearch input::placeholder {
+    color: var(--text-faint);
+}
+
+.navSearch input:focus {
+    border-color: var(--brass);
+}
+
+.navSearch svg {
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 14px;
+
+    height: 14px;
+
+    stroke: var(--text-faint);
+}
+
+
+/*==========================================================
+  NAV LINKS
+==========================================================*/
+
+.navLinks {
+    display: flex;
+
+    gap: 28px;
+
+    list-style: none;
+
+    margin-left: auto;
+}
+
+.navLinks a {
+    font-size: 12px;
+
+    font-weight: 500;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: var(--text-soft);
+
+    transition: color .25s ease;
+}
+
 .navLinks a:hover,
-.navLinks a.active{color:var(--brass-light);}
+.navLinks a.active {
+    color: var(--brass-light);
+}
 
-.navAccount{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding-left:20px;
-    border-left:1px solid var(--glass-border);
-}
-.navAccount span{
-    font-size:12px;
-    color:var(--text-soft);
-}
-.navAccount strong{color:var(--text);font-weight:600;}
 
-@media(max-width:1000px){
-    .navLinks{display:none;}
-    .nav{padding:0 24px;gap:16px;}
+/*==========================================================
+  NAV ACCOUNT
+==========================================================*/
+
+.navAccount {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding-left: 20px;
+
+    border-left: 1px solid var(--glass-border);
 }
-@media(max-width:640px){
-    .navSearch{display:none;}
+
+.navAccount span {
+    font-size: 12px;
+
+    color: var(--text-soft);
+}
+
+.navAccount strong {
+    color: var(--text);
+
+    font-weight: 600;
+}
+
+.logoutBtn {
+    background: none;
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--text-soft);
+
+    font-size: 10.5px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    padding: 7px 14px;
+
+    transition:
+        border-color .25s ease,
+        color .25s ease,
+        background .25s ease;
+}
+
+.logoutBtn:hover {
+    border-color: var(--brass);
+
+    color: var(--brass-light);
+
+    background: rgba(184, 146, 90, .05);
+}
+
+
+/*==========================================================
+  NAV RESPONSIVE
+==========================================================*/
+
+@media (max-width: 1000px) {
+
+    .navLinks {
+        display: none;
+    }
+
+    .nav {
+        padding: 0 24px;
+
+        gap: 16px;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .navSearch {
+        display: none;
+    }
+
+    .navAccount {
+        margin-left: auto;
+
+        padding-left: 0;
+
+        border-left: none;
+    }
+
+    .navAccount span {
+        display: none;
+    }
+}
+
+
+/*==========================================================
+  VAULT ENTRANCE
+==========================================================*/
+
+.entrance {
+    position: relative;
+
+    padding: 56px 48px 44px;
+
+    border-bottom: 1px solid var(--glass-border);
+
+    overflow: hidden;
+}
+
+.entrance::before {
+    content: "";
+
+    position: absolute;
+
+    top: -40%;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 900px;
+
+    height: 300px;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(184, 146, 90, .1),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+.entranceEyebrow {
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    color: var(--brass);
+
+    margin-bottom: 14px;
+}
+
+.entrance h1 {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 2.4rem;
+
+    letter-spacing: 1px;
+
+    color: var(--text);
+
+    margin-bottom: 10px;
+}
+
+.entrance h1 em {
+    font-style: normal;
+
+    color: var(--brass-light);
+}
+
+.entrance p {
+    color: var(--text-soft);
+
+    font-size: 14.5px;
+
+    max-width: 600px;
+
+    line-height: 1.7;
+}
+
+
+/*==========================================================
+  CATEGORY ROOMS
+==========================================================*/
+
+.rooms {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 32px;
+}
+
+.roomTab {
+    background: rgba(255, 255, 255, .02);
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--text-soft);
+
+    padding: 9px 20px;
+
+    font-size: 11.5px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
+
+    border-radius: 2px;
+
+    transition: all .3s ease;
+}
+
+.roomTab:hover {
+    border-color: var(--brass);
+
+    color: var(--text);
+}
+
+.roomTab.active {
+    background: var(--brass);
+
+    border-color: var(--brass);
+
+    color: #100e0b;
+}
+
+@media (max-width: 640px) {
+
+    .entrance {
+        padding: 40px 24px 32px;
+    }
+
+    .entrance h1 {
+        font-size: 1.8rem;
+    }
+}
+
+
+/*==========================================================
+  SECTION SHELL
+==========================================================*/
+
+.section {
+    padding: 64px 48px;
+}
+
+.sectionHead {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    margin-bottom: 34px;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.sectionHead h2 {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 1.7rem;
+
+    letter-spacing: 1px;
+
+    color: var(--text);
+}
+
+.sectionHead p {
+    color: var(--text-faint);
+
+    font-size: 13px;
+
+    margin-top: 6px;
+}
+
+.sectionLink {
+    font-size: 11.5px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: var(--brass);
+
+    border-bottom: 1px solid transparent;
+
+    transition: border-color .3s ease;
+}
+
+.sectionLink:hover {
+    border-color: var(--brass);
+}
+
+@media (max-width: 640px) {
+
+    .section {
+        padding: 48px 24px;
+    }
+}
+
+
+/*==========================================================
+  FEATURED LISTING AREA
+==========================================================*/
+
+.featuredGrid {
+    display: grid;
+
+    grid-template-columns: 1.3fr 1fr;
+
+    gap: 24px;
+
+    min-height: 0;
+}
+
+.featuredSide {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+@media (max-width: 1000px) {
+
+    .featuredGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*==========================================================
+  LOT CARD
+==========================================================*/
+
+.lot {
+    position: relative;
+
+    background:
+        linear-gradient(
+            150deg,
+            rgba(255, 255, 255, .03),
+            rgba(255, 255, 255, .008)
+        );
+
+    border: 1px solid var(--glass-border);
+
+    border-radius: 4px;
+
+    overflow: hidden;
+
+    transition:
+        border-color .35s ease,
+        transform .35s ease,
+        box-shadow .35s ease;
+
+    cursor: pointer;
+}
+
+.lot:hover {
+    border-color: rgba(184, 146, 90, .4);
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, .45);
+}
+
+
+/*==========================================================
+  VITRINE CORNER BRACKETS
+==========================================================*/
+
+.lot::before,
+.lot::after,
+.lotFrame::before,
+.lotFrame::after {
+    content: "";
+
+    position: absolute;
+
+    width: 16px;
+
+    height: 16px;
+
+    border: 1.5px solid var(--brass-light);
+
+    opacity: 0;
+
+    transition: opacity .35s ease;
+
+    z-index: 3;
+}
+
+.lot::before {
+    top: 8px;
+
+    left: 8px;
+
+    border-right: none;
+
+    border-bottom: none;
+}
+
+.lot::after {
+    top: 8px;
+
+    right: 8px;
+
+    border-left: none;
+
+    border-bottom: none;
+}
+
+.lotFrame::before {
+    bottom: 8px;
+
+    left: 8px;
+
+    border-right: none;
+
+    border-top: none;
+}
+
+.lotFrame::after {
+    bottom: 8px;
+
+    right: 8px;
+
+    border-left: none;
+
+    border-top: none;
+}
+
+.lot:hover::before,
+.lot:hover::after,
+.lot:hover .lotFrame::before,
+.lot:hover .lotFrame::after {
+    opacity: .9;
+}
+
+
+/*==========================================================
+  LISTING IMAGE
+==========================================================*/
+
+.lotFrame {
+    position: relative;
+
+    aspect-ratio: 4 / 3;
+
+    background: var(--bg-card);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+/* REAL USER PHOTO */
+
+.lotFrame img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform .45s ease,
+        filter .45s ease;
+}
+
+.lot:hover .lotFrame img {
+    transform: scale(1.025);
+
+    filter: brightness(1.04);
+}
+
+
+/*
+ * Kept for compatibility with any older listing markup.
+ * No fake SVG is generated for real marketplace listings.
+ */
+
+.lotFrame svg {
+    width: 0;
+
+    height: 0;
+
+    display: none;
+}
+
+
+/*==========================================================
+  LOT NUMBER
+==========================================================*/
+
+.lotNumber {
+    position: absolute;
+
+    top: 10px;
+
+    left: 10px;
+
+    font-family: 'DM Mono', monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    color: var(--brass-light);
+
+    background: rgba(7, 6, 5, .78);
+
+    padding: 4px 8px;
+
+    border: 1px solid var(--glass-border);
+
+    z-index: 4;
+}
+
+
+/*==========================================================
+  VERIFIED LABEL
+==========================================================*/
+
+.lotVerified {
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    font-size: 9.5px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: var(--green-bright);
+
+    background: rgba(7, 6, 5, .78);
+
+    padding: 4px 8px;
+
+    border: 1px solid rgba(117, 183, 152, .25);
+
+    z-index: 4;
+}
+
+
+/*==========================================================
+  LOT BODY
+==========================================================*/
+
+.lotBody {
+    padding: 18px 20px 20px;
+}
+
+.lotSeries {
+    font-family: 'DM Mono', monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+
+    margin-bottom: 6px;
+}
+
+.lotName {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    color: var(--text);
+
+    margin-bottom: 14px;
+
+    line-height: 1.3;
+}
+
+
+/*==========================================================
+  CONDITION SCALE
+==========================================================*/
+
+.gradeScale {
+    margin-bottom: 16px;
+}
+
+.gradeLabels {
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 8.5px;
+
+    letter-spacing: .5px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+
+    margin-bottom: 6px;
+}
+
+.gradeTrack {
+    position: relative;
+
+    height: 2px;
+
+    background: rgba(255, 255, 255, .08);
+
+    border-radius: 2px;
+}
+
+.gradeDot {
+    position: absolute;
+
+    top: 50%;
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--brass-light);
+
+    transform: translate(-50%, -50%);
+
+    box-shadow:
+        0 0 8px rgba(232, 201, 156, .5);
+}
+
+
+/*==========================================================
+  LOT FOOT
+==========================================================*/
+
+.lotFoot {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-top: 14px;
+
+    border-top: 1px solid rgba(255, 255, 255, .05);
+}
+
+.lotPrice {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 17px;
+
+    color: var(--brass-light);
+}
+
+.lotGradeText {
+    font-size: 11px;
+
+    color: var(--text-soft);
+
+    letter-spacing: .5px;
+}
+
+
+/*==========================================================
+  LARGE FEATURED VARIANT
+==========================================================*/
+
+.lot.featured .lotFrame {
+    aspect-ratio: 16 / 10;
+}
+
+.lot.featured .lotName {
+    font-size: 19px;
+}
+
+.lot.featured .lotPrice {
+    font-size: 20px;
+}
+
+
+/*==========================================================
+  GRID
+==========================================================*/
+
+.lotGrid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(230px, 1fr)
+        );
+
+    gap: 20px;
+}
+
+
+/*==========================================================
+  EMPTY MARKETPLACE
+==========================================================*/
+
+.marketplaceEmpty {
+    width: 100%;
+
+    min-height: 280px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 48px 24px;
+
+    border: 1px dashed var(--glass-border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .018),
+            rgba(255, 255, 255, .006)
+        );
+}
+
+.marketplaceEmpty.hidden {
+    display: none !important;
+}
+
+.emptyVaultMark {
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid var(--brass-dim);
+
+    color: var(--brass);
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 15px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+}
+
+.marketplaceEmpty h3 {
+    font-family: 'Cinzel', serif;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    color: var(--text);
+
+    margin-bottom: 8px;
+}
+
+.marketplaceEmpty p {
+    max-width: 500px;
+
+    color: var(--text-faint);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+    margin-bottom: 18px;
+}
+
+.emptyVaultLink {
+    color: var(--brass-light);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
+
+    border-bottom: 1px solid transparent;
+
+    transition: border-color .25s ease;
+}
+
+.emptyVaultLink:hover {
+    border-color: var(--brass-light);
+}
+
+
+/*==========================================================
+  SELLER SECTION
+==========================================================*/
+
+.sellerSection {
+    background: var(--bg-soft);
+
+    border-top: 1px solid var(--glass-border);
+
+    border-bottom: 1px solid var(--glass-border);
+}
+
+
+/*==========================================================
+  SELLER STATS
+==========================================================*/
+
+.sellerStats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+
+    margin-bottom: 24px;
+}
+
+.sellerStatCard {
+    background: var(--bg-card);
+
+    border: 1px solid var(--glass-border);
+
+    padding: 18px 20px;
+}
+
+.sellerStatLabel {
+    display: block;
+
+    font-size: 9.5px;
+
+    letter-spacing: 1.8px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+
+    margin-bottom: 9px;
+}
+
+.sellerStatCard strong {
+    display: block;
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 1.65rem;
+
+    font-weight: 600;
+
+    color: var(--brass-light);
+}
+
+
+/*==========================================================
+  SELLER LISTINGS
+==========================================================*/
+
+.sellerListings {
+    display: grid;
+
+    gap: 12px;
+}
+
+.sellerEmptyState {
+    padding: 42px 24px;
+
+    text-align: center;
+
+    border: 1px dashed var(--glass-border);
+
+    background: rgba(255, 255, 255, .015);
+}
+
+.sellerEmptyState h3 {
+    font-family: 'Cinzel', serif;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: var(--text);
+
+    margin-bottom: 8px;
+}
+
+.sellerEmptyState p {
+    font-size: 13px;
+
+    color: var(--text-faint);
+
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+}
+
+
+/*
+ * Seller rows inserted by marketplace.js.
+ */
+
+.sellerListingRow {
+    display: grid;
+
+    grid-template-columns:
+        84px
+        minmax(0, 1fr)
+        auto
+        auto;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 14px;
+
+    background: var(--bg-card);
+
+    border: 1px solid var(--glass-border);
+}
+
+.sellerListingThumb {
+    width: 84px;
+
+    height: 64px;
+
+    overflow: hidden;
+
+    background: var(--bg-raised);
+
+    border: 1px solid var(--glass-border);
+}
+
+.sellerListingThumb img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.sellerListingInfo {
+    min-width: 0;
+}
+
+.sellerListingInfo strong {
+    display: block;
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 14px;
+
+    color: var(--text);
+
+    margin-bottom: 4px;
+}
+
+.sellerListingInfo span {
+    display: block;
+
+    font-size: 11px;
+
+    color: var(--text-faint);
+
+    line-height: 1.5;
+}
+
+.sellerStatus {
+    font-size: 9.5px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+
+    padding: 6px 10px;
+
+    border: 1px solid var(--glass-border);
+
+    white-space: nowrap;
+}
+
+.sellerStatus.pending {
+    color: var(--brass-light);
+
+    border-color: rgba(232, 201, 156, .25);
+}
+
+.sellerStatus.approved {
+    color: var(--green-bright);
+
+    border-color: rgba(117, 183, 152, .25);
+}
+
+.sellerStatus.rejected {
+    color: var(--oxblood-light);
+
+    border-color: rgba(185, 87, 63, .3);
+}
+
+
+/*==========================================================
+  SUBMIT SECTION
+==========================================================*/
+
+.appraisalSection {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 56px;
+
+    align-items: start;
+
+    padding: 80px 48px;
+}
+
+.appraisalIntro .entranceEyebrow {
+    margin-bottom: 14px;
+}
+
+.appraisalIntro h2 {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 2rem;
+
+    color: var(--text);
+
+    margin-bottom: 16px;
+
+    letter-spacing: 1px;
+}
+
+.appraisalIntro > p {
+    color: var(--text-soft);
+
+    font-size: 14.5px;
+
+    line-height: 1.75;
+
+    margin-bottom: 32px;
+
+    max-width: 500px;
+}
+
+
+/*==========================================================
+  SELLER FEATURES
+==========================================================*/
+
+.appraisalFeats {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.aFeat {
+    display: flex;
+
+    gap: 14px;
+
+    padding: 16px;
+
+    background: rgba(255, 255, 255, .02);
+
+    border: 1px solid var(--glass-border);
+}
+
+.aFeatIcon {
+    width: 34px;
+
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--glass-border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--brass-light);
+
+    font-size: 14px;
+}
+
+.aFeat strong {
+    display: block;
+
+    font-size: 14px;
+
+    color: var(--text);
+
+    margin-bottom: 3px;
+}
+
+.aFeat span {
+    font-size: 12.5px;
+
+    color: var(--text-faint);
+
+    line-height: 1.5;
+}
+
+
+/*==========================================================
+  APPRAISAL FORM
+==========================================================*/
+
+.appraisalForm {
+    background: var(--bg-card);
+
+    border: 1px solid var(--glass-border);
+
+    padding: 36px;
+
+    position: relative;
+}
+
+.appraisalForm::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--brass),
+            var(--brass-light)
+        );
+}
+
+.formTitle {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 1.2rem;
+
+    color: var(--text);
+
+    margin-bottom: 22px;
+
+    letter-spacing: .5px;
+}
+
+
+/*==========================================================
+  FORM ROWS
+==========================================================*/
+
+.frow {
+    margin-bottom: 18px;
+}
+
+.frow label {
+    display: block;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+
+    margin-bottom: 7px;
+}
+
+.frow input,
+.frow select,
+.frow textarea {
+    width: 100%;
+
+    background: rgba(255, 255, 255, .02);
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--text);
+
+    padding: 11px 14px;
+
+    font-size: 13.5px;
+
+    outline: none;
+
+    transition:
+        border-color .3s ease,
+        background .3s ease;
+
+    font-family: inherit;
+
+    border-radius: 0;
+}
+
+.frow input:focus,
+.frow select:focus,
+.frow textarea:focus {
+    border-color: var(--brass);
+
+    background: rgba(255, 255, 255, .025);
+}
+
+.frow input::placeholder,
+.frow textarea::placeholder {
+    color: var(--text-faint);
+}
+
+.frow textarea {
+    min-height: 120px;
+
+    resize: vertical;
+
+    line-height: 1.6;
+}
+
+.f2col {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+}
+
+
+/*==========================================================
+  FIELD HINT
+==========================================================*/
+
+.fieldHint {
+    color: var(--text-faint);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    margin:
+        -1px
+        0
+        10px;
+}
+
+
+/*==========================================================
+  IMAGE UPLOAD
+==========================================================*/
+
+.imageUploadRow {
+    margin-top: 4px;
+}
+
+.imageUploadBox {
+    display: block;
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 220px;
+
+    border: 1px dashed rgba(232, 201, 156, .25);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .018),
+            rgba(255, 255, 255, .005)
+        );
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        border-color .3s ease,
+        background .3s ease;
+}
+
+.imageUploadBox:hover {
+    border-color: var(--brass);
+
+    background:
+        rgba(184, 146, 90, .035);
+}
+
+.imageUploadContent {
+    min-height: 220px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 24px;
+}
+
+.uploadIcon {
+    width: 50px;
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 1px solid var(--brass-dim);
+
+    color: var(--brass-light);
+
+    font-size: 24px;
+
+    font-weight: 300;
+
+    margin-bottom: 14px;
+}
+
+.imageUploadContent strong {
+    color: var(--text);
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    margin-bottom: 6px;
+}
+
+.imageUploadContent span {
+    color: var(--text-faint);
+
+    font-size: 11px;
+
+    letter-spacing: .5px;
+}
+
+
+/*==========================================================
+  IMAGE PREVIEW
+==========================================================*/
+
+.imagePreviewWrap {
+    position: absolute;
+
+    inset: 0;
+
+    background: var(--bg-card);
+}
+
+.imagePreviewWrap.hidden {
+    display: none;
+}
+
+.imagePreviewWrap img {
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+    background: #080706;
+}
+
+.imagePreviewHint {
+    position: absolute;
+
+    right: 10px;
+
+    bottom: 10px;
+
+    padding: 5px 9px;
+
+    background: rgba(7, 6, 5, .82);
+
+    border: 1px solid var(--glass-border);
+
+    color: var(--brass-light);
+
+    font-size: 9.5px;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+
+/*==========================================================
+  IMAGE ERROR
+==========================================================*/
+
+.imageUploadError {
+    min-height: 0;
+
+    color: var(--oxblood-light);
+
+    font-size: 11px;
+
+    margin-top: 8px;
+}
+
+
+/*==========================================================
+  FORM STATUS
+==========================================================*/
+
+#appraisalStatus {
+    margin-bottom: 16px;
+}
+
+#appraisalStatus.success {
+    color: var(--green-bright);
+
+    background: rgba(117, 183, 152, .06);
+
+    border-color: rgba(117, 183, 152, .22);
+}
+
+
+/*==========================================================
+  SUBMIT BUTTON
+==========================================================*/
+
+.submitBtn {
+    width: 100%;
+
+    background: var(--brass);
+
+    color: #100e0b;
+
+    border: none;
+
+    padding: 14px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    margin-top: 8px;
+
+    transition:
+        background .3s ease,
+        box-shadow .3s ease,
+        transform .2s ease;
+}
+
+.submitBtn:hover {
+    background: var(--brass-light);
+
+    box-shadow:
+        0 14px 34px
+        rgba(184, 146, 90, .25);
+
+    transform: translateY(-1px);
+}
+
+.submitBtn:disabled {
+    opacity: .65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/*==========================================================
+  SUBMISSION NOTICE
+==========================================================*/
+
+.submissionNotice {
+    margin-top: 14px;
+
+    text-align: center;
+
+    color: var(--text-faint);
+
+    font-size: 10.5px;
+
+    line-height: 1.5;
+}
+
+
+/*==========================================================
+  REVEAL ON SCROLL
+==========================================================*/
+
+.reveal {
+    opacity: 0;
+
+    transform: translateY(20px);
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
+}
+
+.reveal.show {
+    opacity: 1;
+
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    * {
+        animation: none !important;
+
+        transition: none !important;
+    }
+}
+
+
+/*==========================================================
+  FOOTER
+==========================================================*/
+
+.footer {
+    padding: 44px 48px 26px;
+
+    border-top: 1px solid var(--glass-border);
+}
+
+.footerTop {
+    display: flex;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+
+    gap: 24px;
+
+    margin-bottom: 28px;
+}
+
+.footerBrand {
+    font-family: 'Cinzel', serif;
+
+    font-weight: 600;
+
+    font-size: 15px;
+
+    letter-spacing: 1.5px;
+
+    color: var(--text);
+}
+
+.footerBrand em {
+    font-style: normal;
+
+    color: var(--brass-light);
+}
+
+.footerMeta {
+    font-size: 11px;
+
+    color: var(--text-faint);
+
+    letter-spacing: .5px;
+}
+
+
+/*==========================================================
+  HIDDEN
+==========================================================*/
+
+.hidden {
+    display: none !important;
+}
+
+
+/*==========================================================
+  RESPONSIVE
+==========================================================*/
+
+@media (max-width: 900px) {
+
+    .appraisalSection {
+        grid-template-columns: 1fr;
+
+        padding: 60px 24px;
+    }
+
+    .sellerStats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+
+    .section {
+        padding: 48px 24px;
+    }
+
+    .appraisalSection {
+        padding: 48px 24px;
+    }
+
+    .appraisalForm {
+        padding: 26px 22px;
+    }
+
+    .f2col {
+        grid-template-columns: 1fr;
+    }
+
+    .sellerStats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sellerListingRow {
+        grid-template-columns:
+            64px
+            minmax(0, 1fr);
+
+        gap: 12px;
+    }
+
+    .sellerListingThumb {
+        width: 64px;
+
+        height: 52px;
+    }
+
+    .sellerStatus,
+    .sellerListingRow > .sellerListingAction {
+        grid-column: 2;
+    }
+
+    .footer {
+        padding: 36px 24px 20px;
+    }
 }
 
 /*==========================================================
-VAULT ENTRANCE BANNER
+  TOYSGURU — MARKETPLACE GRID REDESIGN
+  Reference-inspired compact marketplace cards
 ==========================================================*/
 
-.entrance{
-    position:relative;
-    padding:56px 48px 44px;
-    border-bottom:1px solid var(--glass-border);
-    overflow:hidden;
-}
-.entrance::before{
-    content:"";
-    position:absolute;
-    top:-40%;left:50%;
-    transform:translateX(-50%);
-    width:900px;height:300px;
-    background:radial-gradient(ellipse,rgba(184,146,90,.1),transparent 70%);
-    pointer-events:none;
-}
-.entranceEyebrow{
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    color:var(--brass);
-    margin-bottom:14px;
-}
-.entrance h1{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:2.4rem;
-    letter-spacing:1px;
-    color:var(--text);
-    margin-bottom:10px;
-}
-.entrance h1 em{
-    font-style:normal;
-    color:var(--brass-light);
-}
-.entrance p{
-    color:var(--text-soft);
-    font-size:14.5px;
-    max-width:560px;
-    line-height:1.7;
+.navTextBtn {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: color .25s ease;
 }
 
-/* Category rooms — engraved plaque tabs */
-.rooms{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:32px;
-}
-.roomTab{
-    background:rgba(255,255,255,.02);
-    border:1px solid var(--glass-border);
-    color:var(--text-soft);
-    padding:9px 20px;
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:1.8px;
-    text-transform:uppercase;
-    border-radius:2px;
-    transition:all .3s ease;
-}
-.roomTab:hover{border-color:var(--brass);color:var(--text);}
-.roomTab.active{
-    background:var(--brass);
-    border-color:var(--brass);
-    color:#100e0b;
+.navTextBtn:hover,
+.navTextBtn.active {
+    color: var(--brass-light);
 }
 
-@media(max-width:640px){
-    .entrance{padding:40px 24px 32px;}
-    .entrance h1{font-size:1.8rem;}
+.navAccount {
+    gap: 12px;
 }
+
+.accountWelcome {
+    font-size: 12px;
+    color: var(--text-soft);
+}
+
+.accountWelcome strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.cartBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    appearance: none;
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--glass-border);
+    color: var(--text-soft);
+    padding: 7px 10px;
+    border-radius: 2px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    transition:
+        border-color .25s ease,
+        color .25s ease,
+        background .25s ease;
+}
+
+.cartBtn:hover {
+    border-color: var(--brass);
+    color: var(--brass-light);
+    background: rgba(184,146,90,.05);
+}
+
+.cartIcon {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.cartLabel {
+    line-height: 1;
+}
+
+.cartCount {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 99px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--brass);
+    color: #100e0b;
+    font-size: 9px;
+    font-weight: 700;
+}
+
 
 /*==========================================================
-SECTION SHELL
+  COMPACT MARKETPLACE GRID
 ==========================================================*/
 
-.section{
-    padding:64px 48px;
+#catalog .sectionHead {
+    margin-bottom: 26px;
 }
-.sectionHead{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    margin-bottom:34px;
-    gap:20px;
-    flex-wrap:wrap;
-}
-.sectionHead h2{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:1.7rem;
-    letter-spacing:1px;
-    color:var(--text);
-}
-.sectionHead p{
-    color:var(--text-faint);
-    font-size:13px;
-    margin-top:6px;
-}
-.sectionLink{
-    font-size:11.5px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--brass);
-    border-bottom:1px solid transparent;
-    transition:border-color .3s ease;
-}
-.sectionLink:hover{border-color:var(--brass);}
 
-@media(max-width:640px){
-    .section{padding:48px 24px;}
+#catalog .sectionHead h2 {
+    font-size: 1.65rem;
 }
+
+.lotGrid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+.lot {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-radius: 3px;
+    cursor: default;
+    transform: none;
+}
+
+.lot:hover {
+    transform: translateY(-3px);
+}
+
+.lotFrame {
+    aspect-ratio: 1 / 1;
+    background: #0e0d0b;
+}
+
+.lotFrame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    padding: 8px;
+    transform: none !important;
+    filter: none !important;
+    background: #0e0d0b;
+}
+
+.lot:hover .lotFrame img {
+    transform: none !important;
+    filter: brightness(1.03) !important;
+}
+
+.lotBody {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 12px 12px;
+    min-height: 148px;
+}
+
+.lotSeries {
+    font-size: 8.5px;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.lotName {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.28;
+    margin-bottom: 8px;
+    min-height: 36px;
+}
+
+.gradeScale {
+    margin-bottom: 10px;
+}
+
+.gradeLabels {
+    font-size: 7.5px;
+    margin-bottom: 5px;
+}
+
+.gradeTrack {
+    height: 1px;
+}
+
+.gradeDot {
+    width: 7px;
+    height: 7px;
+}
+
+.lotFoot {
+    margin-top: auto;
+    padding-top: 9px;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lotPrice {
+    font-size: 15px;
+}
+
+.lotGradeText {
+    font-size: 10px;
+}
+
+.lotActionBtn {
+    width: 100%;
+    margin-top: 10px;
+    appearance: none;
+    border: 1px solid var(--brass);
+    background: var(--brass);
+    color: #100e0b;
+    padding: 10px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition:
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease;
+}
+
+.lotActionBtn:hover {
+    background: var(--brass-light);
+    border-color: var(--brass-light);
+}
+
+.lotActionBtn.is-added {
+    background: transparent;
+    color: var(--green-bright);
+    border-color: rgba(117,183,152,.45);
+}
+
+.lotActionBtn:disabled {
+    cursor: default;
+    opacity: .95;
+}
+
+.lotEmptyPhoto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: var(--text-faint);
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.lot.featured {
+    all: unset;
+}
+
+#featuredGrid {
+    display: none !important;
+}
+
+@media (min-width: 1700px) {
+    .lotGrid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1399px) and (min-width: 1000px) {
+    .lotGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 999px) and (min-width: 700px) {
+    .lotGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 699px) {
+    .lotGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .lot {
+        max-width: 520px;
+        width: 100%;
+        margin-inline: auto;
+    }
+
+    .lotFrame {
+        aspect-ratio: 1 / 1;
+    }
+
+    .lotBody {
+        min-height: 0;
+    }
+}
+
 
 /*==========================================================
-FEATURED CASE — asymmetric hero listing + 3 supporting
+  MY LISTINGS + CART OVERLAYS
 ==========================================================*/
 
-.featuredGrid{
-    display:grid;
-    grid-template-columns:1.3fr 1fr;
-    gap:24px;
-}
-.featuredSide{
-    display:flex;
-    flex-direction:column;
-    gap:24px;
+body.panel-open {
+    overflow: hidden;
 }
 
-@media(max-width:1000px){
-    .featuredGrid{grid-template-columns:1fr;}
+.overlayPanel {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    justify-content: flex-end;
 }
 
-/*==========================================================
-LOT CARD — the signature element
-==========================================================*/
-
-.lot{
-    position:relative;
-    background:linear-gradient(150deg,rgba(255,255,255,.03),rgba(255,255,255,.008));
-    border:1px solid var(--glass-border);
-    border-radius:4px;
-    overflow:hidden;
-    transition:border-color .35s ease, transform .35s ease, box-shadow .35s ease;
-    cursor:pointer;
-}
-.lot:hover{
-    border-color:rgba(184,146,90,.4);
-    transform:translateY(-4px);
-    box-shadow:0 20px 50px rgba(0,0,0,.45);
+.overlayPanel.hidden {
+    display: none !important;
 }
 
-/* Vitrine corner brackets — appear on hover, like catching a display case's light */
-.lot::before,.lot::after,
-.lotFrame::before,.lotFrame::after{
-    content:"";
-    position:absolute;
-    width:16px;height:16px;
-    border:1.5px solid var(--brass-light);
-    opacity:0;
-    transition:opacity .35s ease;
-    z-index:3;
-}
-.lot::before{top:8px;left:8px;border-right:none;border-bottom:none;}
-.lot::after{top:8px;right:8px;border-left:none;border-bottom:none;}
-.lotFrame::before{bottom:8px;left:8px;border-right:none;border-top:none;}
-.lotFrame::after{bottom:8px;right:8px;border-left:none;border-top:none;}
-.lot:hover::before,.lot:hover::after,
-.lot:hover .lotFrame::before,.lot:hover .lotFrame::after{opacity:.9;}
-
-.lotFrame{
-    position:relative;
-    aspect-ratio:4/3;
-    background:var(--bg-card);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-.lotFrame svg{width:58%;opacity:.92;}
-
-.lotNumber{
-    position:absolute;
-    top:10px;left:10px;
-    font-family:'DM Mono',monospace;
-    font-size:10px;
-    letter-spacing:1px;
-    color:var(--brass-light);
-    background:rgba(7,6,5,.7);
-    padding:3px 8px;
-    border:1px solid var(--glass-border);
-    z-index:2;
+.overlayBackdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(5px);
 }
 
-.lotVerified{
-    position:absolute;
-    top:10px;right:10px;
-    font-size:9.5px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--brass-light);
-    background:rgba(7,6,5,.7);
-    padding:3px 8px;
-    border:1px solid var(--glass-border);
-    z-index:2;
+.activityPanel,
+.cartPanel {
+    position: relative;
+    z-index: 2;
+    width: min(860px, 94vw);
+    height: 100%;
+    overflow-y: auto;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(184,146,90,.08),
+            transparent 35%
+        ),
+        var(--bg-soft);
+    border-left: 1px solid var(--glass-border);
+    box-shadow: -30px 0 80px rgba(0,0,0,.5);
+    padding: 40px;
 }
 
-.lotBody{padding:18px 20px 20px;}
-.lotSeries{
-    font-family:'DM Mono',monospace;
-    font-size:10px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    margin-bottom:6px;
-}
-.lotName{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:15px;
-    color:var(--text);
-    margin-bottom:14px;
-    line-height:1.3;
+.cartPanel {
+    width: min(460px, 94vw);
 }
 
-/* Condition grading scale — real collector grading, not a generic badge */
-.gradeScale{
-    margin-bottom:16px;
-}
-.gradeLabels{
-    display:flex;
-    justify-content:space-between;
-    font-size:8.5px;
-    letter-spacing:.5px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    margin-bottom:6px;
-}
-.gradeTrack{
-    position:relative;
-    height:2px;
-    background:rgba(255,255,255,.08);
-    border-radius:2px;
-}
-.gradeDot{
-    position:absolute;
-    top:50%;
-    width:8px;height:8px;
-    border-radius:50%;
-    background:var(--brass-light);
-    transform:translate(-50%,-50%);
-    box-shadow:0 0 8px rgba(232,201,156,.5);
+.panelCloseBtn {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,.02);
+    color: var(--text-soft);
+    font-size: 22px;
+    line-height: 1;
+    transition:
+        border-color .25s ease,
+        color .25s ease;
 }
 
-.lotFoot{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding-top:14px;
-    border-top:1px solid rgba(255,255,255,.05);
-}
-.lotPrice{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:17px;
-    color:var(--brass-light);
-}
-.lotGradeText{
-    font-size:11px;
-    color:var(--text-soft);
-    letter-spacing:.5px;
+.panelCloseBtn:hover {
+    border-color: var(--brass);
+    color: var(--brass-light);
 }
 
-/* Large featured variant */
-.lot.featured .lotFrame{aspect-ratio:16/10;}
-.lot.featured .lotFrame svg{width:44%;}
-.lot.featured .lotName{font-size:19px;}
-.lot.featured .lotPrice{font-size:20px;}
-
-/*==========================================================
-GRID
-==========================================================*/
-
-.lotGrid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-    gap:20px;
+.panelEyebrow {
+    color: var(--brass);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
 }
 
-/*==========================================================
-THE ROSTRUM — live auctions
-==========================================================*/
-
-.rostrumSection{
-    background:var(--bg-soft);
-    border-top:1px solid var(--glass-border);
-    border-bottom:1px solid var(--glass-border);
+.activityPanel h2,
+.cartPanel h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text);
 }
 
-.rostrumGrid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-    gap:22px;
+.panelSubtitle {
+    color: var(--text-soft);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 8px;
+    margin-bottom: 26px;
 }
 
-.rostrumCard{
-    position:relative;
-    background:var(--bg-card);
-    border:1px solid var(--glass-border);
-    padding:22px;
-    transition:border-color .35s ease;
-}
-.rostrumCard:hover{border-color:rgba(184,146,90,.4);}
-.rostrumCard::before{
-    content:"";
-    position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,var(--brass),var(--oxblood-light));
+.activityPanel .sellerStats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
 }
 
-.rostrumTop{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:16px;
-}
-.rostrumTag{
-    font-family:'DM Mono',monospace;
-    font-size:9.5px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--brass);
-}
-.liveTag{
-    display:flex;align-items:center;gap:6px;
-    font-family:'DM Mono',monospace;
-    font-size:9.5px;letter-spacing:1.5px;
-    color:var(--oxblood-light);
-}
-.liveTag::before{
-    content:"";width:5px;height:5px;border-radius:50%;
-    background:var(--oxblood-light);
-    animation:pulse 1.6s infinite;
-}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
-
-.rostrumFrame{
-    aspect-ratio:16/9;
-    background:var(--bg-raised);
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:16px;
-}
-.rostrumFrame svg{width:38%;opacity:.9;}
-
-.rostrumName{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:17px;
-    color:var(--text);
-    margin-bottom:4px;
-}
-.rostrumSeries{
-    font-size:11.5px;
-    color:var(--text-faint);
-    letter-spacing:.5px;
-    margin-bottom:16px;
+.activityPanel .sellerStatCard {
+    padding: 15px;
 }
 
-.rostrumStats{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:10px;
-    padding:14px;
-    background:rgba(255,255,255,.02);
-    border:1px solid var(--glass-border);
-    margin-bottom:16px;
-}
-.statLabel{
-    font-size:9px;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    margin-bottom:4px;
-}
-.statValue{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:16px;
-    color:var(--brass-light);
-}
-.statValue.time{
-    font-family:'DM Mono',monospace;
-    font-weight:500;
-    color:var(--oxblood-light);
-    font-size:14px;
+.activityPanel .sellerListings {
+    max-height: none;
+    overflow: visible;
 }
 
-.bidBtn{
-    width:100%;
-    background:linear-gradient(135deg,var(--brass-light),var(--brass));
-    border:none;
-    color:#100e0b;
-    padding:13px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    transition:box-shadow .3s ease, transform .3s ease;
-}
-.bidBtn:hover{
-    box-shadow:0 14px 34px rgba(184,146,90,.28);
-    transform:translateY(-2px);
+.activityPanel .sellerListingRow {
+    background: rgba(255,255,255,.018);
 }
 
-/*==========================================================
-SUBMIT FOR APPRAISAL (sell)
-==========================================================*/
-
-.appraisalSection{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:56px;
-    align-items:start;
-    padding:80px 48px;
+.sellerListingThumb {
+    width: 74px;
+    height: 74px;
+    flex: 0 0 74px;
+    overflow: hidden;
+    background: #0e0d0b;
+    border: 1px solid var(--glass-border);
 }
 
-.appraisalIntro .entranceEyebrow{margin-bottom:14px;}
-.appraisalIntro h2{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:2rem;
-    color:var(--text);
-    margin-bottom:16px;
-    letter-spacing:1px;
-}
-.appraisalIntro > p{
-    color:var(--text-soft);
-    font-size:14.5px;
-    line-height:1.75;
-    margin-bottom:32px;
-    max-width:480px;
+.sellerListingThumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
 }
 
-.appraisalFeats{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-}
-.aFeat{
-    display:flex;
-    gap:14px;
-    padding:16px;
-    background:rgba(255,255,255,.02);
-    border:1px solid var(--glass-border);
-}
-.aFeatIcon{
-    width:34px;height:34px;flex-shrink:0;
-    border:1px solid var(--glass-border);
-    display:flex;align-items:center;justify-content:center;
-    color:var(--brass-light);
-    font-size:14px;
-}
-.aFeat strong{
-    display:block;
-    font-size:14px;
-    color:var(--text);
-    margin-bottom:3px;
-}
-.aFeat span{
-    font-size:12.5px;
-    color:var(--text-faint);
-    line-height:1.5;
+.cartItems {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
-.appraisalForm{
-    background:var(--bg-card);
-    border:1px solid var(--glass-border);
-    padding:36px;
-    position:relative;
-}
-.appraisalForm::before{
-    content:"";
-    position:absolute;top:0;left:0;right:0;height:2px;
-    background:linear-gradient(90deg,var(--brass),var(--brass-light));
-}
-.formTitle{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:1.2rem;
-    color:var(--text);
-    margin-bottom:22px;
-    letter-spacing:.5px;
-}
-.frow{margin-bottom:16px;}
-.frow label{
-    display:block;
-    font-size:10px;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    color:var(--text-faint);
-    margin-bottom:7px;
-}
-.frow input,.frow select{
-    width:100%;
-    background:rgba(255,255,255,.02);
-    border:1px solid var(--glass-border);
-    color:var(--text);
-    padding:11px 14px;
-    font-size:13.5px;
-    outline:none;
-    transition:border-color .3s ease;
-}
-.frow input:focus,.frow select:focus{border-color:var(--brass);}
-.frow input::placeholder{color:var(--text-faint);}
-.f2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-
-.submitBtn{
-    width:100%;
-    background:var(--brass);
-    color:#100e0b;
-    border:none;
-    padding:14px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    margin-top:8px;
-    transition:background .3s ease, box-shadow .3s ease;
-}
-.submitBtn:hover{
-    background:var(--brass-light);
-    box-shadow:0 14px 34px rgba(184,146,90,.25);
+.cartEmptyState {
+    padding: 40px 18px;
+    border: 1px dashed var(--glass-border);
+    color: var(--text-faint);
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
 }
 
-@media(max-width:900px){
-    .appraisalSection{grid-template-columns:1fr;padding:60px 24px;}
+.cartItem {
+    display: grid;
+    grid-template-columns: 74px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255,255,255,.018);
 }
 
-/*==========================================================
-REVEAL ON SCROLL
-==========================================================*/
-
-.reveal{
-    opacity:0;
-    transform:translateY(20px);
-    transition:opacity .7s ease, transform .7s ease;
-}
-.reveal.show{opacity:1;transform:none;}
-
-@media(prefers-reduced-motion:reduce){
-    *{animation:none !important;transition:none !important;}
+.cartItemImage {
+    width: 74px;
+    height: 74px;
+    background: #0e0d0b;
+    overflow: hidden;
 }
 
-/*==========================================================
-FOOTER
-==========================================================*/
-
-.footer{
-    padding:44px 48px 26px;
-    border-top:1px solid var(--glass-border);
-}
-.footerTop{
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:24px;
-    margin-bottom:28px;
-}
-.footerBrand{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:15px;
-    letter-spacing:1.5px;
-    color:var(--text);
-}
-.footerBrand em{font-style:normal;color:var(--brass-light);}
-.footerMeta{
-    font-size:11px;
-    color:var(--text-faint);
-    letter-spacing:.5px;
+.cartItemImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 4px;
 }
 
-@media(max-width:640px){
-    .footer{padding:36px 24px 20px;}
+.cartItemInfo strong {
+    display: block;
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.cartItemInfo span {
+    display: block;
+    color: var(--text-faint);
+    font-size: 9.5px;
+    line-height: 1.5;
+}
+
+.cartItemPrice {
+    font-family: 'Cinzel', serif;
+    color: var(--brass-light);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.cartRemoveBtn {
+    margin-top: 6px;
+    appearance: none;
+    border: 0;
+    padding: 0;
+    background: none;
+    color: var(--text-faint);
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.cartRemoveBtn:hover {
+    color: var(--oxblood-light);
+}
+
+.cartSummary {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 18px;
+}
+
+.cartSummaryRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--text-soft);
+    font-size: 12px;
+    margin-bottom: 14px;
+}
+
+.cartSummaryRow strong {
+    color: var(--brass-light);
+    font-family: 'Cinzel', serif;
+    font-size: 16px;
+}
+
+.cartCheckoutBtn {
+    width: 100%;
+    border: 1px solid var(--brass);
+    background: var(--brass);
+    color: #100e0b;
+    padding: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: .65;
+    cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+    .nav {
+        padding: 0 16px;
+    }
+
+    .navLinks {
+        display: none !important;
+    }
+
+    .accountWelcome {
+        display: none;
+    }
+
+    .cartLabel {
+        display: none;
+    }
+
+    .activityPanel,
+    .cartPanel {
+        width: 100%;
+        padding: 28px 20px;
+    }
+
+    .activityPanel .sellerStats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sellerListingRow {
+        grid-template-columns: 74px 1fr auto;
+    }
+
+    .sellerListingAction {
+        display: none;
+    }
+
+    .cartItem {
+        grid-template-columns: 62px 1fr auto;
+    }
+
+    .cartItemImage,
+    .sellerListingThumb {
+        width: 62px;
+        height: 62px;
+    }
 }
